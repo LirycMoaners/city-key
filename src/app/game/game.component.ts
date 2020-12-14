@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import * as apiKeys from '../../assets/secure/api-keys.json';
 
 @Component({
   selector: 'app-game',
@@ -147,7 +148,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiLoaded = this.httpClient.jsonp(
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCRnkz903chyNcwW5W3A0_nWHE359oLdlw',
+      'https://maps.googleapis.com/maps/api/js?key=' + apiKeys.googleMapKey,
       'callback'
     ).pipe(
       map(() => true),
