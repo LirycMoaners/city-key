@@ -1,4 +1,4 @@
 export enum Type {
-  FOUR_NR_LOCK,
+  FOUR_NRS_LOCK,
   LAYER_PUZZLE
 }
