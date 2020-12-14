@@ -1,1 +1,3 @@
-<p>mechanisme-list works!</p>
+<div *ngFor="let mechanism of mechanisms">
+  <img style="height: 30px; width: 30px" src="{{mechanism.icon}}"> {{mechanism.title}} {{mechanism.description}}
+</div>
