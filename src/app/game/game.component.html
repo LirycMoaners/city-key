@@ -1,2 +1,12 @@
 <div class="map-container" *ngIf="apiLoaded | async">
+  <section class="items-menu">
+    <button routerLink="mechanism_list"><img style="height: 30px" src="https://cdn.pixabay.com/photo/2015/12/04/22/20/gear-1077550_960_720.png"> </button>
+  </section>
+  <google-map
+    height="100%"
+    width="100%"
+    [center]="center"
+    [options]="options"
+  >
+  </google-map>
 </div>
