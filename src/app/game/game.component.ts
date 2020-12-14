@@ -13,9 +13,12 @@ import * as mapStyle from '../../assets/styles/map-style.json';
 export class GameComponent implements OnInit {
   center: google.maps.LatLngLiteral = { lat: 48.8581929, lng: 2.3508915 };
   options: google.maps.MapOptions = {
+    disableDefaultUI: true,
     // @ts-ignore
-    styles : mapStyle
+    styles : mapStyle.default
   };
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerOptions: google.maps.MarkerOptions = {draggable: false};
   apiLoaded: Observable<boolean>;
 
   constructor(private httpClient: HttpClient) { }
@@ -28,5 +31,18 @@ export class GameComponent implements OnInit {
       map(() => true),
       catchError(() => of(false))
     );
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          this.markerPositions = [{...this.center}];
+        }
+      );
+    }
   }
 }
