@@ -17,10 +17,7 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.apiLoaded = this.httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyCRnkz903chyNcwW5W3A0_nWHE359oLdlw', 'callback')
         .pipe(
-          map(() => {
-            new google.maps.Map(this.googleMap.nativeElement, {mapId: 'a6e118a22ba119fa'});
-            return true;
-          }),
+          map(() => of(true)),
           catchError(() => of(false))
         );
   }
