@@ -11,28 +11,32 @@ import * as mapStyle from '../../assets/styles/map-style.json';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  center: google.maps.LatLngLiteral = { lat: 48.8581929, lng: 2.3508915 };
-  options: google.maps.MapOptions = {
+  public isGoogleMapApiLoaded$: Observable<boolean> = this.httpClient.jsonp(
+    'https://maps.googleapis.com/maps/api/js?key=' + apiKeys.googleMapKey,
+    'callback'
+  ).pipe(
+    map(() => true),
+    catchError(() => of(false))
+  );
+  public center: google.maps.LatLngLiteral = { lat: 48.8581929, lng: 2.3508915 };
+  public options: google.maps.MapOptions = {
     disableDefaultUI: true,
     // @ts-ignore
     styles : mapStyle.default
   };
-  markerPositions: google.maps.LatLngLiteral[] = [];
-  markerOptions: google.maps.MarkerOptions = {draggable: false};
-  apiLoaded: Observable<boolean>;
+  public markerPositions: google.maps.LatLngLiteral[] = [];
+  public markerOptions: google.maps.MarkerOptions = {draggable: false};
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.apiLoaded = this.httpClient.jsonp(
-      'https://maps.googleapis.com/maps/api/js?key=' + apiKeys.googleMapKey,
-      'callback'
-    ).pipe(
-      map(() => true),
-      catchError(() => of(false))
-    );
+    this.initGeolocation();
+  }
 
-    // Try HTML5 geolocation.
+  /**
+   * Initialize the center position of the map & the marker position of the player
+   */
+  private initGeolocation(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {

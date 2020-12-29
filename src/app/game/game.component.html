@@ -1,4 +1,4 @@
-<div class="map-container" *ngIf="apiLoaded | async">
+<div class="map-container" *ngIf="isGoogleMapApiLoaded$ | async">
   <google-map
     height="100%"
     width="100%"
