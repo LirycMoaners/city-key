@@ -1,6 +1,8 @@
 <div class="map-container" *ngIf="apiLoaded | async">
   <section class="items-menu">
-    <button routerLink="mechanism_list"><img style="height: 30px" src="https://cdn.pixabay.com/photo/2015/12/04/22/20/gear-1077550_960_720.png"> </button>
+    <button routerLink="mechanism_list" mat-icon-button aria-label="Mechanisms list">
+      <mat-icon>lock</mat-icon>
+    </button>
   </section>
   <google-map
     height="100%"

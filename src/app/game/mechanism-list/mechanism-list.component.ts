@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Mechanism} from '../../shared/mechanism';
-import {MechanismService} from '../../core/mechanism.service';
+import {MechanismModel} from '../../shared/models/mechanism.model';
+import {MechanismService} from '../../core/http-services/mechanism.service';
 
 @Component({
   selector: 'app-mechanisme-list',
@@ -8,16 +8,15 @@ import {MechanismService} from '../../core/mechanism.service';
   styleUrls: ['./mechanism-list.component.scss']
 })
 export class MechanismListComponent implements OnInit {
-  mechanisms: Mechanism[];
+  mechanisms: MechanismModel[];
 
   constructor(
     private mechanismService: MechanismService
   ) { }
 
   ngOnInit(): void {
-    this.mechanismService.read().subscribe( mechanisms =>
+    this.mechanismService.readAll().subscribe(mechanisms =>
     {
-      console.log(mechanisms);
       this.mechanisms = mechanisms;
     });
   }

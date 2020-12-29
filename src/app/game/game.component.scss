@@ -2,3 +2,12 @@
   height: 100%;
   width: 100%;
 }
+
+.items-menu {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+}
