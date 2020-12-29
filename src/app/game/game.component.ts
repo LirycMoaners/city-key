@@ -35,7 +35,7 @@ export class GameComponent implements OnInit {
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
+        position => {
           this.center = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
