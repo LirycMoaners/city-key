@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {MechanismModel} from '../../shared/models/mechanism.model';
+import {Mechanism} from '../../shared/models/mechanism.model';
 import {MechanismService} from '../../core/http-services/mechanism.service';
 
 @Component({
-  selector: 'app-mechanisme-list',
+  selector: 'app-mechanism-list',
   templateUrl: './mechanism-list.component.html',
   styleUrls: ['./mechanism-list.component.scss']
 })
 export class MechanismListComponent implements OnInit {
-  mechanisms: MechanismModel[];
+  mechanisms: Mechanism[];
 
   constructor(
     private mechanismService: MechanismService

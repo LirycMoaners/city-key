@@ -4,9 +4,6 @@ import { GameComponent } from './game.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameRoutingModule } from './game-routing.module';
 import { MechanismListComponent } from './mechanism-list/mechanism-list.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
 
 
 

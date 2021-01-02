@@ -1,6 +1,6 @@
-import {MechanismType} from '../enums/mechanism_type.enum';
+import {MechanismType} from '../enums/mechanism-type.enum';
 
-export interface MechanismModel {
+export interface Mechanism {
   id: number;
   name: string;
   title: string;
