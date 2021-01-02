@@ -1,4 +1,9 @@
 <div class="map-container" *ngIf="isGoogleMapApiLoaded$ | async">
+  <section class="items-menu">
+    <button routerLink="mechanism_list" mat-icon-button aria-label="Mechanisms list">
+      <mat-icon>lock</mat-icon>
+    </button>
+  </section>
   <google-map
     height="100%"
     width="100%"

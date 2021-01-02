@@ -1,0 +1,9 @@
+<mat-card *ngFor="let mechanism of mechanisms">
+  <mat-icon>{{mechanism.icon}}</mat-icon> {{mechanism.title}} {{mechanism.description}}
+</mat-card>
+
+<section class="buttons-bar">
+  <button routerLink=".." mat-icon-button>
+    <mat-icon>undo</mat-icon>
+  </button>
+</section>
