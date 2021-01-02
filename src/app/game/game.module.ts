@@ -16,9 +16,6 @@ import {MatCardModule} from '@angular/material/card';
     GameRoutingModule,
     CommonModule,
     SharedModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule
   ]
 })
 export class GameModule { }
