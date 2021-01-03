@@ -4,6 +4,7 @@ import { GameComponent } from './game.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameRoutingModule } from './game-routing.module';
 import { MechanismListComponent } from './mechanism-list/mechanism-list.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 
 
