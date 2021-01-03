@@ -7,10 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
+import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 
 @NgModule({
   declarations: [
     ItemIconPipe,
+    MechanismIconPipe
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { ItemIconPipe } from './pipes/item-icon.pipe';
     MatCardModule,
     MatListModule,
     ItemIconPipe,
+    MechanismIconPipe
   ]
 })
 export class SharedModule { }
