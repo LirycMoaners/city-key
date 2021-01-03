@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'mechanism_list',
     component: MechanismListComponent
+  },
+  {
+    path: 'inventory',
+    component: InventoryComponent,
   }
 ];
 

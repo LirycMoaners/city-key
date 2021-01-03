@@ -8,7 +8,7 @@ import { MechanismListComponent } from './mechanism-list/mechanism-list.componen
 
 
 @NgModule({
-  declarations: [GameComponent, MechanismListComponent],
+  declarations: [GameComponent, MechanismListComponent, InventoryComponent],
   imports: [
     GameRoutingModule,
     CommonModule,
