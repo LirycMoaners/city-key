@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <button
+    *ngIf="isFirstLevelRoute; else back"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="menuButtonClicked.emit()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <ng-template #back>
+    <button
+      aria-label="Back"
+      mat-icon-button
+      routerLink="..">
+      <mat-icon aria-label="Back icon">navigate_before</mat-icon>
+    </button>
+  </ng-template>
+  <span>{{ title }}</span>
+</mat-toolbar>

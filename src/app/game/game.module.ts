@@ -4,6 +4,8 @@ import { GameComponent } from './game.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameRoutingModule } from './game-routing.module';
 import { MechanismListComponent } from './mechanism-list/mechanism-list.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 
@@ -12,7 +14,8 @@ import { MechanismListComponent } from './mechanism-list/mechanism-list.componen
   imports: [
     GameRoutingModule,
     CommonModule,
-    SharedModule,
+    GoogleMapsModule,
+    SharedModule
   ]
 })
 export class GameModule { }

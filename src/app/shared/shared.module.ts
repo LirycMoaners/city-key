@@ -1,26 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    GoogleMapsModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
+    RouterModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule,
+    MatToolbarModule
   ],
   exports: [
-    GoogleMapsModule,
-    HttpClientModule,
-    HttpClientJsonpModule
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ]
 })
 export class SharedModule { }
