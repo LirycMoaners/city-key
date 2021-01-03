@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { GoogleMapService } from './http-services/google-map.service';
-import { ItemService } from './http-services/item.service';
 import { MechanismService } from './http-services/mechanism.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
@@ -23,7 +22,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   ],
   providers: [
     GoogleMapService,
-    ItemService,
     MechanismService
   ]
 })
