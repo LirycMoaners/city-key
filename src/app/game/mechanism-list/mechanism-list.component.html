@@ -1,9 +1,6 @@
-<mat-card *ngFor="let mechanism of mechanisms">
-  <mat-icon>{{mechanism.icon}}</mat-icon> {{mechanism.title}} {{mechanism.description}}
-</mat-card>
-
-<section class="buttons-bar">
-  <button routerLink=".." mat-icon-button>
-    <mat-icon>undo</mat-icon>
-  </button>
-</section>
+<mat-selection-list #items [multiple]="false">
+  <mat-list-option *ngFor="let mechanism of mechanisms$ | async" [value]="mechanism">
+    <mat-icon mat-list-icon>{{mechanism.type | mechanismIcon}}</mat-icon>
+    <div mat-line>{{mechanism.title}} {{mechanism.description}}</div>
+  </mat-list-option>
+</mat-selection-list>
