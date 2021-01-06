@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import * as apiKeys from '../../assets/secure/api-keys.json';
+import { Observable, } from 'rxjs';
 import * as mapStyle from '../../assets/styles/map-style.json';
+import { GoogleMapService } from '../core/http-services/google-map.service';
 
 @Component({
   selector: 'app-game',
@@ -11,13 +9,7 @@ import * as mapStyle from '../../assets/styles/map-style.json';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public isGoogleMapApiLoaded$: Observable<boolean> = this.httpClient.jsonp(
-    'https://maps.googleapis.com/maps/api/js?key=' + apiKeys.googleMapKey,
-    'callback'
-  ).pipe(
-    map(() => true),
-    catchError(() => of(false))
-  );
+  public isGoogleMapApiLoaded$: Observable<boolean>;
   public center: google.maps.LatLngLiteral = { lat: 48.8581929, lng: 2.3508915 };
   public options: google.maps.MapOptions = {
     disableDefaultUI: true,
@@ -27,7 +19,11 @@ export class GameComponent implements OnInit {
   public markerPositions: google.maps.LatLngLiteral[] = [];
   public markerOptions: google.maps.MarkerOptions = {draggable: false};
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private readonly googleMapService: GoogleMapService
+  ) {
+    this.isGoogleMapApiLoaded$ = this.googleMapService.initGoogleMap();
+  }
 
   ngOnInit(): void {
     this.initGeolocation();

@@ -12,11 +12,13 @@ const routes: Routes = [
   },
   {
     path: 'mechanism_list',
-    component: MechanismListComponent
+    component: MechanismListComponent,
+    data: { title: 'Mechnisms' }
   },
   {
     path: 'inventory',
     component: InventoryComponent,
+    data: { title: 'Inventory' }
   }
 ];
 

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -6,8 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'city-key';
+  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
 
-  constructor() {
-  }
+  constructor(
+    private readonly breakpointObserver: BreakpointObserver
+  ) { }
 }
