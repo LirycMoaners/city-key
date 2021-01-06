@@ -7,9 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { ItemIconPipe } from './pipes/item-icon.pipe';
+import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ItemIconPipe,
+    MechanismIconPipe
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -28,7 +33,9 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     MatSidenavModule,
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    ItemIconPipe,
+    MechanismIconPipe
   ]
 })
 export class SharedModule { }
