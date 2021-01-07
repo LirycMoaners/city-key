@@ -1,1 +1,17 @@
-<p>number-lock-mechanism works!</p>
+<h3>
+  Type the 4-digits code to unlock clues:
+</h3>
+<form>
+  <mat-form-field appearance="fill">
+    <input #code matInput type="number">
+  </mat-form-field>
+  <section class="items-menu">
+    <button (click)="$event.preventDefault(); onTryCode(code)" mat-fab color="primary" aria-label="Mechanisms list">
+      <mat-icon>lock_open</mat-icon>
+    </button>
+    <button (click)="onClose()" mat-fab color="primary" aria-label="Mechanisms list">
+      <mat-icon>backspace</mat-icon>
+    </button>
+  </section>
+</form>
+

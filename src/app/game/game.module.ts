@@ -7,6 +7,8 @@ import { MechanismListComponent } from './mechanism-list/mechanism-list.componen
 import { GoogleMapsModule } from '@angular/google-maps';
 import { InventoryComponent } from './inventory/inventory.component';
 import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 
@@ -16,7 +18,9 @@ import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mecha
     GameRoutingModule,
     CommonModule,
     GoogleMapsModule,
-    SharedModule
+    SharedModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class GameModule { }

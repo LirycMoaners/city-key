@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Mechanism } from '../../shared/models/mechanism.model';
-import { MechanismService } from '../../core/http-services/mechanism.service';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Mechanism} from '../../shared/models/mechanism.model';
+import {MechanismService} from '../../core/http-services/mechanism.service';
+import {Observable} from 'rxjs';
+import {NumberLockMechanismComponent} from './number-lock-mechanism/number-lock-mechanism.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MechanismType} from '../../shared/enums/mechanism-type.enum';
 
 @Component({
   selector: 'app-mechanism-list',
@@ -12,7 +15,8 @@ export class MechanismListComponent implements OnInit {
   public mechanisms$: Observable<Mechanism[]>;
 
   constructor(
-    private mechanismService: MechanismService
+    private mechanismService: MechanismService,
+    private dialog: MatDialog
   ) {
     this.mechanisms$ = this.mechanismService.readAll();
   }
@@ -20,4 +24,27 @@ export class MechanismListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openMechanism(mechanism: Mechanism): void {
+    let component;
+    switch (mechanism.type) {
+      case MechanismType.FOUR_NRS_LOCK:
+        component = NumberLockMechanismComponent;
+        break;
+    }
+
+    if (component) {
+      const dialogRef = this.dialog.open(component, {
+        minWidth: '100vw',
+        height: '100vh',
+        data: {mechanism},
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // do smtg
+      });
+    }
+
+  }
 }

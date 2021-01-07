@@ -11,7 +11,8 @@ const mockDB: Mechanism[] = [
     name: 'Lock123',
     title: 'Lock closing a chest',
     type: MechanismType.FOUR_NRS_LOCK,
-    unlockedItems: []
+    unlockedItems: [],
+    unlockingKey: 9999
   },
   {
     id: 1,
@@ -19,7 +20,8 @@ const mockDB: Mechanism[] = [
     name: 'Lock456',
     title: 'Lock closing a drawer',
     type: MechanismType.FOUR_NRS_LOCK,
-    unlockedItems: []
+    unlockedItems: [],
+    unlockingKey: 1234
   },
   {
     id: 2,
