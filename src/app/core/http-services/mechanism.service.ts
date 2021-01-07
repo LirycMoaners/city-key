@@ -51,4 +51,9 @@ export class MechanismService {
   public readAll(): Observable<Mechanism[]> {
     return of(mockDB);
   }
+
+  public delete(id: number): void {
+    const index = mockDB.findIndex( m => m.id === id);
+    mockDB.splice(index, 1);
+  }
 }
