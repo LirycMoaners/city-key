@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
@@ -23,7 +24,8 @@ import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
     MatCardModule,
     MatSidenavModule,
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatDialogModule,
     ItemIconPipe,
     MechanismIconPipe
   ]
