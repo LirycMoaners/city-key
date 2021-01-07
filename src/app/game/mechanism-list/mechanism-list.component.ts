@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {NumberLockMechanismComponent} from './number-lock-mechanism/number-lock-mechanism.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MechanismType} from '../../shared/enums/mechanism-type.enum';
+import {ItemService} from '../../core/http-services/item.service';
 
 @Component({
   selector: 'app-mechanism-list',
@@ -16,7 +17,8 @@ export class MechanismListComponent implements OnInit {
 
   constructor(
     private mechanismService: MechanismService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private itemService: ItemService
   ) {
     this.mechanisms$ = this.mechanismService.readAll();
   }
@@ -41,8 +43,9 @@ export class MechanismListComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        // do smtg
+        if (result === true) {
+          this.itemService.add(mechanism.unlockedItems);
+        }
       });
     }
 

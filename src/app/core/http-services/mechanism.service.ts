@@ -3,6 +3,7 @@ import {Mechanism} from '../../shared/models/mechanism.model';
 import {MechanismType} from '../../shared/enums/mechanism-type.enum';
 
 import {Observable, of} from 'rxjs';
+import {ItemType} from '../../shared/enums/item-type.enum';
 
 const mockDB: Mechanism[] = [
   {
@@ -11,7 +12,14 @@ const mockDB: Mechanism[] = [
     name: 'Lock123',
     title: 'Lock closing a chest',
     type: MechanismType.FOUR_NRS_LOCK,
-    unlockedItems: [],
+    unlockedItems: [
+      {
+        id: '99',
+        name: 'New item',
+        type: ItemType.TEXT,
+        text: 'New stuff'
+      }
+    ],
     unlockingKey: 9999
   },
   {

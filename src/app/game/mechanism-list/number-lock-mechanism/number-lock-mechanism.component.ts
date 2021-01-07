@@ -23,13 +23,13 @@ export class NumberLockMechanismComponent implements OnInit {
   }
 
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onTryCode(code: HTMLInputElement): void {
     if (Number(code.value) === this.data.mechanism.unlockingKey) {
       window.alert('New items were unlocked!');
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     } else {
       window.alert('Wrong code, try again or come back later');
     }
