@@ -1,9 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MechanismService} from '../../../core/http-services/mechanism.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Mechanism} from '../../../shared/models/mechanism.model';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {Router} from '@angular/router';
+import {TextDialogComponent} from '../../../shared/utils/text-dialog/text-dialog.component';
 
 @Component({
   selector: 'app-number-lock-mechanism',
@@ -14,8 +12,9 @@ export class NumberLockMechanismComponent implements OnInit {
   private mechanism: Mechanism;
 
   constructor(
-    public dialogRef: MatDialogRef<NumberLockMechanismComponent>,
+    public codeDialogRef: MatDialogRef<NumberLockMechanismComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -23,15 +22,21 @@ export class NumberLockMechanismComponent implements OnInit {
   }
 
   onClose(): void {
-    this.dialogRef.close(false);
+    this.codeDialogRef.close(false);
   }
 
   onTryCode(code: HTMLInputElement): void {
     if (Number(code.value) === this.data.mechanism.unlockingKey) {
-      window.alert('New items were unlocked!');
-      this.dialogRef.close(true);
+      const textDialogRef = this.dialog.open(TextDialogComponent, {
+        data: 'New items were unlocked!',
+      });
+      textDialogRef.afterClosed().subscribe(result => {
+        this.codeDialogRef.close(true);
+      });
     } else {
-      window.alert('Wrong code, try again or come back later');
+      const textDialogRef = this.dialog.open(TextDialogComponent, {
+        data: 'Wrong code, try again or come back later',
+      });
     }
   }
 }
