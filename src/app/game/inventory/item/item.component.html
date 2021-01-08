@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ data.name }}</h1>
+<div mat-dialog-content>
+  <div *ngIf="data.text; else image" [innerHTML]="data.text"></div>
+  <ng-template #image>
+    <img [src]="data.imgSrc" [alt]="data.name">
+  </ng-template>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>
