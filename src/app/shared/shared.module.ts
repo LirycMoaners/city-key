@@ -11,8 +11,6 @@ import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import {MatDialogModule} from '@angular/material/dialog';
 import { TextDialogComponent } from './utils/text-dialog/text-dialog.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -29,7 +27,7 @@ import {MatInputModule} from '@angular/material/input';
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
