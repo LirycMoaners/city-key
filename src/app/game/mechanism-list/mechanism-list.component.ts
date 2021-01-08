@@ -44,8 +44,8 @@ export class MechanismListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
-          this.itemService.add(mechanism.unlockedItems);
-          this.mechanismService.delete(mechanism.id);
+          this.itemService.add(mechanism.unlockedItems).subscribe();
+          this.mechanismService.delete(mechanism.id).subscribe();
         }
       });
     }

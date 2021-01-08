@@ -20,8 +20,6 @@ import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/whe
     CommonModule,
     GoogleMapsModule,
     SharedModule,
-    MatFormFieldModule,
-    MatInputModule
   ]
 })
 export class GameModule { }
