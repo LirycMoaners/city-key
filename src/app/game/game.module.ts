@@ -9,11 +9,12 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/wheel-picker/wheel-picker.component';
 
 
 
 @NgModule({
-  declarations: [GameComponent, MechanismListComponent, InventoryComponent, NumberLockMechanismComponent],
+  declarations: [GameComponent, MechanismListComponent, InventoryComponent, NumberLockMechanismComponent, WheelPickerComponent],
   imports: [
     GameRoutingModule,
     CommonModule,

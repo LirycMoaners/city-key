@@ -1,17 +1,19 @@
-<h3>
-  Type the 4-digits code to unlock clues:
-</h3>
-<form>
-  <mat-form-field appearance="fill">
-    <input #code matInput type="number">
-  </mat-form-field>
-  <section class="items-menu">
-    <button (click)="$event.preventDefault(); onTryCode(code)" mat-fab color="primary" aria-label="Mechanisms list">
-      <mat-icon>lock_open</mat-icon>
-    </button>
-    <button (click)="onClose()" mat-fab color="primary" aria-label="Mechanisms list">
-      <mat-icon>backspace</mat-icon>
-    </button>
-  </section>
-</form>
+<h1 mat-dialog-title>{{ data.mechanism.title }}</h1>
+<div mat-dialog-content>
+  <div class="lock">
+    <app-wheel-picker [values]="values" (valueSelected)="setCodeDigit($event, 0)"></app-wheel-picker>
+    <app-wheel-picker [values]="values" (valueSelected)="setCodeDigit($event, 1)"></app-wheel-picker>
+    <app-wheel-picker [values]="values" (valueSelected)="setCodeDigit($event, 2)"></app-wheel-picker>
+    <app-wheel-picker [values]="values" (valueSelected)="setCodeDigit($event, 3)"></app-wheel-picker>
+  </div>
+  <h3>Type the 4-digits code to unlock clues:</h3>
+</div>
+<mat-dialog-actions align="center">
+  <button (click)="onTryCode()" mat-fab color="primary" aria-label="Mechanisms list">
+    <mat-icon>lock_open</mat-icon>
+  </button>
+  <button (click)="onClose()" mat-fab color="primary" aria-label="Mechanisms list">
+    <mat-icon>backspace</mat-icon>
+  </button>
+</mat-dialog-actions>
 

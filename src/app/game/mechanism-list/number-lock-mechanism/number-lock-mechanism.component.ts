@@ -10,6 +10,8 @@ import {TextDialogComponent} from '../../../shared/utils/text-dialog/text-dialog
 })
 export class NumberLockMechanismComponent implements OnInit {
   private mechanism: Mechanism;
+  public values: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  public code = '0000';
 
   constructor(
     public codeDialogRef: MatDialogRef<NumberLockMechanismComponent>,
@@ -25,8 +27,12 @@ export class NumberLockMechanismComponent implements OnInit {
     this.codeDialogRef.close(false);
   }
 
-  onTryCode(code: HTMLInputElement): void {
-    if (Number(code.value) === this.data.mechanism.unlockingKey) {
+  public setCodeDigit(value: string, index: number): void {
+    this.code = this.code.substring(0, index) + value + this.code.substring(index + 1);
+  }
+
+  onTryCode(): void {
+    if (Number(this.code) === this.data.mechanism.unlockingKey) {
       const textDialogRef = this.dialog.open(TextDialogComponent, {
         data: 'New items were unlocked!',
       });

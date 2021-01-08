@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .mat-dialog-content {
+    flex: 1;
+    max-height: none;
+    background-image: url("/assets/images/lock.svg");
+    background-repeat: no-repeat;
+
+    .lock{
+      display: flex;
+      flex-direction: row;
+      margin-top: 214px;
+      margin-bottom: 50px;
+
+      app-wheel-picker {
+        flex: 1;
+        margin: 0 25px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
   styleUrls: ['./text-dialog.component.scss']
 })
 export class TextDialogComponent implements OnInit {
-  private text: string;
+  public text: string;
 
   constructor(
     public dialogRef: MatDialogRef<TextDialogComponent>,
