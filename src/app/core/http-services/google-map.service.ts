@@ -4,9 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import * as apiKeys from '../../../assets/secure/api-keys.json';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GoogleMapService {
   private isGoogleMapInit = false;
 

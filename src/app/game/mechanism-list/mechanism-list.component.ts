@@ -1,34 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Mechanism } from '../../shared/models/mechanism.model';
-import { MechanismService } from '../../core/http-services/mechanism.service';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { GameService } from 'src/app/core/http-services/game.service';
 import { NumberLockMechanismComponent } from './number-lock-mechanism/number-lock-mechanism.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ItemService } from '../../core/http-services/item.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Game } from 'src/app/shared/models/game.model';
 
 @Component({
   selector: 'app-mechanism-list',
   templateUrl: './mechanism-list.component.html',
   styleUrls: ['./mechanism-list.component.scss']
 })
-export class MechanismListComponent implements OnInit {
-  public mechanisms$: Observable<Mechanism[]>;
+export class MechanismListComponent implements OnInit, OnDestroy {
+  public game: Game;
+  private subscriptions: Subscription[] = [];
 
   constructor(
-    private readonly mechanismService: MechanismService,
-    private readonly itemService: ItemService,
+    private gameService: GameService,
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar,
     private readonly router: Router
   ) {
-    this.mechanisms$ = this.mechanismService.readAll();
+    this.subscriptions.push(
+      this.gameService.getCurrentGame().subscribe(game => this.game = game)
+    );
   }
 
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
   openMechanism(mechanism: Mechanism): void {
     const dialogRef = this.dialog.open(NumberLockMechanismComponent, {
       minWidth: '100vw',
@@ -39,8 +46,9 @@ export class MechanismListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.itemService.add(mechanism.unlockedItems).subscribe();
-        this.mechanismService.delete(mechanism.id).subscribe();
+        this.game.items.push(...mechanism.unlockedItems);
+        this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
+        this.gameService.updateCurrentGame(this.game);
         this.snackBar.open('Success! New items unlocked!', 'Ok', {
           verticalPosition: 'bottom'
         });
