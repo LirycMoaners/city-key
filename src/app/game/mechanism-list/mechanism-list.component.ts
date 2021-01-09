@@ -27,28 +27,18 @@ export class MechanismListComponent implements OnInit {
   }
 
   openMechanism(mechanism: Mechanism): void {
-    let component;
-    switch (mechanism.type) {
-      case MechanismType.FOUR_NRS_LOCK:
-        component = NumberLockMechanismComponent;
-        break;
-    }
+    const dialogRef = this.dialog.open(NumberLockMechanismComponent, {
+      minWidth: '100vw',
+      height: '100vh',
+      data: {mechanism},
+      disableClose: true
+    });
 
-    if (component) {
-      const dialogRef = this.dialog.open(component, {
-        minWidth: '100vw',
-        height: '100vh',
-        data: {mechanism},
-        disableClose: true
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.itemService.add(mechanism.unlockedItems).subscribe();
-          this.mechanismService.delete(mechanism.id).subscribe();
-        }
-      });
-    }
-
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.itemService.add(mechanism.unlockedItems).subscribe();
+        this.mechanismService.delete(mechanism.id).subscribe();
+      }
+    });
   }
 }
