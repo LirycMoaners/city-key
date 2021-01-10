@@ -8,6 +8,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { InventoryComponent } from './inventory/inventory.component';
 import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
 import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/wheel-picker/wheel-picker.component';
+import { ItemComponent } from './inventory/item/item.component';
 
 
 
@@ -16,6 +17,7 @@ import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/whe
     GameComponent,
     MechanismListComponent,
     InventoryComponent,
+    ItemComponent,
     NumberLockMechanismComponent,
     WheelPickerComponent
   ],

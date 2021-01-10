@@ -1,5 +1,5 @@
 <mat-selection-list #items [multiple]="false">
-  <mat-list-option *ngFor="let item of items$ | async" [value]="item">
+  <mat-list-option *ngFor="let item of items$ | async" [value]="item" (click)="openItem(item)">
     <mat-icon mat-list-icon>{{item.type | itemIcon}}</mat-icon>
     <div mat-line>{{item.name}}</div>
   </mat-list-option>
