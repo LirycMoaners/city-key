@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { GameService } from 'src/app/core/http-services/game.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { ItemService } from 'src/app/core/http-services/item.service';
 import { Item } from 'src/app/shared/models/item.model';
 import { ItemComponent } from './item/item.component';
 
@@ -10,17 +11,28 @@ import { ItemComponent } from './item/item.component';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss']
 })
-export class InventoryComponent implements OnInit {
-  public items$: Observable<Item[]>;
+export class InventoryComponent implements OnInit, OnDestroy {
+  public items: Item[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
-    private readonly itemService: ItemService,
+    private readonly gameService: GameService,
     private readonly dialog: MatDialog
   ) {
-    this.items$ = this.itemService.readAll();
+    this.subscriptions.push(
+      this.gameService.getCurrentGame().pipe(
+        map(game => game.items)
+      ).subscribe(items => this.items = items)
+    );
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   public openItem(item: Item): void {
