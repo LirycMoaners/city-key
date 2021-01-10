@@ -10,13 +10,12 @@ import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import {MatDialogModule} from '@angular/material/dialog';
-import { TextDialogComponent } from './utils/text-dialog/text-dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     ItemIconPipe,
     MechanismIconPipe,
-    TextDialogComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +26,8 @@ import { TextDialogComponent } from './utils/text-dialog/text-dialog.component';
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
