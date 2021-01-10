@@ -40,7 +40,8 @@ export class GameService {
                   type: ItemType.IMAGE,
                   imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/NYC_14th_Street_looking_west_12_2005.jpg'
                 }
-              ]
+              ],
+              unlockingKey: 9999
             }
           ],
           unlockedStepsId: ['2']
@@ -66,7 +67,8 @@ export class GameService {
               name: 'Lock456',
               title: 'Lock closing a drawer',
               type: MechanismType.FOUR_NRS_LOCK,
-              unlockedItems: []
+              unlockedItems: [],
+              unlockingKey: 1234
             }
           ],
           unlockedStepsId: ['3']
