@@ -9,8 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [

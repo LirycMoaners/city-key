@@ -12,7 +12,13 @@ import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/whe
 
 
 @NgModule({
-  declarations: [GameComponent, MechanismListComponent, InventoryComponent, NumberLockMechanismComponent, WheelPickerComponent],
+  declarations: [
+    GameComponent,
+    MechanismListComponent,
+    InventoryComponent,
+    NumberLockMechanismComponent,
+    WheelPickerComponent
+  ],
   imports: [
     GameRoutingModule,
     CommonModule,
