@@ -34,4 +34,11 @@ export class ItemService {
   public readAll(): Observable<Item[]> {
     return of(mockDB);
   }
+
+  public add(items: Item[]): Observable<Item[]> {
+    for (const item of items) {
+      mockDB.push(item);
+    }
+    return of(mockDB);
+  }
 }

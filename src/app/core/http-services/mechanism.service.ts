@@ -3,6 +3,7 @@ import {Mechanism} from '../../shared/models/mechanism.model';
 import {MechanismType} from '../../shared/enums/mechanism-type.enum';
 
 import {Observable, of} from 'rxjs';
+import {ItemType} from '../../shared/enums/item-type.enum';
 
 const mockDB: Mechanism[] = [
   {
@@ -11,7 +12,15 @@ const mockDB: Mechanism[] = [
     name: 'Lock123',
     title: 'Lock closing a chest',
     type: MechanismType.FOUR_NRS_LOCK,
-    unlockedItems: []
+    unlockedItems: [
+      {
+        id: '99',
+        name: 'New item',
+        type: ItemType.TEXT,
+        text: 'New stuff'
+      }
+    ],
+    unlockingKey: 9999
   },
   {
     id: 1,
@@ -19,7 +28,8 @@ const mockDB: Mechanism[] = [
     name: 'Lock456',
     title: 'Lock closing a drawer',
     type: MechanismType.FOUR_NRS_LOCK,
-    unlockedItems: []
+    unlockedItems: [],
+    unlockingKey: 1234
   },
   {
     id: 2,
@@ -39,6 +49,12 @@ export class MechanismService {
   constructor() { }
 
   public readAll(): Observable<Mechanism[]> {
+    return of(mockDB);
+  }
+
+  public delete(id: number): Observable<Mechanism[]> {
+    const index = mockDB.findIndex( m => m.id === id);
+    mockDB.splice(index, 1);
     return of(mockDB);
   }
 }

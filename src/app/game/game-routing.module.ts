@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'mechanism_list',
     component: MechanismListComponent,
-    data: { title: 'Mechnisms' }
+    data: { title: 'Mechanisms' }
   },
   {
     path: 'inventory',

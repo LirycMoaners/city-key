@@ -1,5 +1,5 @@
 <mat-selection-list #items [multiple]="false">
-  <mat-list-option *ngFor="let mechanism of mechanisms$ | async" [value]="mechanism">
+  <mat-list-option (click)="openMechanism(mechanism)" *ngFor="let mechanism of mechanisms$ | async" [value]="mechanism">
     <mat-icon mat-list-icon>{{mechanism.type | mechanismIcon}}</mat-icon>
     <div mat-line>{{mechanism.title}} {{mechanism.description}}</div>
   </mat-list-option>

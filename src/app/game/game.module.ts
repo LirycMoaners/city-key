@@ -6,17 +6,26 @@ import { GameRoutingModule } from './game-routing.module';
 import { MechanismListComponent } from './mechanism-list/mechanism-list.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { InventoryComponent } from './inventory/inventory.component';
+import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
+import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/wheel-picker/wheel-picker.component';
 import { ItemComponent } from './inventory/item/item.component';
 
 
 
 @NgModule({
-  declarations: [GameComponent, MechanismListComponent, InventoryComponent, ItemComponent],
+  declarations: [
+    GameComponent,
+    MechanismListComponent,
+    InventoryComponent,
+    ItemComponent,
+    NumberLockMechanismComponent,
+    WheelPickerComponent
+  ],
   imports: [
     GameRoutingModule,
     CommonModule,
     GoogleMapsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class GameModule { }
