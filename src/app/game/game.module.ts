@@ -9,6 +9,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
 import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/wheel-picker/wheel-picker.component';
 import { ItemComponent } from './inventory/item/item.component';
+import { StepDialogComponent } from './step-dialog/step-dialog.component';
 
 
 
@@ -19,7 +20,8 @@ import { ItemComponent } from './inventory/item/item.component';
     InventoryComponent,
     ItemComponent,
     NumberLockMechanismComponent,
-    WheelPickerComponent
+    WheelPickerComponent,
+    StepDialogComponent
   ],
   imports: [
     GameRoutingModule,

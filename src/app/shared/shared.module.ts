@@ -16,7 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     ItemIconPipe,
-    MechanismIconPipe,
+    MechanismIconPipe
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+  {{ data.title }}
+</h1>
+<mat-dialog-content>
+  <p>{{ data.description }}</p>
+  <h2>New items :</h2>
+  <div *ngFor="let item of data.unlockedItems">{{ item.name }}</div>
+  <h2>New mechanisms :</h2>
+  <div *ngFor="let mechanism of data.unlockedMechanisms">{{ mechanism.name }}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Ok</button>
+</mat-dialog-actions>

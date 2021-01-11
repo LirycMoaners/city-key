@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { combineLatest, Observable, of, Subscription, } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as mapStyle from '../../assets/styles/map-style.json';
@@ -6,6 +7,7 @@ import { GameService } from '../core/http-services/game.service';
 import { GoogleMapService } from '../core/http-services/google-map.service';
 import { Game } from '../shared/models/game.model';
 import { Step } from '../shared/models/step.model';
+import { StepDialogComponent } from './step-dialog/step-dialog.component';
 
 @Component({
   selector: 'app-game',
@@ -26,7 +28,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly googleMapService: GoogleMapService,
-    private readonly gameService: GameService
+    private readonly gameService: GameService,
+    private readonly dialog: MatDialog
   ) {
     this.isGoogleMapApiLoaded$ = this.googleMapService.initGoogleMap();
   }
@@ -105,6 +108,7 @@ export class GameComponent implements OnInit, OnDestroy {
           game.reachableSteps.push(...step.unlockedStepsId.map(id => game.scenario.steps.find(s => s.id === id)));
           game.reachableSteps.splice(game.reachableSteps.indexOf(step), 1);
           isUpdateNeeded = true;
+          this.dialog.open(StepDialogComponent, { data: step });
         }
       }
       if (isUpdateNeeded) {
