@@ -37,7 +37,7 @@ export class GameService {
               description: 'a beautiful golden lock',
               name: 'Lock123',
               title: 'Lock closing a chest',
-              type: MechanismType.LOCK,
+              type: MechanismType.FOUR_NRS_LOCK,
               unlockedItems: [
                 {
                   id: '1',
@@ -46,8 +46,17 @@ export class GameService {
                   imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/NYC_14th_Street_looking_west_12_2005.jpg'
                 }
               ],
+              unlockingCombination: 9999,
+            },
+            {
+              id: '2',
+              description: 'a beautiful golden lock',
+              name: 'Lock',
+              title: 'Lock closing a chest',
+              type: MechanismType.LOCK,
+              unlockedItems: [],
               unlockingKeyId: '0',
-              image: 'https://media.idownloadblog.com/wp-content/uploads/2018/08/iPhone-XS-marketing-wallpaper.jpg'
+              image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
             }
           ],
           unlockedStepsId: ['2']

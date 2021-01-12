@@ -25,6 +25,7 @@ export class LockComponent implements OnInit {
 
   public onTryKey(key: Item): void {
     if (this.data.mechanism.unlockingKeyId === key.id) {
+      this.data.items.splice(this.data.items.indexOf(key), 1);
       this.dialogRef.close(true);
     } else {
       this.snackBar.open('Wrong key, try another one or come back later.', null, {
