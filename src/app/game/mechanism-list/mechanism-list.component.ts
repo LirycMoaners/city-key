@@ -47,6 +47,7 @@ export class MechanismListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.game.items.push(...mechanism.unlockedItems);
+        this.game.completedMechanismsId.push(mechanism.id);
         this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
         this.gameService.updateCurrentGame(this.game);
         this.snackBar.open('Success! New items unlocked!', 'Ok', {

@@ -15,9 +15,10 @@ export class GameService {
       steps: [
         {
           id: '1',
+          title: 'Hey !',
+          description: 'Bienvenue dans le scénario !',
           isFirstStep: true,
           isLastStep: false,
-          description: 'Bienvenue dans le scénario !',
           unlockedItems: [
             {
               id: '0',
@@ -48,9 +49,10 @@ export class GameService {
         },
         {
           id: '2',
+          title: 'La suite ...',
+          description: 'Du nouveau dans l\'enquête !',
           isFirstStep: false,
           isLastStep: false,
-          description: 'Du nouveau dans l\'enquête !',
           requiredMechanismsId: ['0'],
           requiredPosition: { lat: 50.8467839, lng: 4.3536178 },
           unlockedItems: [
@@ -75,9 +77,10 @@ export class GameService {
         },
         {
           id: '3',
+          title: 'Fin !',
+          description: 'Bravo vous avez réussi !',
           isFirstStep: false,
           isLastStep: true,
-          description: 'Bravo vous avez réussi !',
           requiredMechanismsId: ['1'],
           requiredPosition: { lat: 50.453286, lng: 3.9509247 },
           unlockedItems: [],

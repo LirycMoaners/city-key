@@ -3,6 +3,7 @@ import { Mechanism } from './mechanism.model';
 
 export interface Step {
   id: string;
+  title: string;
   description: string;
   isFirstStep: boolean;
   isLastStep: boolean;

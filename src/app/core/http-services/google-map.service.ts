@@ -7,6 +7,7 @@ import * as apiKeys from '../../../assets/secure/api-keys.json';
 @Injectable()
 export class GoogleMapService {
   private isGoogleMapInit = false;
+  public lastPosition: google.maps.LatLngLiteral;
 
   constructor(
     private httpClient: HttpClient
