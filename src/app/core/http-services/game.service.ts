@@ -11,7 +11,7 @@ export class GameService {
     scenario: {
       id: '1',
       name: 'Scenario de test',
-      description: 'Les premier des scénarios !!!',
+      description: 'Le premier des scénarios !!!',
       steps: [
         {
           id: '1',
@@ -22,9 +22,13 @@ export class GameService {
           unlockedItems: [
             {
               id: '0',
-              name: 'A text',
-              type: ItemType.TEXT,
-              text: 'Lorem Ipsum'
+              name: 'A key',
+              type: ItemType.KEY
+            },
+            {
+              id: '1',
+              name: 'A second key',
+              type: ItemType.KEY
             }
           ],
           unlockedMechanisms: [
@@ -33,7 +37,7 @@ export class GameService {
               description: 'a beautiful golden lock',
               name: 'Lock123',
               title: 'Lock closing a chest',
-              type: MechanismType.FOUR_NRS_LOCK,
+              type: MechanismType.LOCK,
               unlockedItems: [
                 {
                   id: '1',
@@ -42,7 +46,8 @@ export class GameService {
                   imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/NYC_14th_Street_looking_west_12_2005.jpg'
                 }
               ],
-              unlockingKey: 9999
+              unlockingKeyId: '0',
+              image: 'https://media.idownloadblog.com/wp-content/uploads/2018/08/iPhone-XS-marketing-wallpaper.jpg'
             }
           ],
           unlockedStepsId: ['2']
@@ -70,7 +75,7 @@ export class GameService {
               title: 'Lock closing a drawer',
               type: MechanismType.FOUR_NRS_LOCK,
               unlockedItems: [],
-              unlockingKey: 1234
+              unlockingCombination: 1234
             }
           ],
           unlockedStepsId: ['3']

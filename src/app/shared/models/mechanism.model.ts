@@ -8,5 +8,7 @@ export interface Mechanism {
   description: string;
   type: MechanismType;
   unlockedItems: Item[];
-  unlockingKey?: number;
+  unlockingCombination?: number;
+  unlockingKeyId?: string;
+  image?: string;
 }

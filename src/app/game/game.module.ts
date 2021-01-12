@@ -6,10 +6,11 @@ import { GameRoutingModule } from './game-routing.module';
 import { MechanismListComponent } from './mechanism-list/mechanism-list.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { InventoryComponent } from './inventory/inventory.component';
-import { NumberLockMechanismComponent } from './mechanism-list/number-lock-mechanism/number-lock-mechanism.component';
-import { WheelPickerComponent } from './mechanism-list/number-lock-mechanism/wheel-picker/wheel-picker.component';
+import { NumberLockComponent } from './mechanism-list/number-lock/number-lock.component';
+import { WheelPickerComponent } from './mechanism-list/number-lock/wheel-picker/wheel-picker.component';
 import { ItemComponent } from './inventory/item/item.component';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
+import { LockComponent } from './mechanism-list/lock/lock.component';
 
 
 
@@ -19,8 +20,9 @@ import { StepDialogComponent } from './step-dialog/step-dialog.component';
     MechanismListComponent,
     InventoryComponent,
     ItemComponent,
-    NumberLockMechanismComponent,
+    NumberLockComponent,
     WheelPickerComponent,
+    LockComponent,
     StepDialogComponent
   ],
   imports: [
