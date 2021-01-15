@@ -41,3 +41,22 @@ $city-key-theme: mat-dark-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.gm-style .gm-style-iw-c,
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track,
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
+  background-color: #424242;
+}
+
+.gm-style .gm-style-iw-d {
+  padding-top: 100px;
+  width: 187px;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: #424242;
+}
+
+.gm-ui-hover-effect {
+  filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(10deg) brightness(103%) contrast(90%);
+}

@@ -13,9 +13,23 @@
     [center]="center"
     [options]="options"
   >
-    <map-marker *ngFor="let markerPosition of markerPositions"
-      [position]="markerPosition"
-      [options]="markerOptions">
+    <map-marker *ngIf="userPosition"
+      [position]="userPosition"
+      [options]="userMarkerOptions">
     </map-marker>
+    <map-marker #marker="mapMarker"
+      *ngFor="let m of markers"
+      [position]="m.position"
+      [options]="{ draggable: false }"
+      (mapClick)="showInfoWindow(marker, m)"
+    >
+    </map-marker>
+    <map-info-window>
+      <ng-container *ngIf="currentMarker">
+        <img class="info-image" [src]="currentMarker.image">
+        <h1>{{ currentMarker.title }}</h1>
+        <p>{{ currentMarker.description }}</p>
+      </ng-container>
+    </map-info-window>
   </google-map>
 </div>

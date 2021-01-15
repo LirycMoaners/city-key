@@ -91,6 +91,19 @@ export class GameService {
     },
     items: [],
     mechanisms: [],
+    markers: [{
+      id: '0',
+      position: { lat: 51.1702647, lng: 4.3964923 },
+      title: 'Test',
+      description: 'It\'s a test',
+      image: 'https://images.france.fr/zeaejvyq9bhj/3I6KpOJXfaq4GGAOgEoEOK/2085fcaae0d9d1c78d491c6852132057/cathedrale_notre-dame_de_reims-r_christian_lantenois.jpg'
+    }, {
+      id: '1',
+      position: { lat: 51.17, lng: 4.39 },
+      title: 'Test 2',
+      description: 'It\'s another test',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/L%27%C3%A9chanson%2C_Nancy.jpg/220px-L%27%C3%A9chanson%2C_Nancy.jpg'
+    }],
     completedMechanismsId: [],
     reachableSteps: []
   }];
