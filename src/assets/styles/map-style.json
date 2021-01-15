@@ -14,6 +14,13 @@
     ]
   },
   {
+    "featureType": "all",
+    "elementType": "labels.icon",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },
+  {
     "featureType": "landscape.man_made",
     "elementType": "geometry.fill",
     "stylers": [
