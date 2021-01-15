@@ -39,6 +39,7 @@ export class MechanismListComponent implements OnInit, OnDestroy {
       subscription.unsubscribe();
     }
   }
+
   openMechanism(mechanism: Mechanism): void {
     let component: ComponentType<unknown>;
     switch (mechanism.type) {
@@ -68,7 +69,7 @@ export class MechanismListComponent implements OnInit, OnDestroy {
         this.snackBar.open('Success! New items unlocked!', 'Ok', {
           verticalPosition: 'bottom'
         });
-        this.router.navigate(['/game/inventory']);
+        this.router.navigate(['/game']);
       }
     });
   }

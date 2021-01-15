@@ -5,7 +5,10 @@
   </div>
   <div class="keys">
     <button mat-fab *ngFor="let key of keys" (click)="onTryKey(key)">
-      <mat-icon>vpn_key</mat-icon>
+      <img *ngIf="key.imgSrc; else icon" [src]="key.imgSrc">
+      <ng-template #icon>
+        <mat-icon>vpn_key</mat-icon>
+      </ng-template>
     </button>
   </div>
 </mat-dialog-content>

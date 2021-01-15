@@ -23,12 +23,14 @@ export class GameService {
             {
               id: '0',
               name: 'A key',
-              type: ItemType.KEY
+              type: ItemType.KEY,
+              imgSrc: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/key-icon.png'
             },
             {
               id: '1',
               name: 'A second key',
-              type: ItemType.KEY
+              type: ItemType.KEY,
+              imgSrc: 'https://cdn1.iconfinder.com/data/icons/hawcons/32/699371-icon-24-key-512.png'
             }
           ],
           unlockedMechanisms: [
