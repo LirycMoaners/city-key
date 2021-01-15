@@ -9,6 +9,7 @@ import { GoogleMapService } from '../core/http-services/google-map.service';
 import { Game } from '../shared/models/game.model';
 import { Marker } from '../shared/models/marker.model';
 import { Step } from '../shared/models/step.model';
+import { DistanceTool } from '../shared/tools/distance.tool';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
 
 @Component({
@@ -122,7 +123,7 @@ export class GameComponent implements OnInit, OnDestroy {
           )
           && (
             !step.requiredPosition
-            || (step.requiredPosition.lat === playerPosition.lat && step.requiredPosition.lng === playerPosition.lng)
+            || (DistanceTool.getDistanceBetweenCoordinates(step.requiredPosition, playerPosition) <= 50)
           )
         ) {
           game.items.push(...step.unlockedItems);
