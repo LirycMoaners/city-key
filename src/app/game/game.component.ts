@@ -79,7 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private initGame(): Observable<Game> {
     return this.gameService.getCurrentGame().pipe(
       map(game => {
-        if (!game.reachableSteps.length) {
+        if (!game.reachableSteps.length && !game.completedMechanismsId.length) {
           const firstStep: Step = game.scenario.steps.find(step => step.isFirstStep);
           game.reachableSteps.push(firstStep);
         }
@@ -103,12 +103,12 @@ export class GameComponent implements OnInit, OnDestroy {
             || (step.requiredPosition.lat === playerPosition.lat && step.requiredPosition.lng === playerPosition.lng)
           )
         ) {
+          this.dialog.open(StepDialogComponent, { data: step });
           game.items.push(...step.unlockedItems);
           game.mechanisms.push(...step.unlockedMechanisms);
           game.reachableSteps.push(...step.unlockedStepsId.map(id => game.scenario.steps.find(s => s.id === id)));
           game.reachableSteps.splice(game.reachableSteps.indexOf(step), 1);
           isUpdateNeeded = true;
-          this.dialog.open(StepDialogComponent, { data: step });
         }
       }
       if (isUpdateNeeded) {

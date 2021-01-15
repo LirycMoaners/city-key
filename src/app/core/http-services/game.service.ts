@@ -11,7 +11,7 @@ export class GameService {
     scenario: {
       id: '1',
       name: 'Scenario de test',
-      description: 'Les premier des scénarios !!!',
+      description: 'Le premier des scénarios !!!',
       steps: [
         {
           id: '1',
@@ -22,9 +22,15 @@ export class GameService {
           unlockedItems: [
             {
               id: '0',
-              name: 'A text',
-              type: ItemType.TEXT,
-              text: 'Lorem Ipsum'
+              name: 'A key',
+              type: ItemType.KEY,
+              imgSrc: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/key-icon.png'
+            },
+            {
+              id: '1',
+              name: 'A second key',
+              type: ItemType.KEY,
+              imgSrc: 'https://cdn1.iconfinder.com/data/icons/hawcons/32/699371-icon-24-key-512.png'
             }
           ],
           unlockedMechanisms: [
@@ -42,7 +48,17 @@ export class GameService {
                   imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/NYC_14th_Street_looking_west_12_2005.jpg'
                 }
               ],
-              unlockingKey: 9999
+              unlockingCombination: 9999,
+            },
+            {
+              id: '2',
+              description: 'a beautiful golden lock',
+              name: 'Lock',
+              title: 'Lock closing a chest',
+              type: MechanismType.LOCK,
+              unlockedItems: [],
+              unlockingKeyId: '0',
+              image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
             }
           ],
           unlockedStepsId: ['2']
@@ -70,7 +86,7 @@ export class GameService {
               title: 'Lock closing a drawer',
               type: MechanismType.FOUR_NRS_LOCK,
               unlockedItems: [],
-              unlockingKey: 1234
+              unlockingCombination: 1234
             }
           ],
           unlockedStepsId: ['3']

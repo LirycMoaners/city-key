@@ -7,6 +7,7 @@ import { MechanismType } from '../enums/mechanism-type.enum';
 export class MechanismIconPipe implements PipeTransform {
   transform(value: MechanismType, ...args: any[]): any {
     switch (value) {
+      case MechanismType.LOCK:
       case MechanismType.FOUR_NRS_LOCK:
         return 'lock';
       default:

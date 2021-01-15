@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .mat-dialog-content {
+    flex: 1;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+
+    .lock {
+      flex: 1;
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+
+      img {
+        position: absolute;
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+
+    button {
+      margin-right: 10px;
+
+      ::ng-deep.mat-button-wrapper {
+        padding: 0;
+
+        img {
+          max-height: 40px;
+          max-width: 40px;
+        }
+      }
+    }
+  }
+}
