@@ -129,6 +129,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.dialog.open(StepDialogComponent, { data: step });
           game.items.push(...step.unlockedItems);
           game.mechanisms.push(...step.unlockedMechanisms);
+          game.markers.push(...step.unlockedMarkers);
           game.reachableSteps.push(...step.unlockedStepsId.map(id => game.scenario.steps.find(s => s.id === id)));
           game.reachableSteps.splice(game.reachableSteps.indexOf(step), 1);
           isUpdateNeeded = true;

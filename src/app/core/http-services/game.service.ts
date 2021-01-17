@@ -48,20 +48,42 @@ export class GameService {
                   imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/NYC_14th_Street_looking_west_12_2005.jpg'
                 }
               ],
+              unlockedMechanisms: [
+                {
+                  id: '2',
+                  description: 'a beautiful golden lock',
+                  name: 'Lock',
+                  title: 'Lock closing a chest',
+                  type: MechanismType.LOCK,
+                  unlockedItems: [],
+                  unlockedMechanisms: [],
+                  unlockedMarkers: [],
+                  unlockingKeyId: '0',
+                  image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
+                }
+              ],
+              unlockedMarkers: [
+                {
+                  id: '0',
+                  position: { lat: 51.1702647, lng: 4.3964923 },
+                  title: 'Test',
+                  description: 'It\'s a test',
+                  image: 'https://images.france.fr/zeaejvyq9bhj/3I6KpOJXfaq4GGAOgEoEOK/2085fcaae0d9d1c78d491c6852132057/cathedrale_notre-dame_de_reims-r_christian_lantenois.jpg'
+                }
+              ],
               unlockingCombination: 9999,
-            },
-            {
-              id: '2',
-              description: 'a beautiful golden lock',
-              name: 'Lock',
-              title: 'Lock closing a chest',
-              type: MechanismType.LOCK,
-              unlockedItems: [],
-              unlockingKeyId: '0',
-              image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
             }
           ],
-          unlockedStepsId: ['2']
+          unlockedStepsId: ['2'],
+          unlockedMarkers: [
+            {
+              id: '1',
+              position: { lat: 51.17, lng: 4.39 },
+              title: 'Test 2',
+              description: 'It\'s another test',
+              image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/L%27%C3%A9chanson%2C_Nancy.jpg/220px-L%27%C3%A9chanson%2C_Nancy.jpg'
+            }
+          ]
         },
         {
           id: '2',
@@ -86,10 +108,13 @@ export class GameService {
               title: 'Lock closing a drawer',
               type: MechanismType.FOUR_NRS_LOCK,
               unlockedItems: [],
+              unlockedMechanisms: [],
+              unlockedMarkers: [],
               unlockingCombination: 1234
             }
           ],
-          unlockedStepsId: ['3']
+          unlockedStepsId: ['3'],
+          unlockedMarkers: []
         },
         {
           id: '3',
@@ -101,25 +126,14 @@ export class GameService {
           requiredPosition: { lat: 50.453286, lng: 3.9509247 },
           unlockedItems: [],
           unlockedMechanisms: [],
-          unlockedStepsId: []
+          unlockedStepsId: [],
+          unlockedMarkers: []
         }
       ]
     },
     items: [],
     mechanisms: [],
-    markers: [{
-      id: '0',
-      position: { lat: 51.1702647, lng: 4.3964923 },
-      title: 'Test',
-      description: 'It\'s a test',
-      image: 'https://images.france.fr/zeaejvyq9bhj/3I6KpOJXfaq4GGAOgEoEOK/2085fcaae0d9d1c78d491c6852132057/cathedrale_notre-dame_de_reims-r_christian_lantenois.jpg'
-    }, {
-      id: '1',
-      position: { lat: 51.17, lng: 4.39 },
-      title: 'Test 2',
-      description: 'It\'s another test',
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/L%27%C3%A9chanson%2C_Nancy.jpg/220px-L%27%C3%A9chanson%2C_Nancy.jpg'
-    }],
+    markers: [],
     completedMechanismsId: [],
     reachableSteps: []
   }];

@@ -1,4 +1,5 @@
 import { Item } from './item.model';
+import { Marker } from './marker.model';
 import { Mechanism } from './mechanism.model';
 
 export interface Step {
@@ -11,5 +12,6 @@ export interface Step {
   requiredPosition?: google.maps.LatLngLiteral;
   unlockedItems: Item[];
   unlockedMechanisms: Mechanism[];
+  unlockedMarkers: Marker[];
   unlockedStepsId: string[];
 }
