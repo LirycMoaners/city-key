@@ -59,6 +59,15 @@ export class GameService {
               unlockedItems: [],
               unlockingKeyId: '0',
               image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
+            },
+            {
+              id: '3',
+              description: 'somebody',
+              name: 'Image search',
+              title: 'A strange man',
+              type: MechanismType.SSIM,
+              unlockedItems: [],
+              image: '\\assets\\images\\test.jpg'
             }
           ],
           unlockedStepsId: ['2']
