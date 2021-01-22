@@ -1,0 +1,17 @@
+<div mat-dialog-title>
+  <h2>{{ data.mechanism.title }}</h2>
+  <button mat-icon-button color="accent" align="right" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <webcam #webcam (imageCapture)="compareImage($event)" width="1920" height="1080"></webcam>
+  <div class="overlay">
+    <img #overlay [src]="data.mechanism.image">
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-fab (click)="webcam.takeSnapshot()">
+    <mat-icon>camera_alt</mat-icon>
+  </button>
+</mat-dialog-actions>

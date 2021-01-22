@@ -11,6 +11,8 @@ import { WheelPickerComponent } from './mechanism-list/number-lock/wheel-picker/
 import { ItemComponent } from './inventory/item/item.component';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
 import { LockComponent } from './mechanism-list/lock/lock.component';
+import { ResembleComponent } from './mechanism-list/resemble/resemble.component';
+import { WebcamModule } from 'ngx-webcam';
 
 
 
@@ -23,12 +25,14 @@ import { LockComponent } from './mechanism-list/lock/lock.component';
     NumberLockComponent,
     WheelPickerComponent,
     LockComponent,
-    StepDialogComponent
+    StepDialogComponent,
+    ResembleComponent
   ],
   imports: [
     GameRoutingModule,
     CommonModule,
     GoogleMapsModule,
+    WebcamModule,
     SharedModule,
   ]
 })

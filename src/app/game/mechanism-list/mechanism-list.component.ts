@@ -10,6 +10,7 @@ import { Game } from 'src/app/shared/models/game.model';
 import { MechanismType } from 'src/app/shared/enums/mechanism-type.enum';
 import { LockComponent } from './lock/lock.component';
 import { ComponentType } from '@angular/cdk/portal';
+import { ResembleComponent } from './resemble/resemble.component';
 
 @Component({
   selector: 'app-mechanism-list',
@@ -43,14 +44,14 @@ export class MechanismListComponent implements OnInit, OnDestroy {
   openMechanism(mechanism: Mechanism): void {
     let component: ComponentType<unknown>;
     switch (mechanism.type) {
-      case MechanismType.LOCK:
-        component = LockComponent;
+      case MechanismType.SSIM:
+        component = ResembleComponent;
         break;
       case MechanismType.FOUR_NRS_LOCK:
         component = NumberLockComponent;
         break;
       default:
-        component = NumberLockComponent;
+        component = LockComponent;
     }
 
     const dialogRef = this.dialog.open(component, {

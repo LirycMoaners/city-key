@@ -72,6 +72,25 @@ export class GameService {
                 }
               ],
               unlockingCombination: 9999,
+            },
+            {
+              id: '2',
+              description: 'a beautiful golden lock',
+              name: 'Lock',
+              title: 'Lock closing a chest',
+              type: MechanismType.LOCK,
+              unlockedItems: [],
+              unlockingKeyId: '0',
+              image: 'https://cdn.pixabay.com/photo/2014/04/03/00/32/padlock-308589__340.png'
+            },
+            {
+              id: '3',
+              description: 'somebody',
+              name: 'Image search',
+              title: 'A strange man',
+              type: MechanismType.SSIM,
+              unlockedItems: [],
+              image: '\\assets\\images\\test.jpg'
             }
           ],
           unlockedStepsId: ['2'],
