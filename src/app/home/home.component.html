@@ -1,0 +1,9 @@
+<mat-card *ngFor="let scenario of scenarii" (click)="startScenario(scenario)">
+  <mat-card-header>
+    <mat-card-title>{{ scenario.name }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="scenario.image" alt="Scenario picture">
+  <mat-card-content>
+    <p>{{ scenario.description }}</p>
+  </mat-card-content>
+</mat-card>

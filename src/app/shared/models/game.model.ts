@@ -4,7 +4,7 @@ import { Mechanism } from './mechanism.model';
 import { Scenario } from './scenario.model';
 import { Step } from './step.model';
 
-export interface Game {
+export class Game {
   id: string;
   scenario: Scenario;
   items: Item[];
@@ -12,4 +12,14 @@ export interface Game {
   markers: Marker[];
   completedMechanismsId: string[];
   reachableSteps: Step[];
+
+  constructor(scenario: Scenario) {
+    this.id = '';
+    this.scenario = {...scenario};
+    this.completedMechanismsId = [];
+    this.items = [];
+    this.markers = [];
+    this.mechanisms = [];
+    this.reachableSteps = [];
+  }
 }

@@ -136,7 +136,7 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       }
       if (isUpdateNeeded) {
-        return this.gameService.updateCurrentGame(game);
+        return this.gameService.updateGame(game);
       }
     }
     return of();

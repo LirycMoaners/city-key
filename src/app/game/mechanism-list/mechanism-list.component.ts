@@ -68,7 +68,7 @@ export class MechanismListComponent implements OnInit, OnDestroy {
         this.game.markers.push(...mechanism.unlockedMarkers);
         this.game.completedMechanismsId.push(mechanism.id);
         this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
-        this.gameService.updateCurrentGame(this.game);
+        this.gameService.updateGame(this.game);
         this.snackBar.open('Success! New items unlocked!', 'Ok', {
           verticalPosition: 'bottom'
         });
