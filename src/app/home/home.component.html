@@ -1,9 +1,9 @@
-<mat-card *ngFor="let scenario of scenarii" (click)="startScenario(scenario)">
+<mat-card *ngFor="let scenario of scenarii" (click)="seeDetails(scenario)">
   <mat-card-header>
-    <mat-card-title>{{ scenario.name }}</mat-card-title>
+    <mat-card-title>{{ scenario.scenarioMetadata.title }}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image [src]="scenario.image" alt="Scenario picture">
+  <img mat-card-image [src]="scenario.scenarioMetadata.image" alt="Scenario picture">
   <mat-card-content>
-    <p>{{ scenario.description }}</p>
+    <p>{{ scenario.scenarioMetadata.description }}</p>
   </mat-card-content>
 </mat-card>

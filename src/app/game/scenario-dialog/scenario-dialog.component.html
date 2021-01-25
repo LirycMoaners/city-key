@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>
+  {{ data.scenarioMetadata.title }}
+</h1>
+<mat-dialog-content>
+  <p>{{ data.scenarioMetadata.description }}</p>
+  <ng-container>
+    <h2>Information:</h2>
+    <p>City {{ data.scenarioMetadata.city}}</p>
+    <p>Rating {{ data.scenarioMetadata.rate}}</p>
+    <p>Estimated duration {{ data.scenarioMetadata.rate}}</p>
+    <p>Difficulty {{ data.scenarioMetadata.difficulty}}</p>
+  </ng-container>
+  <ng-container>
+    <h2>About:</h2>
+    <p>Created by on {{ data.scenarioMetadata.creationDate | date }}</p>
+    <p>Last update {{ data.scenarioMetadata.lastUpdateDate | date}}</p>
+    <p>Played {{ data.scenarioMetadata.timesPlayed}} times</p>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)=startScenario(data) mat-raised-button mat-dialog-close>Play</button>
+  <button mat-raised-button mat-dialog-close>Abort</button>
+</mat-dialog-actions>
+
