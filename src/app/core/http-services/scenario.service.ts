@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ItemType } from 'src/app/shared/enums/item-type.enum';
-import { MechanismType } from 'src/app/shared/enums/mechanism-type.enum';
-import { Scenario } from 'src/app/shared/models/scenario.model';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {ItemType} from 'src/app/shared/enums/item-type.enum';
+import {MechanismType} from 'src/app/shared/enums/mechanism-type.enum';
+import {Scenario} from 'src/app/shared/models/scenario.model';
+import {ScenarioType} from '../../shared/enums/scenario-type.enum';
 
 @Injectable()
 export class ScenarioService {
   private mockDB: Scenario[] = [{
     id: '1',
-    name: 'Scenario de test',
-    description: 'Le premier des scénarios !!!',
-    image: 'https://media.routard.com/image/73/7/belgique-gand.1487737.c1000x300.jpg',
     steps: [
       {
         id: '1',
@@ -151,7 +149,21 @@ export class ScenarioService {
         unlockedStepsId: [],
         unlockedMarkers: []
       }
-    ]
+    ],
+    scenarioMetadata: {
+      title: 'Scenario de test',
+      image: 'https://media.routard.com/image/73/7/belgique-gand.1487737.c1000x300.jpg',
+      city: 'Gand',
+      description: 'Le premier des scénarios !!!',
+      rate: 5,
+      difficulty: 1,
+      estimatedDuration: 120,
+      creationDate: new Date('2021/01/02'),
+      lastUpdateDate: new Date('2021/01/25'),
+      timesPlayed: 27,
+      authorId: '1',
+      type: ScenarioType.PERMANENT
+    }
   }];
 
   constructor() { }
