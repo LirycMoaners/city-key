@@ -25,7 +25,11 @@ export class HomeComponent implements OnInit {
     this.scenarioService.readAllScenario().subscribe(scenarii => this.scenarii = scenarii);
   }
 
-  seeDetails(scenario: Scenario): void {
+  /**
+   * Open a dialog with additional information on the selected scenario and allows to start it or abort
+   * @param scenario The scenario to show details about
+   */
+  public seeDetails(scenario: Scenario): void {
     this.dialog.open(ScenarioDialogComponent, { data: scenario });
   }
 }
