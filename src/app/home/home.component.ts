@@ -5,6 +5,7 @@ import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
 import {MatDialog} from '@angular/material/dialog';
 import {ScenarioDialogComponent} from '../game/scenario-dialog/scenario-dialog.component';
+import {FilterScenarioDialogComponent} from '../game/filter-scenario-dialog/filter-scenario-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -31,5 +32,9 @@ export class HomeComponent implements OnInit {
    */
   public seeDetails(scenario: Scenario): void {
     this.dialog.open(ScenarioDialogComponent, { data: scenario });
+  }
+
+  public openFilterScenarioDialog(): void {
+    this.dialog.open(FilterScenarioDialogComponent);
   }
 }

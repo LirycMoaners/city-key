@@ -14,6 +14,7 @@ import { LockComponent } from './mechanism-list/lock/lock.component';
 import { ResembleComponent } from './mechanism-list/resemble/resemble.component';
 import { WebcamModule } from 'ngx-webcam';
 import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
+import { FilterScenarioDialogComponent } from './filter-scenario-dialog/filter-scenario-dialog.component';
 
 
 
@@ -28,7 +29,8 @@ import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.compo
     LockComponent,
     StepDialogComponent,
     ResembleComponent,
-    ScenarioDialogComponent
+    ScenarioDialogComponent,
+    FilterScenarioDialogComponent
   ],
   imports: [
     GameRoutingModule,
