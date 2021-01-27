@@ -34,7 +34,10 @@ export class HomeComponent implements OnInit {
     this.dialog.open(ScenarioDialogComponent, { data: scenario });
   }
 
+  /**
+   * Open a dialog to filter the scenarios list //TODO complete doc
+   */
   public openFilterScenarioDialog(): void {
-    this.dialog.open(FilterScenarioDialogComponent);
+    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => console.log(data));
   }
 }
