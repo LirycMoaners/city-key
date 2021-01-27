@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { GameService } from '../core/http-services/game.service';
 import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
+import {MatDialog} from '@angular/material/dialog';
+import {ScenarioDialogComponent} from '../game/scenario-dialog/scenario-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +17,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly scenarioService: ScenarioService,
-    private readonly gameService: GameService
+    private readonly gameService: GameService,
+    private readonly dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -23,11 +26,10 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Create a game from a scenario and redirect to the game page
-   * @param scenario The scenario to start
+   * Open a dialog with additional information on the selected scenario and allows to start it or abort
+   * @param scenario The scenario to show details about
    */
-  public startScenario(scenario: Scenario): void {
-    this.gameService.createGame(scenario).subscribe(() => this.router.navigate(['/game']));
+  public seeDetails(scenario: Scenario): void {
+    this.dialog.open(ScenarioDialogComponent, { data: scenario });
   }
-
 }
