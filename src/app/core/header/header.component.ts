@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly location: Location
   ) { }
 
   ngOnInit(): void {
@@ -31,5 +33,9 @@ export class HeaderComponent implements OnInit {
       filter((route) => route.outlet === 'primary'),
       mergeMap((route) => route.data)
     ).subscribe((event) => this.title = event.title);
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }
