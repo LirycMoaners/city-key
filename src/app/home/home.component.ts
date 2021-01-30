@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from '../core/http-services/game.service';
 import { ScenarioService } from '../core/http-services/scenario.service';
@@ -38,6 +38,35 @@ export class HomeComponent implements OnInit {
    * Open a dialog to filter the scenarios list //TODO complete doc
    */
   public openFilterScenarioDialog(): void {
-    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => console.log(data));
+    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => {
+      if (data.difficulty) {
+        this.filterDifficulty(data.difficulty);
+      }
+      if (data.rate) {
+        this.filterRate(data.rate);
+      }
+      if (data.estimatedDuration) {
+        this.filterDuration(data.estimatedDuration);
+      }
+      if (data.type) {
+        this.filterType(data.type.id)
+      }
+    });
+  }
+
+  private filterDifficulty(difficulty: number): void {
+
+  }
+
+  private filterType(typeId: number): void {
+
+  }
+
+  private filterDuration(estimatedDuration: number): void {
+
+  }
+
+  private filterRate(rate: number): void {
+
   }
 }

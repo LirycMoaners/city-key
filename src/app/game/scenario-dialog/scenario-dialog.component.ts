@@ -3,7 +3,6 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Scenario} from '../../shared/models/scenario.model';
 import {GameService} from '../../core/http-services/game.service';
 import {Router} from '@angular/router';
-import {Pipe} from '@angular/core';
 
 @Component({
   selector: 'app-scenario-dialog',

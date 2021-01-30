@@ -11,10 +11,6 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class FilterScenarioDialogComponent implements OnInit {
   public title = 'Filters';
-  public rate: 0 | 1 | 2 | 3 | 4 | 5;
-  public difficulty: 1 | 2 | 3 | 4 | 5;
-  public estimatedDuration: number;
-  public type: ScenarioType;
   public form: FormGroup;
   public types = ScenarioType;
 
@@ -30,8 +26,7 @@ export class FilterScenarioDialogComponent implements OnInit {
   }
 
   filter(): void {
-    console.log(this.form.value)
-    this.dialogRef.close({data: 'coucou'});
+    this.dialogRef.close(this.form.value);
   }
 
   initForm(): void {
