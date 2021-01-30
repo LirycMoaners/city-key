@@ -11,12 +11,19 @@ import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
   declarations: [
     ItemIconPipe,
-    MechanismIconPipe
+    MechanismIconPipe,
+    EnumToArrayPipe
   ],
   imports: [
     CommonModule,
@@ -28,7 +35,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatToolbarModule,
     MatListModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonToggleModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
@@ -39,9 +52,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatButtonToggleModule,
     MatDialogModule,
+    MatSelectModule,
     ItemIconPipe,
-    MechanismIconPipe
+    MechanismIconPipe,
+    EnumToArrayPipe
   ]
 })
 export class SharedModule { }

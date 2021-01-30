@@ -2,8 +2,44 @@
   {{ title }}
 </h1>
 <mat-dialog-content>
+  <form [formGroup]="form">
+    <h3>Rating</h3>
+    <mat-button-toggle-group formControlName="rate" aria-label="Rating">
+      <mat-button-toggle value="0">0</mat-button-toggle>
+      <mat-button-toggle value="1">1</mat-button-toggle>
+      <mat-button-toggle value="2">2</mat-button-toggle>
+      <mat-button-toggle value="3">3</mat-button-toggle>
+      <mat-button-toggle value="4">4</mat-button-toggle>
+      <mat-button-toggle value="5">5</mat-button-toggle>
+    </mat-button-toggle-group>
 
-  // TODO
+    <h3>Difficulty</h3>
+    <mat-button-toggle-group formControlName="difficulty" aria-label="Difficulty">
+      <mat-button-toggle value="1">1</mat-button-toggle>
+      <mat-button-toggle value="2">2</mat-button-toggle>
+      <mat-button-toggle value="3">3</mat-button-toggle>
+      <mat-button-toggle value="4">4</mat-button-toggle>
+      <mat-button-toggle value="5">5</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Estimated duration (max)</h3>
+    <mat-button-toggle-group formControlName="estimatedDuration" aria-label="Estimated duration in minutes">
+      <mat-button-toggle value="60">60</mat-button-toggle>
+      <mat-button-toggle value="120">120</mat-button-toggle>
+      <mat-button-toggle value="180">180</mat-button-toggle>
+      <mat-button-toggle value="240">240</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Type</h3>
+    <mat-form-field>
+      <mat-select formControlName="type" aria-label="Type of scenario">
+        <mat-option *ngFor="let type of types | enumToArray" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
 
 </mat-dialog-content>
 <mat-dialog-actions>
