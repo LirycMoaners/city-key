@@ -23,6 +23,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initScenarii();
+  }
+
+  initScenarii(): void {
     this.scenarioService.readAllScenario().subscribe(scenarii => this.scenarii = scenarii);
   }
 
@@ -35,38 +39,41 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Open a dialog to filter the scenarios list //TODO complete doc
+   * Open a dialog to filter the scenario list
    */
   public openFilterScenarioDialog(): void {
     this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => {
+
+      this.initScenarii();
+
       if (data.difficulty) {
-        this.filterDifficulty(data.difficulty);
+        this.filterDifficulty(Number(data.difficulty));
       }
       if (data.rate) {
-        this.filterRate(data.rate);
+        this.filterRate(Number(data.rate));
       }
       if (data.estimatedDuration) {
-        this.filterDuration(data.estimatedDuration);
+        this.filterDuration(Number(data.estimatedDuration));
       }
       if (data.type) {
-        this.filterType(data.type.id)
+        this.filterType(data.type.index);
       }
     });
   }
 
   private filterDifficulty(difficulty: number): void {
-
+    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.difficulty === difficulty);
   }
 
   private filterType(typeId: number): void {
-
+    this.scenarii = this.scenarii.filter(scenario => scenario.scenarioMetadata.type.valueOf() === typeId);
   }
 
   private filterDuration(estimatedDuration: number): void {
-
+    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.estimatedDuration === estimatedDuration);
   }
 
   private filterRate(rate: number): void {
-
+    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.rate === rate);
   }
 }
