@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   }
 
   private filterDuration(estimatedDuration: number): void {
-    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.estimatedDuration >= estimatedDuration);
+    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.estimatedDuration <= estimatedDuration);
   }
 
   private filterRate(rate: number): void {
