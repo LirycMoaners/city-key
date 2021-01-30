@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 import {ScenarioType} from '../../shared/enums/scenario-type.enum';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
@@ -25,10 +25,16 @@ export class FilterScenarioDialogComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Close Dialog and passes form data to the component creating the Dialog
+   */
   filter(): void {
     this.dialogRef.close(this.form.value);
   }
 
+  /**
+   * Initialize formgroup without values
+   */
   initForm(): void {
     this.form = this.formBuilder.group({
       rate: [''],

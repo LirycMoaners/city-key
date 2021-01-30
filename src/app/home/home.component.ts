@@ -61,18 +61,38 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Filter scenarii where difficulty = param
+   * @param difficulty
+   * @private
+   */
   private filterDifficulty(difficulty: number): void {
     this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.difficulty === difficulty);
   }
 
+  /**
+   * Filter scenarii where ScenarioType index = param
+   * @param typeId
+   * @private
+   */
   private filterType(typeId: number): void {
     this.scenarii = this.scenarii.filter(scenario => scenario.scenarioMetadata.type.valueOf() === typeId);
   }
 
+  /**
+   * Filter scenarii where estimated duration <= param
+   * @param estimatedDuration
+   * @private
+   */
   private filterDuration(estimatedDuration: number): void {
     this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.estimatedDuration <= estimatedDuration);
   }
 
+  /**
+   * Filter scenarii where rate = param
+   * @param rate
+   * @private
+   */
   private filterRate(rate: number): void {
     this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.rate === rate);
   }
