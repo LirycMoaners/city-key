@@ -13,7 +13,6 @@ import { StepDialogComponent } from './step-dialog/step-dialog.component';
 import { LockComponent } from './mechanism-list/lock/lock.component';
 import { ResembleComponent } from './mechanism-list/resemble/resemble.component';
 import { WebcamModule } from 'ngx-webcam';
-import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
 
 
 
@@ -27,8 +26,7 @@ import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.compo
     WheelPickerComponent,
     LockComponent,
     StepDialogComponent,
-    ResembleComponent,
-    ScenarioDialogComponent
+    ResembleComponent
   ],
   imports: [
     GameRoutingModule,

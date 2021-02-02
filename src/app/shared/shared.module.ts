@@ -11,12 +11,14 @@ import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HourPipe } from './pipes/hour.pipe';
 
 
 @NgModule({
   declarations: [
     ItemIconPipe,
-    MechanismIconPipe
+    MechanismIconPipe,
+    HourPipe
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatListModule,
     MatDialogModule,
     ItemIconPipe,
-    MechanismIconPipe
+    MechanismIconPipe,
+    HourPipe
   ]
 })
 export class SharedModule { }
