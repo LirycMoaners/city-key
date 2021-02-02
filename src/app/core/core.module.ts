@@ -6,6 +6,9 @@ import { ScenarioService } from './http-services/scenario.service';
 import { GameService } from './http-services/game.service';
 import { GoogleMapService } from './http-services/google-map.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   imports: [
     HttpClientModule,
     HttpClientJsonpModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     SharedModule
   ],
   exports: [

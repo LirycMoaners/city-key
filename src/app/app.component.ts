@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { first, map, shareReplay, switchMap } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,12 @@ export class AppComponent {
   );
 
   constructor(
-    private readonly breakpointObserver: BreakpointObserver
-  ) { }
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly auth: AngularFireAuth
+  ) {
+    this.auth.user.pipe(
+      first(),
+      switchMap(user => !user ? of(this.auth.signInAnonymously()) : of(null))
+    ).subscribe();
+  }
 }
