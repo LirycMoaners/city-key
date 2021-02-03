@@ -166,6 +166,8 @@ export class ScenarioService {
     }
   }];
 
+  private mockAvailableCities = ['Bruxelles', 'Mons', 'Charleroi', 'Gand', 'Anvers'];
+
   constructor() { }
 
   /**
@@ -173,6 +175,13 @@ export class ScenarioService {
    */
   public readAllScenario(): Observable<Scenario[]> {
     return of(this.mockDB);
+  }
+
+  /**
+   * Get all available cities for scenarii
+   */
+  public readAllAvailableCities(): Observable<string[]> {
+    return of(this.mockAvailableCities);
   }
 
 }

@@ -3,6 +3,15 @@
 </h1>
 <mat-dialog-content>
   <form [formGroup]="form">
+    <h3>City</h3>
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="city" aria-label="City">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <h3>Rating</h3>
     <mat-button-toggle-group formControlName="rate" aria-label="Rating">
       <mat-button-toggle value="0">0</mat-button-toggle>
