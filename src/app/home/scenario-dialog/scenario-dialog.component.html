@@ -19,6 +19,7 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-  <button (click)=startScenario(data) mat-fab mat-dialog-close><mat-icon>play_arrow</mat-icon></button>
+  <button *ngIf="isStartVisible" (click)=startScenario() mat-fab mat-dialog-close><mat-icon>play_arrow</mat-icon></button>
+  <button *ngIf="game" (click)=restartScenario() mat-fab color="warn" mat-dialog-close><mat-icon>replay</mat-icon></button>
 </mat-dialog-actions>
 
