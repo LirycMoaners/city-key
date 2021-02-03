@@ -63,6 +63,10 @@ import {MatOptionModule} from '@angular/material/core';
     MatButtonToggleModule,
     MatDialogModule,
     MatSelectModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSliderModule,
     ItemIconPipe,
     MechanismIconPipe,
     EnumToArrayPipe

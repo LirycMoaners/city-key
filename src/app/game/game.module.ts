@@ -13,15 +13,6 @@ import { StepDialogComponent } from './step-dialog/step-dialog.component';
 import { LockComponent } from './mechanism-list/lock/lock.component';
 import { ResembleComponent } from './mechanism-list/resemble/resemble.component';
 import { WebcamModule } from 'ngx-webcam';
-import { ScenarioDialogComponent } from '../home/scenario-dialog/scenario-dialog.component';
-import { FilterScenarioDialogComponent } from '../home/filter-scenario-dialog/filter-scenario-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatOptionModule} from '@angular/material/core';
-import {MatInputModule} from '@angular/material/input';
-import {MatSliderModule} from '@angular/material/slider';
-
-
 
 @NgModule({
   declarations: [
@@ -33,9 +24,7 @@ import {MatSliderModule} from '@angular/material/slider';
     WheelPickerComponent,
     LockComponent,
     StepDialogComponent,
-    ResembleComponent,
-    ScenarioDialogComponent,
-    FilterScenarioDialogComponent
+    ResembleComponent
   ],
   imports: [
     GameRoutingModule,
