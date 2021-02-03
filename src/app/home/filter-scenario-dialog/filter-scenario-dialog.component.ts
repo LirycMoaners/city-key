@@ -28,20 +28,20 @@ export class FilterScenarioDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.initCities();
+    this.getCities();
   }
 
   /**
-   * Close Dialog and passes form data to the component creating the Dialog
+   * Close Dialog and pass form data to the component creating the Dialog
    */
-  filter(): void {
+  public filter(): void {
     this.dialogRef.close(this.form.value);
   }
 
   /**
    * Initialize formgroup without values
    */
-  initForm(): void {
+  private initForm(): void {
     this.form = this.formBuilder.group({
       city: [''],
       rate: [''],
@@ -51,7 +51,10 @@ export class FilterScenarioDialogComponent implements OnInit {
     });
   }
 
-  initCities(): void {
+  /**
+   * Get cities list
+   */
+  private getCities(): void {
     this.scenarioService.readAllAvailableCities().subscribe( cities => this.cities = cities);
   }
 

@@ -26,10 +26,13 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initScenarii();
+    this.getScenarii();
   }
 
-  initScenarii(): void {
+  /**
+   * Get scenarii list to display
+   */
+  private getScenarii(): void {
     this.scenarioService.readAllScenario(this.scenarioFilter).subscribe(scenarii => this.scenarii = scenarii);
   }
 
@@ -47,7 +50,7 @@ export class HomeComponent implements OnInit {
   public openFilterScenarioDialog(): void {
     this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => {
       this.scenarioFilter = data;
-      this.initScenarii();
+      this.getScenarii();
     });
   }
 }
