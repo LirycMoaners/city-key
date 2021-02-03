@@ -43,11 +43,6 @@ import {MatSliderModule} from '@angular/material/slider';
     GoogleMapsModule,
     WebcamModule,
     SharedModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatInputModule,
-    MatSliderModule,
   ]
 })
 export class GameModule { }
