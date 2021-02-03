@@ -35,7 +35,6 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Close Dialog and passes form data to the component creating the Dialog
    */
   filter(): void {
-    console.log(this.form.value)
     this.dialogRef.close(this.form.value);
   }
 

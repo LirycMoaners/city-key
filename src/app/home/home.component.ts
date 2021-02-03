@@ -6,6 +6,8 @@ import { Scenario } from '../shared/models/scenario.model';
 import {MatDialog} from '@angular/material/dialog';
 import {ScenarioDialogComponent} from './scenario-dialog/scenario-dialog.component';
 import {FilterScenarioDialogComponent} from './filter-scenario-dialog/filter-scenario-dialog.component';
+import {ScenarioFilter} from '../shared/models/scenario-filter';
+import {ScenarioType} from '../shared/enums/scenario-type.enum';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ import {FilterScenarioDialogComponent} from './filter-scenario-dialog/filter-sce
 })
 export class HomeComponent implements OnInit {
   public scenarii: Scenario[] = [];
+  public scenarioFilter: ScenarioFilter = null;
 
   constructor(
     private readonly router: Router,
@@ -27,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   initScenarii(): void {
-    this.scenarioService.readAllScenario().subscribe(scenarii => this.scenarii = scenarii);
+    this.scenarioService.readAllScenario(this.scenarioFilter).subscribe(scenarii => this.scenarii = scenarii);
   }
 
   /**
@@ -43,57 +46,8 @@ export class HomeComponent implements OnInit {
    */
   public openFilterScenarioDialog(): void {
     this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => {
-
+      this.scenarioFilter = data;
       this.initScenarii();
-
-      if (data.difficulty) {
-        this.filterDifficulty(Number(data.difficulty));
-      }
-      if (data.rate) {
-        this.filterRate(Number(data.rate));
-      }
-      if (data.estimatedDuration) {
-        this.filterDuration(Number(data.estimatedDuration));
-      }
-      if (data.type) {
-        this.filterType(data.type.index);
-      }
     });
-  }
-
-  /**
-   * Filter scenarii where difficulty = param
-   * @param difficulty
-   * @private
-   */
-  private filterDifficulty(difficulty: number): void {
-    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.difficulty === difficulty);
-  }
-
-  /**
-   * Filter scenarii where ScenarioType index = param
-   * @param typeId
-   * @private
-   */
-  private filterType(typeId: number): void {
-    this.scenarii = this.scenarii.filter(scenario => scenario.scenarioMetadata.type.valueOf() === typeId);
-  }
-
-  /**
-   * Filter scenarii where estimated duration <= param
-   * @param estimatedDuration
-   * @private
-   */
-  private filterDuration(estimatedDuration: number): void {
-    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.estimatedDuration <= estimatedDuration);
-  }
-
-  /**
-   * Filter scenarii where rate = param
-   * @param rate
-   * @private
-   */
-  private filterRate(rate: number): void {
-    this.scenarii = this.scenarii.filter( scenario => scenario.scenarioMetadata.rate === rate);
   }
 }

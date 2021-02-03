@@ -4,6 +4,8 @@ import {ItemType} from 'src/app/shared/enums/item-type.enum';
 import {MechanismType} from 'src/app/shared/enums/mechanism-type.enum';
 import {Scenario} from 'src/app/shared/models/scenario.model';
 import {ScenarioType} from '../../shared/enums/scenario-type.enum';
+import {ScenarioFilter} from '../../shared/models/scenario-filter';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class ScenarioService {
@@ -171,10 +173,22 @@ export class ScenarioService {
   constructor() { }
 
   /**
-   * Get all the scenarii
+   * Get all the scenarii or filtered list of scenarii if param
+   * @param filter Filter properties
    */
-  public readAllScenario(): Observable<Scenario[]> {
-    return of(this.mockDB);
+  public readAllScenario(filter: ScenarioFilter): Observable<Scenario[]> {
+    return of(this.mockDB)
+      .pipe(
+        map(scenarrii => {
+          return scenarrii.filter(scenario =>
+            filter?.difficulty ? scenario.scenarioMetadata.difficulty === +filter.difficulty : true
+            && filter?.estimatedDuration ? scenario.scenarioMetadata.estimatedDuration <= +filter.estimatedDuration : true
+            && filter?.city ? scenario.scenarioMetadata.city === filter.city : true
+            && filter?.type ? scenario.scenarioMetadata.type === filter?.type['index'] : true
+            && filter?.rate ? scenario.scenarioMetadata.rate === +filter.rate : true
+          );
+        })
+      );
   }
 
   /**
@@ -183,5 +197,4 @@ export class ScenarioService {
   public readAllAvailableCities(): Observable<string[]> {
     return of(this.mockAvailableCities);
   }
-
 }
