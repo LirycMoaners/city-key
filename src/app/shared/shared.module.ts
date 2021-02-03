@@ -17,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatSelectModule} from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ],
   exports: [
     CommonModule,

@@ -13,6 +13,8 @@ export class FilterScenarioDialogComponent implements OnInit {
   public title = 'Filters';
   public form: FormGroup;
   public types = ScenarioType;
+  public readonly MAX_DURATION = 400;
+  public readonly MIN_DURATION = 15;
 
   constructor(
     private readonly router: Router,
@@ -29,6 +31,7 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Close Dialog and passes form data to the component creating the Dialog
    */
   filter(): void {
+    console.log(this.form.value)
     this.dialogRef.close(this.form.value);
   }
 

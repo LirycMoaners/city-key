@@ -4,8 +4,8 @@ import { GameService } from '../core/http-services/game.service';
 import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
 import {MatDialog} from '@angular/material/dialog';
-import {ScenarioDialogComponent} from '../game/scenario-dialog/scenario-dialog.component';
-import {FilterScenarioDialogComponent} from '../game/filter-scenario-dialog/filter-scenario-dialog.component';
+import {ScenarioDialogComponent} from './scenario-dialog/scenario-dialog.component';
+import {FilterScenarioDialogComponent} from './filter-scenario-dialog/filter-scenario-dialog.component';
 
 @Component({
   selector: 'app-home',

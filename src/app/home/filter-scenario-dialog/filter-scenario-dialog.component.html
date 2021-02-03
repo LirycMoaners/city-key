@@ -23,15 +23,10 @@
     </mat-button-toggle-group>
 
     <h3>Estimated duration (max)</h3>
-    <mat-button-toggle-group formControlName="estimatedDuration" aria-label="Estimated duration in minutes">
-      <mat-button-toggle value="60">60</mat-button-toggle>
-      <mat-button-toggle value="120">120</mat-button-toggle>
-      <mat-button-toggle value="180">180</mat-button-toggle>
-      <mat-button-toggle value="240">240</mat-button-toggle>
-    </mat-button-toggle-group>
+    <mat-slider formControlName="estimatedDuration" min="{{ MIN_DURATION }}" max="{{ MAX_DURATION }}" thumbLabel step="15" aria-label="Maximum duration slider"></mat-slider>
 
     <h3>Type</h3>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-select formControlName="type" aria-label="Type of scenario">
         <mat-option *ngFor="let type of types | enumToArray" [value]="type">
           {{type.name}}
