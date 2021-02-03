@@ -181,11 +181,11 @@ export class ScenarioService {
       .pipe(
         map(scenarrii => {
           return scenarrii.filter(scenario =>
-            filter?.difficulty ? scenario.scenarioMetadata.difficulty === +filter.difficulty : true
-            && filter?.estimatedDuration ? scenario.scenarioMetadata.estimatedDuration <= +filter.estimatedDuration : true
-            && filter?.city ? scenario.scenarioMetadata.city === filter.city : true
-            && filter?.type ? scenario.scenarioMetadata.type === filter?.type['index'] : true
-            && filter?.rate ? scenario.scenarioMetadata.rate === +filter.rate : true
+            filter?.difficulty ? scenario.scenarioMetadata.difficulty === +filter.difficulty : scenarrii
+            && filter?.estimatedDuration ? scenario.scenarioMetadata.estimatedDuration <= +filter.estimatedDuration : scenarrii
+            && filter?.city ? scenario.scenarioMetadata.city === filter.city : scenarrii
+            && filter?.type ? scenario.scenarioMetadata.type === filter?.type['index'] : scenarrii
+            && filter?.rate ? scenario.scenarioMetadata.rate === +filter.rate : scenarrii
           );
         })
       );

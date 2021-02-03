@@ -7,7 +7,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {ScenarioDialogComponent} from './scenario-dialog/scenario-dialog.component';
 import {FilterScenarioDialogComponent} from './filter-scenario-dialog/filter-scenario-dialog.component';
 import {ScenarioFilter} from '../shared/models/scenario-filter';
-import {ScenarioType} from '../shared/enums/scenario-type.enum';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +15,6 @@ import {ScenarioType} from '../shared/enums/scenario-type.enum';
 })
 export class HomeComponent implements OnInit {
   public scenarii: Scenario[] = [];
-  public scenarioFilter: ScenarioFilter = null;
 
   constructor(
     private readonly router: Router,
@@ -26,14 +24,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getScenarii();
+    this.getScenarii(null);
   }
 
   /**
    * Get scenarii list to display
+   * @param filter The scenario filter
    */
-  private getScenarii(): void {
-    this.scenarioService.readAllScenario(this.scenarioFilter).subscribe(scenarii => this.scenarii = scenarii);
+  private getScenarii(filter: ScenarioFilter): void {
+    this.scenarioService.readAllScenario(filter).subscribe(scenarii => this.scenarii = scenarii);
   }
 
   /**
@@ -48,9 +47,8 @@ export class HomeComponent implements OnInit {
    * Open a dialog to filter the scenario list
    */
   public openFilterScenarioDialog(): void {
-    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( data => {
-      this.scenarioFilter = data;
-      this.getScenarii();
+    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( filter => {
+      this.getScenarii(filter);
     });
   }
 }
