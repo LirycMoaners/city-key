@@ -5,6 +5,7 @@ import { GameService } from '../../core/http-services/game.service';
 import { Router } from '@angular/router';
 import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 
+
 @Component({
   selector: 'app-scenario-dialog',
   templateUrl: './scenario-dialog.component.html',

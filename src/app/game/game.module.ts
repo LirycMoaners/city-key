@@ -15,7 +15,6 @@ import { ResembleComponent } from './mechanism-list/resemble/resemble.component'
 import { WebcamModule } from 'ngx-webcam';
 
 
-
 @NgModule({
   declarations: [
     GameComponent,

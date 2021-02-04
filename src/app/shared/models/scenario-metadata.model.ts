@@ -1,5 +1,5 @@
 import { Difficulty } from '../enums/difficulty.enum';
-import {ScenarioType} from '../enums/scenario-type.enum';
+import { ScenarioType } from '../enums/scenario-type.enum';
 
 export interface ScenarioMetadata {
   title: string;
