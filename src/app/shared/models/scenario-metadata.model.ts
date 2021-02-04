@@ -1,4 +1,5 @@
-import {ScenarioType} from '../enums/scenario-type.enum';
+import { Difficulty } from '../enums/difficulty.enum';
+import { ScenarioType } from '../enums/scenario-type.enum';
 
 export interface ScenarioMetadata {
   title: string;
@@ -6,7 +7,7 @@ export interface ScenarioMetadata {
   city: string;
   description: string;
   rate: number;
-  difficulty: number;
+  difficulty: Difficulty;
   estimatedDuration: number;
   creationDate: Date;
   lastUpdateDate: Date;

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 import {ItemType} from 'src/app/shared/enums/item-type.enum';
 import {MechanismType} from 'src/app/shared/enums/mechanism-type.enum';
 import {Scenario} from 'src/app/shared/models/scenario.model';
@@ -157,8 +158,8 @@ export class ScenarioService {
       image: 'https://media.routard.com/image/73/7/belgique-gand.1487737.c1000x300.jpg',
       city: 'Gand',
       description: 'Le premier des scénarios !!!',
-      rate: 5,
-      difficulty: 1,
+      rate: 3.5,
+      difficulty: Difficulty.EASY,
       estimatedDuration: 120,
       creationDate: new Date('2021/01/02'),
       lastUpdateDate: new Date('2021/01/25'),

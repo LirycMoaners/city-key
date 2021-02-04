@@ -11,21 +11,23 @@ import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatInputModule} from '@angular/material/input';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatOptionModule} from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatOptionModule } from '@angular/material/core';
+import { HourPipe } from './pipes/hour.pipe';
 
 
 @NgModule({
   declarations: [
     ItemIconPipe,
     MechanismIconPipe,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    HourPipe
   ],
   imports: [
     CommonModule,
@@ -68,7 +70,8 @@ import {MatOptionModule} from '@angular/material/core';
     MatSliderModule,
     ItemIconPipe,
     MechanismIconPipe,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    HourPipe
   ]
 })
 export class SharedModule { }

@@ -14,6 +14,7 @@ import { LockComponent } from './mechanism-list/lock/lock.component';
 import { ResembleComponent } from './mechanism-list/resemble/resemble.component';
 import { WebcamModule } from 'ngx-webcam';
 
+
 @NgModule({
   declarations: [
     GameComponent,

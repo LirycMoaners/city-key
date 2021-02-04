@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "city-key": {
+      "hosting": {
+        "city-key": [
+          "city-key"
+        ]
+      }
+    }
+  }
+}

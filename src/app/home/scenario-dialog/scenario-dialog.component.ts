@@ -1,8 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Scenario} from '../../shared/models/scenario.model';
-import {GameService} from '../../core/http-services/game.service';
-import {Router} from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Scenario } from '../../shared/models/scenario.model';
+import { GameService } from '../../core/http-services/game.service';
+import { Router } from '@angular/router';
+import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
+
 
 @Component({
   selector: 'app-scenario-dialog',
@@ -10,6 +12,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./scenario-dialog.component.scss']
 })
 export class ScenarioDialogComponent implements OnInit {
+  public Difficulty: typeof Difficulty = Difficulty;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Scenario,

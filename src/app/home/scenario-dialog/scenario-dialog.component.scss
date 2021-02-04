@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mat-dialog-title {
+  display:flex;
+  line-height: 40px;
+
+  p {
+    flex: 1;
+  }
+}
+
+.mat-dialog-content {
+  flex: 1;
+  max-height: 100%;
+
+  img {
+    height: 200px;
+    width: 100vw;
+    margin: 0 -25px;
+    object-fit: cover;
+  }
+
+  div {
+    margin: 10px 0;
+
+    mat-icon {
+      vertical-align: bottom;
+      margin-right: 5px;
+    }
+  }
+
+  .infos, .about {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.mat-dialog-actions {
+  padding: 20px;
+}

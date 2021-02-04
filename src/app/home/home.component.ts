@@ -1,12 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { GameService } from '../core/http-services/game.service';
+import { Component, OnInit } from '@angular/core';
 import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
-import {MatDialog} from '@angular/material/dialog';
-import {ScenarioDialogComponent} from './scenario-dialog/scenario-dialog.component';
-import {FilterScenarioDialogComponent} from './filter-scenario-dialog/filter-scenario-dialog.component';
-import {ScenarioFilter} from '../shared/models/scenario-filter';
+import { MatDialog } from '@angular/material/dialog';
+import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
+import { FilterScenarioDialogComponent } from './filter-scenario-dialog/filter-scenario-dialog.component';
+import { ScenarioFilter } from '../shared/models/scenario-filter';
+
 
 @Component({
   selector: 'app-home',
@@ -17,9 +16,7 @@ export class HomeComponent implements OnInit {
   public scenarii: Scenario[] = [];
 
   constructor(
-    private readonly router: Router,
     private readonly scenarioService: ScenarioService,
-    private readonly gameService: GameService,
     private readonly dialog: MatDialog
   ) { }
 
@@ -40,7 +37,11 @@ export class HomeComponent implements OnInit {
    * @param scenario The scenario to show details about
    */
   public seeDetails(scenario: Scenario): void {
-    this.dialog.open(ScenarioDialogComponent, { data: scenario });
+    this.dialog.open(ScenarioDialogComponent, {
+      minWidth: '100vw',
+      height: '100vh',
+      data: scenario
+    });
   }
 
   /**

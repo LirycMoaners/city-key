@@ -10,9 +10,11 @@
 <mat-card *ngFor="let scenario of scenarii" (click)="seeDetails(scenario)">
   <mat-card-header>
     <mat-card-title>{{ scenario.scenarioMetadata.title }}</mat-card-title>
+    <div><mat-icon>location_city</mat-icon>{{ scenario.scenarioMetadata.city}}</div>
   </mat-card-header>
   <img mat-card-image [src]="scenario.scenarioMetadata.image" alt="Scenario picture">
   <mat-card-content>
-    <p>{{ scenario.scenarioMetadata.description }}</p>
+    <div class="rate"><mat-icon *ngFor="let i of [1,2,3,4,5]">{{ scenario.scenarioMetadata.rate >= i ? 'star' : scenario.scenarioMetadata.rate >= i -.5 ? 'star_half' : 'star_border' }}</mat-icon></div>
+    <div><mat-icon>hourglass_bottom</mat-icon>{{ scenario.scenarioMetadata.estimatedDuration | hour }}</div>
   </mat-card-content>
 </mat-card>
