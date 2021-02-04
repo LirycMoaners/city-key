@@ -1,9 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {MatDialogRef} from '@angular/material/dialog';
-import {ScenarioType} from '../../shared/enums/scenario-type.enum';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {ScenarioService} from '../../core/http-services/scenario.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ScenarioType } from '../../shared/enums/scenario-type.enum';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ScenarioService } from '../../core/http-services/scenario.service';
+import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 
 @Component({
   selector: 'app-filter-scenario-dialog',
@@ -14,15 +14,15 @@ export class FilterScenarioDialogComponent implements OnInit {
   public title = 'Filters';
   public form: FormGroup;
   public types = ScenarioType;
+  public difficulties = Difficulty;
   public readonly MAX_DURATION = 400;
   public readonly MIN_DURATION = 15;
   public cities = [];
 
   constructor(
-    private readonly router: Router,
     private readonly dialogRef: MatDialogRef<FilterScenarioDialogComponent>,
     private readonly formBuilder: FormBuilder,
-    private scenarioService: ScenarioService
+    private readonly scenarioService: ScenarioService
   ) {
   }
 
@@ -43,11 +43,11 @@ export class FilterScenarioDialogComponent implements OnInit {
    */
   private initForm(): void {
     this.form = this.formBuilder.group({
-      city: [''],
-      rate: [''],
-      difficulty: [''],
-      estimatedDuration: [''],
-      type: ['']
+      city: [],
+      rate: [],
+      difficulty: [],
+      estimatedDuration: [],
+      type: []
     });
   }
 

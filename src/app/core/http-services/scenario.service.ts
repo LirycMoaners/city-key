@@ -20,7 +20,7 @@ export class ScenarioService {
    * Get all the scenarii or filtered list of scenarii if param
    * @param filter Filter properties
    */
-  public readAllScenario(filter: ScenarioFilter): Observable<Scenario[]> {
+  public readAllScenario(scenariofilter: ScenarioFilter): Observable<Scenario[]> {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
@@ -33,11 +33,13 @@ export class ScenarioService {
       })),
       map(scenarrii => {
         return scenarrii.filter(scenario =>
-          filter?.difficulty ? scenario.scenarioMetadata.difficulty === +filter.difficulty : scenarrii
-          && filter?.estimatedDuration ? scenario.scenarioMetadata.estimatedDuration <= +filter.estimatedDuration : scenarrii
-          && filter?.city ? scenario.scenarioMetadata.city === filter.city : scenarrii
-          && filter?.type ? scenario.scenarioMetadata.type === filter.type['index'] : scenarrii
-          && filter?.rate ? scenario.scenarioMetadata.rate === +filter.rate : scenarrii
+          !!scenariofilter ? (
+            scenariofilter.difficulty !== null ? scenario.scenarioMetadata.difficulty === scenariofilter.difficulty : true
+            && scenariofilter.estimatedDuration !== null ? scenario.scenarioMetadata.estimatedDuration <= +scenariofilter.estimatedDuration : true
+            && scenariofilter.city !== null ? scenario.scenarioMetadata.city === scenariofilter.city : true
+            && scenariofilter.type !== null ? scenario.scenarioMetadata.type === scenariofilter.type : true
+            && scenariofilter.rate !== null ? scenario.scenarioMetadata.rate >= +scenariofilter.rate : true
+          ) : true
         );
       })
     );
@@ -56,6 +58,7 @@ export class ScenarioService {
         return scenario;
       })
     );
+  }
 
   /**
    * Get all available cities for scenarii

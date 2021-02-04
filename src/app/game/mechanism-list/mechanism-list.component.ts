@@ -11,6 +11,7 @@ import { MechanismType } from 'src/app/shared/enums/mechanism-type.enum';
 import { LockComponent } from './lock/lock.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { ResembleComponent } from './resemble/resemble.component';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mechanism-list',
@@ -61,19 +62,22 @@ export class MechanismListComponent implements OnInit, OnDestroy {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.game.items.push(...mechanism.unlockedItems);
-        this.game.mechanisms.push(...mechanism.unlockedMechanisms);
-        this.game.markers.push(...mechanism.unlockedMarkers);
-        this.game.completedMechanismsId.push(mechanism.id);
-        this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
-        this.gameService.updateGame(this.game);
-        this.snackBar.open('Success! New items unlocked!', 'Ok', {
-          verticalPosition: 'bottom'
-        });
-        this.router.navigate(['/game']);
-      }
+    dialogRef.afterClosed().pipe(
+      switchMap(result => {
+        if (result === true) {
+          this.game.items.push(...mechanism.unlockedItems);
+          this.game.mechanisms.push(...mechanism.unlockedMechanisms);
+          this.game.markers.push(...mechanism.unlockedMarkers);
+          this.game.completedMechanismsId.push(mechanism.id);
+          this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
+          return this.gameService.updateGame(this.game);
+        }
+      })
+    ).subscribe(_ => {
+      this.snackBar.open('Success! New items unlocked!', 'Ok', {
+        verticalPosition: 'bottom'
+      });
+      this.router.navigate(['/game']);
     });
   }
 }
