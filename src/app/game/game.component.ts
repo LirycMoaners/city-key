@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatDialog } from '@angular/material/dialog';
 import { combineLatest, Observable, of, Subscription, } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import * as mapStyle from '../../assets/styles/map-style.json';
 import { GameService } from '../core/http-services/game.service';
 import { GoogleMapService } from '../core/http-services/google-map.service';
+import { ScenarioService } from '../core/http-services/scenario.service';
 import { Game } from '../shared/models/game.model';
 import { Marker } from '../shared/models/marker.model';
+import { Scenario } from '../shared/models/scenario.model';
 import { Step } from '../shared/models/step.model';
 import { DistanceTool } from '../shared/tools/distance.tool';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
@@ -38,6 +40,7 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(
     private readonly googleMapService: GoogleMapService,
     private readonly gameService: GameService,
+    private readonly scenarioService: ScenarioService,
     private readonly dialog: MatDialog
   ) {
     this.isGoogleMapApiLoaded$ = this.googleMapService.initGoogleMap();
@@ -49,7 +52,9 @@ export class GameComponent implements OnInit, OnDestroy {
         this.initGeolocation(),
         this.initGame()
       ]).pipe(
-        map(([playerPosition, game]: [google.maps.LatLngLiteral, Game]) => this.checkSteps(playerPosition, game))
+        map(([playerPosition, [game, scenario]]: [google.maps.LatLngLiteral, [Game, Scenario]]) =>
+          this.checkSteps(playerPosition, game, scenario)
+        )
       ).subscribe()
     );
   }
@@ -93,15 +98,21 @@ export class GameComponent implements OnInit, OnDestroy {
   /**
    * Initialize the game at the beginning & watch it over time for modifications
    */
-  private initGame(): Observable<Game> {
+  private initGame(): Observable<[Game, Scenario]> {
     return this.gameService.getCurrentGame().pipe(
-      map(game => {
-        if (!game.reachableSteps.length && !game.completedMechanismsId.length) {
-          const firstStep: Step = game.scenario.steps.find(step => step.isFirstStep);
-          game.reachableSteps.push(firstStep);
-        }
+      switchMap(game => {
         this.markers = game.markers;
-        return game;
+        return combineLatest([
+          of(game),
+          this.scenarioService.readScenario(game.scenarioId).pipe(
+            tap(scenario => {
+              if (!game.reachableSteps.length && !game.completedMechanismsId.length) {
+                const firstStep: Step = scenario.steps.find(step => step.isFirstStep);
+                game.reachableSteps.push(firstStep);
+              }
+            })
+          )
+        ]);
       })
     );
   }
@@ -111,7 +122,7 @@ export class GameComponent implements OnInit, OnDestroy {
    * @param playerPosition The current player position
    * @param game The current played game
    */
-  private checkSteps(playerPosition: google.maps.LatLngLiteral, game: Game): Observable<void> {
+  private checkSteps(playerPosition: google.maps.LatLngLiteral, game: Game, scenario: Scenario): Observable<void> {
     if (game.reachableSteps.length) {
       let isUpdateNeeded = false;
       for (const step of game.reachableSteps) {
@@ -130,7 +141,7 @@ export class GameComponent implements OnInit, OnDestroy {
           game.items.push(...step.unlockedItems);
           game.mechanisms.push(...step.unlockedMechanisms);
           game.markers.push(...step.unlockedMarkers);
-          game.reachableSteps.push(...step.unlockedStepsId.map(id => game.scenario.steps.find(s => s.id === id)));
+          game.reachableSteps.push(...step.unlockedStepsId.map(id => scenario.steps.find(s => s.id === id)));
           game.reachableSteps.splice(game.reachableSteps.indexOf(step), 1);
           isUpdateNeeded = true;
         }
