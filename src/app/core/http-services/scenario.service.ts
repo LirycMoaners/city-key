@@ -184,7 +184,7 @@ export class ScenarioService {
             filter?.difficulty ? scenario.scenarioMetadata.difficulty === +filter.difficulty : scenarrii
             && filter?.estimatedDuration ? scenario.scenarioMetadata.estimatedDuration <= +filter.estimatedDuration : scenarrii
             && filter?.city ? scenario.scenarioMetadata.city === filter.city : scenarrii
-            && filter?.type ? scenario.scenarioMetadata.type === filter?.type['index'] : scenarrii
+            && filter?.type ? scenario.scenarioMetadata.type === filter.type['index'] : scenarrii
             && filter?.rate ? scenario.scenarioMetadata.rate === +filter.rate : scenarrii
           );
         })
