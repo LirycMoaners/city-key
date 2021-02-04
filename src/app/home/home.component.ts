@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
-import {MatDialog} from '@angular/material/dialog';
-import {ScenarioDialogComponent} from './scenario-dialog/scenario-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
+import { FilterScenarioDialogComponent } from './filter-scenario-dialog/filter-scenario-dialog.component';
+import { ScenarioFilter } from '../shared/models/scenario-filter';
+
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.scenarioService.readAllScenario().subscribe(scenarii => this.scenarii = scenarii);
+    this.getScenarii(null);
+  }
+
+  /**
+   * Get scenarii list to display
+   * @param filter The scenario filter
+   */
+  private getScenarii(filter: ScenarioFilter): void {
+    this.scenarioService.readAllScenario(filter).subscribe(scenarii => this.scenarii = scenarii);
   }
 
   /**
@@ -30,6 +41,15 @@ export class HomeComponent implements OnInit {
       minWidth: '100vw',
       height: '100vh',
       data: scenario
+    });
+  }
+
+  /**
+   * Open a dialog to filter the scenario list
+   */
+  public openFilterScenarioDialog(): void {
+    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( filter => {
+      this.getScenarii(filter);
     });
   }
 }

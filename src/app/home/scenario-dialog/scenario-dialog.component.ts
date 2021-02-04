@@ -8,6 +8,7 @@ import { first, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Game } from 'src/app/shared/models/game.model';
 
+
 @Component({
   selector: 'app-scenario-dialog',
   templateUrl: './scenario-dialog.component.html',

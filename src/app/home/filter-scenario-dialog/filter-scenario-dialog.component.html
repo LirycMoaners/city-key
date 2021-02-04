@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>
+  {{ title }}
+</h1>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <h3>City</h3>
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="city" aria-label="City">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h3>Rating</h3>
+    <mat-button-toggle-group formControlName="rate" aria-label="Rating">
+      <mat-button-toggle value="0">0</mat-button-toggle>
+      <mat-button-toggle value="1">1</mat-button-toggle>
+      <mat-button-toggle value="2">2</mat-button-toggle>
+      <mat-button-toggle value="3">3</mat-button-toggle>
+      <mat-button-toggle value="4">4</mat-button-toggle>
+      <mat-button-toggle value="5">5</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Difficulty</h3>
+    <mat-button-toggle-group formControlName="difficulty" aria-label="Difficulty">
+      <mat-button-toggle value="1">1</mat-button-toggle>
+      <mat-button-toggle value="2">2</mat-button-toggle>
+      <mat-button-toggle value="3">3</mat-button-toggle>
+      <mat-button-toggle value="4">4</mat-button-toggle>
+      <mat-button-toggle value="5">5</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Estimated duration (max)</h3>
+    <mat-slider formControlName="estimatedDuration" min="{{ MIN_DURATION }}" max="{{ MAX_DURATION }}" thumbLabel step="15" aria-label="Maximum duration slider"></mat-slider>
+
+    <h3>Type</h3>
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="type" aria-label="Type of scenario">
+        <mat-option *ngFor="let type of types | enumToArray" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)=filter() mat-raised-button mat-dialog-close>Filter</button>
+  <button mat-raised-button mat-dialog-close>Abort</button>
+</mat-dialog-actions>
+
+
+<!--
+UI ideas
+https://i.pinimg.com/originals/93/93/ae/9393aefb5bf1a60ce64cadd6d3789b59.png
+https://koenig-media.raywenderlich.com/uploads/2017/01/hotwire.png
+-->

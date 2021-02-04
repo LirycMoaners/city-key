@@ -11,6 +11,14 @@ import { RouterModule } from '@angular/router';
 import { ItemIconPipe } from './pipes/item-icon.pipe';
 import { MechanismIconPipe } from './pipes/mechanism-icon.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatOptionModule } from '@angular/material/core';
 import { HourPipe } from './pipes/hour.pipe';
 
 
@@ -18,6 +26,7 @@ import { HourPipe } from './pipes/hour.pipe';
   declarations: [
     ItemIconPipe,
     MechanismIconPipe,
+    EnumToArrayPipe,
     HourPipe
   ],
   imports: [
@@ -30,7 +39,15 @@ import { HourPipe } from './pipes/hour.pipe';
     MatToolbarModule,
     MatListModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormsModule,
+    MatButtonToggleModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
+    MatSliderModule,
   ],
   exports: [
     CommonModule,
@@ -42,8 +59,18 @@ import { HourPipe } from './pipes/hour.pipe';
     MatToolbarModule,
     MatListModule,
     MatDialogModule,
+    MatSnackBarModule,
+    FormsModule,
+    MatButtonToggleModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
+    MatSliderModule,
     ItemIconPipe,
     MechanismIconPipe,
+    EnumToArrayPipe,
     HourPipe
   ]
 })
