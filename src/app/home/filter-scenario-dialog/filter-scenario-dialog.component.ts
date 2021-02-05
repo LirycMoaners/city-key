@@ -35,7 +35,16 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Close Dialog and pass form data to the component creating the Dialog
    */
   public filter(): void {
+    this.scenarioService.currentScenarioFilter = this.form.value;
     this.dialogRef.close(this.form.value);
+  }
+
+  /**
+   * Close Dialog and pass an empty object to the component creating the Dialog
+   */
+  public resetFilter(): void {
+    this.scenarioService.currentScenarioFilter = undefined;
+    this.dialogRef.close({});
   }
 
   /**
@@ -43,11 +52,11 @@ export class FilterScenarioDialogComponent implements OnInit {
    */
   private initForm(): void {
     this.form = this.formBuilder.group({
-      city: [],
-      rate: [],
-      difficulty: [],
-      estimatedDuration: [],
-      type: []
+      city: [this.scenarioService.currentScenarioFilter?.city],
+      rate: [this.scenarioService.currentScenarioFilter?.rate],
+      difficulty: [this.scenarioService.currentScenarioFilter?.difficulty],
+      estimatedDuration: [this.scenarioService.currentScenarioFilter?.estimatedDuration],
+      type: [this.scenarioService.currentScenarioFilter?.type]
     });
   }
 

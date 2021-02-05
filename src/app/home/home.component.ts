@@ -49,7 +49,9 @@ export class HomeComponent implements OnInit {
    */
   public openFilterScenarioDialog(): void {
     this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( filter => {
-      this.getScenarii(filter);
+      if (!!filter) {
+        this.getScenarii(Object.entries(filter).length ? filter : null);
+      }
     });
   }
 }
