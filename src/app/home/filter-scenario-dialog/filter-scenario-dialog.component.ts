@@ -48,7 +48,7 @@ export class FilterScenarioDialogComponent implements OnInit {
   }
 
   /**
-   * Initialize formgroup without values
+   * Initialize formgroup with value if already init in service
    */
   private initForm(): void {
     this.form = this.formBuilder.group({
