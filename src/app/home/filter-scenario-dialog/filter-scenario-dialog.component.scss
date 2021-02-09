@@ -1,7 +1,8 @@
-h3 {
-  padding-top: 20px;
-}
+form {
+  display: flex;
+  flex-direction: column;
 
-mat-slider {
-  width: 95%;
+  .mat-slider, .mat-button-toggle-group {
+    margin-bottom: 1.34375em;
+  }
 }

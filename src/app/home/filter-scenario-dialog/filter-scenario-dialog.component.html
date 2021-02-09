@@ -3,8 +3,8 @@
 </h1>
 <mat-dialog-content>
   <form [formGroup]="form">
-    <h3>City</h3>
     <mat-form-field appearance="fill">
+      <mat-label>City</mat-label>
       <mat-select formControlName="city" aria-label="City">
         <mat-option *ngFor="let city of cities" [value]="city">
           {{city}}
@@ -12,7 +12,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h3>Rating</h3>
+    <h3>Rating (min)</h3>
     <mat-button-toggle-group formControlName="rate" aria-label="Rating">
       <mat-button-toggle *ngFor="let val of [0, 1, 2, 3, 4, 5]" [value]="val">{{ val }}</mat-button-toggle>
     </mat-button-toggle-group>
@@ -25,8 +25,8 @@
     <h3>Estimated duration (max)</h3>
     <mat-slider formControlName="estimatedDuration" min="{{ MIN_DURATION }}" max="{{ MAX_DURATION }}" thumbLabel step="15" aria-label="Maximum duration slider"></mat-slider>
 
-    <h3>Type</h3>
     <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
       <mat-select formControlName="type" aria-label="Type of scenario">
         <mat-option *ngFor="let type of types | enumToArray" [value]="type.index">
           {{type.name}}
@@ -34,12 +34,10 @@
       </mat-select>
     </mat-form-field>
   </form>
-
-
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button (click)=filter() mat-raised-button mat-dialog-close>Filter</button>
-  <button mat-raised-button mat-dialog-close>Abort</button>
+<mat-dialog-actions align="center">
+  <button (click)="filter()" mat-raised-button mat-dialog-close cdkFocusInitial color="accent">Filter</button>
+  <button (click)="resetFilter()" mat-raised-button mat-dialog-close color="warn">Reset</button>
 </mat-dialog-actions>
 
 

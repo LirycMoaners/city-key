@@ -2,10 +2,10 @@
   padding: 10px;
 }
 
-.home-menu {
-  button {
-    margin-bottom: 5px;
-  }
+.filter-button {
+  position: fixed;
+  top: 8px;
+  right: 20px;
 }
 
 .mat-card-header, .mat-card-content {

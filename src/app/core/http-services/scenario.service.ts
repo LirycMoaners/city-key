@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { filter, first, map, switchMap } from 'rxjs/operators';
 import { Scenario } from 'src/app/shared/models/scenario.model';
-import {ScenarioFilter} from '../../shared/models/scenario-filter';
+import { ScenarioFilter } from '../../shared/models/scenario-filter';
 
 
 @Injectable()
 export class ScenarioService {
+  public currentScenarioFilter: ScenarioFilter;
   private mockAvailableCities = ['Bruxelles', 'Mons', 'Charleroi', 'Gand', 'Anvers'];
 
   constructor(
