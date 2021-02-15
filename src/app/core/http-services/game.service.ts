@@ -27,11 +27,13 @@ export class GameService {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(user => from(this.store.collection<Game>(
-        'users/' + user.uid + '/games',
-        ref => ref.where('scenarioId', '==', scenarioId)).snapshotChanges()
-      )),
-      map(changes => changes.map(c => ({...c.payload.doc.data(), uid: c.payload.doc.id})))
+      switchMap(user =>
+        this.store.collection<Game>(
+          'users/' + user.uid + '/games',
+          ref => ref.where('scenarioId', '==', scenarioId)
+        ).get()
+      ),
+      map(snapshot => snapshot.docs.map(doc => ({...doc.data(), uid: doc.id})))
     );
   }
 

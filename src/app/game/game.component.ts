@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatDialog } from '@angular/material/dialog';
+import { distanceBetween } from 'geofire-common';
 import { combineLatest, Observable, of, Subscription, } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import * as mapStyle from '../../assets/styles/map-style.json';
@@ -11,7 +12,6 @@ import { Game } from '../shared/models/game.model';
 import { Marker } from '../shared/models/marker.model';
 import { Scenario } from '../shared/models/scenario.model';
 import { Step } from '../shared/models/step.model';
-import { DistanceTool } from '../shared/tools/distance.tool';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
 
 @Component({
@@ -134,7 +134,7 @@ export class GameComponent implements OnInit, OnDestroy {
           )
           && (
             !step.requiredPosition
-            || (DistanceTool.getDistanceBetweenCoordinates(step.requiredPosition, playerPosition) <= 50)
+            || (distanceBetween([step.requiredPosition.lat, step.requiredPosition.lng], [playerPosition.lat, playerPosition.lng]) <= 50)
           )
         ) {
           this.dialog.open(StepDialogComponent, { data: step });

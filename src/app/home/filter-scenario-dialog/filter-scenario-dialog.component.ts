@@ -4,6 +4,7 @@ import { ScenarioType } from '../../shared/enums/scenario-type.enum';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ScenarioService } from '../../core/http-services/scenario.service';
 import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
+import { CityService } from 'src/app/core/http-services/city.service';
 
 @Component({
   selector: 'app-filter-scenario-dialog',
@@ -15,14 +16,15 @@ export class FilterScenarioDialogComponent implements OnInit {
   public form: FormGroup;
   public types = ScenarioType;
   public difficulties = Difficulty;
-  public readonly MAX_DURATION = 400;
-  public readonly MIN_DURATION = 15;
+  public readonly MAX_DURATION = 240;
+  public readonly MIN_DURATION = 30;
   public cities = [];
 
   constructor(
     private readonly dialogRef: MatDialogRef<FilterScenarioDialogComponent>,
     private readonly formBuilder: FormBuilder,
-    private readonly scenarioService: ScenarioService
+    private readonly scenarioService: ScenarioService,
+    private readonly cityService: CityService
   ) {
   }
 
@@ -64,7 +66,7 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Get cities list
    */
   private getCities(): void {
-    this.scenarioService.readAllAvailableCities().subscribe( cities => this.cities = cities);
+    this.cityService.readAllCity().subscribe( cities => this.cities = cities);
   }
 
 }

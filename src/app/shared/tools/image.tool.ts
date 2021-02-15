@@ -1,10 +1,10 @@
 import * as resemble from 'resemblejs';
-import { combineLatest, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 export class ImageTool {
   public static compare(firstImagePath: string, secondImagePath: string, canvasWidth: number, canvasHeight: number): Observable<number> {
-    return combineLatest([
+    return forkJoin([
       ImageTool.cropImage(firstImagePath, canvasWidth, canvasHeight),
       ImageTool.cropImage(secondImagePath, canvasWidth, canvasHeight)
     ]).pipe(
