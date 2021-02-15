@@ -55,6 +55,10 @@ export class ScenarioService {
       );
   }
 
+  /**
+   * Get a scenario from the database
+   * @param id Scenario id to read
+   */
   public readScenario(id: string): Observable<Scenario> {
     return this.auth.user.pipe(
       filter(user => user !== null),
@@ -64,6 +68,11 @@ export class ScenarioService {
     );
   }
 
+  /**
+   * Get a subcollection from the scenario collection filtered by filter and map area
+   * @param scenariofilter Filter to construct the subcollection
+   * @param bound Map area range
+   */
   private getScenarioCollection(scenariofilter: ScenarioFilter, bound?: string[]): AngularFirestoreCollection<Scenario> {
     return this.store.collection<Scenario>('scenarii', ref => {
       let query: Query = ref.limit(50);
@@ -93,6 +102,12 @@ export class ScenarioService {
     });
   }
 
+  /**
+   * Get the scenarii from the snapshots after the completed queries
+   * @param scenariofilter Filter to know if we need to check false positiv
+   * @param snapshots Scenario snapshots from the queries
+   * @param pos Current user position to detect false positiv
+   */
   private getScenariiFromSnapshots(
     scenariofilter: ScenarioFilter,
     snapshots: firebase.default.firestore.QuerySnapshot<Scenario>[],
@@ -107,6 +122,10 @@ export class ScenarioService {
       });
   }
 
+  /**
+   * Get the scenario from document snapshot & modify it for front-end usage
+   * @param doc Document snapshot containing the scenario
+   */
   private getScenarioFromSnapshot(
     doc: firebase.default.firestore.DocumentSnapshot<Scenario> | firebase.default.firestore.QueryDocumentSnapshot<Scenario>
   ): Scenario {
