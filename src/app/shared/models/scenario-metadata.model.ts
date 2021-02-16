@@ -5,6 +5,8 @@ export interface ScenarioMetadata {
   title: string;
   image: string;
   city: string;
+  position: google.maps.LatLngLiteral;
+  geohash: string;
   description: string;
   rate: number;
   difficulty: Difficulty;

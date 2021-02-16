@@ -22,8 +22,8 @@
       <mat-button-toggle *ngFor="let difficulty of difficulties | enumToArray" [value]="difficulty.index">{{ difficulty.name }}</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <h3>Estimated duration (max)</h3>
-    <mat-slider formControlName="estimatedDuration" min="{{ MIN_DURATION }}" max="{{ MAX_DURATION }}" thumbLabel step="15" aria-label="Maximum duration slider"></mat-slider>
+    <h3>Estimated duration</h3>
+    <mat-slider formControlName="estimatedDuration" min="{{ MIN_DURATION }}" max="{{ MAX_DURATION }}" thumbLabel step="30" aria-label="Maximum duration slider"></mat-slider>
 
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>

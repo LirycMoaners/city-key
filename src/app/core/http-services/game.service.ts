@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { from, Observable, of, ReplaySubject } from 'rxjs';
+import { from, Observable, ReplaySubject } from 'rxjs';
 import { filter, first, switchMap, map, tap } from 'rxjs/operators';
 import { Game } from 'src/app/shared/models/game.model';
 import { Scenario } from 'src/app/shared/models/scenario.model';
@@ -15,26 +15,43 @@ export class GameService {
     private readonly store: AngularFirestore
   ) { }
 
+  /**
+   * Retrieve the current game subject
+   */
   public getCurrentGame(): Observable<Game> {
     return this.currentGame$;
   }
 
+  /**
+   * Set the current game subject with the game in parameter
+   * @param game Game to push in the subject
+   */
   public setCurrentGame(game: Game): void {
     this.currentGame$.next(game);
   }
 
+  /**
+   * Retrieve all the user's games for a scenario
+   * @param scenarioId Scenario id for the query
+   */
   public getGamesByScenarioId(scenarioId: string): Observable<Game[]> {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(user => from(this.store.collection<Game>(
-        'users/' + user.uid + '/games',
-        ref => ref.where('scenarioId', '==', scenarioId)).snapshotChanges()
-      )),
-      map(changes => changes.map(c => ({...c.payload.doc.data(), uid: c.payload.doc.id})))
+      switchMap(user =>
+        this.store.collection<Game>(
+          'users/' + user.uid + '/games',
+          ref => ref.where('scenarioId', '==', scenarioId)
+        ).get()
+      ),
+      map(snapshot => snapshot.docs.map(doc => ({...doc.data(), uid: doc.id})))
     );
   }
 
+  /**
+   * Update a game with the one in parameter
+   * @param game The updated game
+   */
   public updateGame(game: Game): Observable<void> {
     return this.auth.user.pipe(
       filter(user => user !== null),
@@ -73,6 +90,10 @@ export class GameService {
     );
   }
 
+  /**
+   * Delete a game from the database
+   * @param game The game to delete
+   */
   public deleteGame(game: Game): Observable<void> {
     return this.auth.user.pipe(
       filter(user => user !== null),

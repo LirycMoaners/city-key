@@ -10,6 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { CityService } from './http-services/city.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   providers: [
     GoogleMapService,
     ScenarioService,
-    GameService
+    GameService,
+    CityService
   ]
 })
 export class CoreModule { }

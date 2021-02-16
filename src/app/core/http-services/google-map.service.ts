@@ -13,6 +13,9 @@ export class GoogleMapService {
     private httpClient: HttpClient
   ) { }
 
+  /**
+   * Initialise the google map api
+   */
   public initGoogleMap(): Observable<boolean> {
     return this.isGoogleMapInit ? of(true) : this.httpClient.jsonp(
       'https://maps.googleapis.com/maps/api/js?key=' + apiKeys.googleMapKey,
