@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GameService } from 'src/app/core/http-services/game.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/shared/models/item.model';
@@ -20,9 +19,9 @@ export class InventoryComponent implements OnInit, OnDestroy {
     private readonly dialog: MatDialog
   ) {
     this.subscriptions.push(
-      this.gameService.getCurrentGame().pipe(
-        map(game => game.items)
-      ).subscribe(items => this.items = items)
+      this.gameService.getCurrentGame().subscribe(game =>
+        this.items = game.scenario.items.filter(item => game.itemsId.includes(item.uid))
+      )
     );
   }
 

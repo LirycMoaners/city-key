@@ -41,7 +41,7 @@ export class GameService {
       switchMap(user =>
         this.store.collection<Game>(
           'users/' + user.uid + '/games',
-          ref => ref.where('scenarioId', '==', scenarioId)
+          ref => ref.where('scenario.uid', '==', scenarioId)
         ).get()
       ),
       map(snapshot => snapshot.docs.map(doc => ({...doc.data(), uid: doc.id})))
@@ -70,12 +70,12 @@ export class GameService {
    */
   public createGame(scenario: Scenario): Observable<Game> {
     const newGame: Game = {
-      scenarioId: scenario.uid,
+      scenario,
       completedMechanismsId: [],
-      items: [],
-      markers: [],
-      mechanisms: [],
-      reachableSteps: []
+      itemsId: [],
+      markersId: [],
+      mechanismsId: [],
+      reachableStepsId: []
     };
 
     return this.auth.user.pipe(

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ScenarioService } from '../../core/http-services/scenario.service';
 import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 import { CityService } from 'src/app/core/http-services/city.service';
+import { City } from 'src/app/shared/models/city.model';
 
 @Component({
   selector: 'app-filter-scenario-dialog',
@@ -18,7 +19,7 @@ export class FilterScenarioDialogComponent implements OnInit {
   public difficulties = Difficulty;
   public readonly MAX_DURATION = 240;
   public readonly MIN_DURATION = 30;
-  public cities = [];
+  public cities: City[] = [];
 
   constructor(
     private readonly dialogRef: MatDialogRef<FilterScenarioDialogComponent>,
@@ -37,7 +38,7 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Close Dialog and pass form data to the component creating the Dialog
    */
   public filter(): void {
-    this.scenarioService.currentScenarioFilter = this.form.value;
+    this.scenarioService.currentFilter = this.form.value;
     this.dialogRef.close(this.form.value);
   }
 
@@ -45,7 +46,7 @@ export class FilterScenarioDialogComponent implements OnInit {
    * Close Dialog and pass an empty object to the component creating the Dialog
    */
   public resetFilter(): void {
-    this.scenarioService.currentScenarioFilter = undefined;
+    this.scenarioService.currentFilter = undefined;
     this.dialogRef.close({});
   }
 
@@ -54,11 +55,11 @@ export class FilterScenarioDialogComponent implements OnInit {
    */
   private initForm(): void {
     this.form = this.formBuilder.group({
-      city: [this.scenarioService.currentScenarioFilter?.city],
-      rate: [this.scenarioService.currentScenarioFilter?.rate],
-      difficulty: [this.scenarioService.currentScenarioFilter?.difficulty],
-      estimatedDuration: [this.scenarioService.currentScenarioFilter?.estimatedDuration],
-      type: [this.scenarioService.currentScenarioFilter?.type]
+      cityId: [this.scenarioService.currentFilter?.cityId],
+      rate: [this.scenarioService.currentFilter?.rate],
+      difficulty: [this.scenarioService.currentFilter?.difficulty],
+      estimatedDuration: [this.scenarioService.currentFilter?.estimatedDuration],
+      type: [this.scenarioService.currentFilter?.type]
     });
   }
 

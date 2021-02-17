@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ScenarioService } from '../core/http-services/scenario.service';
-import { Scenario } from '../shared/models/scenario.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
 import { FilterScenarioDialogComponent } from './filter-scenario-dialog/filter-scenario-dialog.component';
 import { ScenarioFilter } from '../shared/models/scenario-filter';
+import { Scenario } from '../shared/models/scenario.model';
 
 
 @Component({

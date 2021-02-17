@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatOptionModule } from '@angular/material/core';
 import { HourPipe } from './pipes/hour.pipe';
+import { CityNamePipe } from './pipes/city-name.pipe';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { HourPipe } from './pipes/hour.pipe';
     ItemIconPipe,
     MechanismIconPipe,
     EnumToArrayPipe,
-    HourPipe
+    HourPipe,
+    CityNamePipe
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ import { HourPipe } from './pipes/hour.pipe';
     ItemIconPipe,
     MechanismIconPipe,
     EnumToArrayPipe,
-    HourPipe
+    HourPipe,
+    CityNamePipe
   ]
 })
 export class SharedModule { }
