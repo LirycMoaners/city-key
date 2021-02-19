@@ -4,7 +4,7 @@ import { ScenarioType } from '../enums/scenario-type.enum';
 export interface ScenarioMetadata {
   title: string;
   image: string;
-  city: string;
+  cityId: string;
   position: google.maps.LatLngLiteral;
   geohash: string;
   description: string;
@@ -16,4 +16,5 @@ export interface ScenarioMetadata {
   timesPlayed: number;
   authorId: string;
   type: ScenarioType;
+  scenarioId: string;
 }

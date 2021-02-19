@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection, Query } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, Query, QuerySnapshot } from '@angular/fire/firestore';
 import { distanceBetween, geohashQueryBounds } from 'geofire-common';
 import { forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap } from 'rxjs/operators';
+import { Item } from 'src/app/shared/models/item.model';
+import { Marker } from 'src/app/shared/models/marker.model';
+import { Mechanism } from 'src/app/shared/models/mechanism.model';
 import { Scenario } from 'src/app/shared/models/scenario.model';
+import { Step } from 'src/app/shared/models/step.model';
 import { ScenarioFilter } from '../../shared/models/scenario-filter';
 
 
 @Injectable()
 export class ScenarioService {
-  public currentScenarioFilter: ScenarioFilter;
+  public currentFilter: ScenarioFilter;
   private currentUser$: Observable<firebase.default.User>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
@@ -37,7 +41,7 @@ export class ScenarioService {
   public readAllScenario(scenarioFilter: ScenarioFilter): Observable<Scenario[]> {
     let pos: google.maps.LatLngLiteral;
 
-    return !!scenarioFilter && !!scenarioFilter.city
+    return !!scenarioFilter && !!scenarioFilter.cityId
       ? this.currentUser$.pipe(
         switchMap(() => this.getScenarioCollection(scenarioFilter).get()),
         map(snapshot => snapshot.docs.map(doc => this.getScenarioFromSnapshot(doc)))
@@ -56,15 +60,36 @@ export class ScenarioService {
   }
 
   /**
-   * Get a scenario from the database
-   * @param id Scenario id to read
+   * Get a full scenario from the database
+   * @param scenario Scenario id with only metadata
    */
-  public readScenario(id: string): Observable<Scenario> {
+  public readScenario(scenario: Scenario): Observable<Scenario> {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(_ => this.store.collection<Scenario>('scenarii').doc(id).get()),
-      map(this.getScenarioFromSnapshot)
+      switchMap(_ => forkJoin([
+        this.store.collection<Scenario>('scenarii').doc(scenario.uid).collection<Step>('steps').get(),
+        this.store.collection<Scenario>('scenarii').doc(scenario.uid).collection<Mechanism>('mechanisms').get(),
+        this.store.collection<Scenario>('scenarii').doc(scenario.uid).collection<Item>('items').get(),
+        this.store.collection<Scenario>('scenarii').doc(scenario.uid).collection<Marker>('markers').get(),
+      ])),
+      map(([
+        stepsSnapshot,
+        mechanismsSnapshot,
+        itemsSnapshot,
+        markersSnapshot
+      ]: [
+        QuerySnapshot<Step>,
+        QuerySnapshot<Mechanism>,
+        QuerySnapshot<Item>,
+        QuerySnapshot<Marker>
+      ]) => ({
+        ...scenario,
+        steps: stepsSnapshot.docs.map(doc => ({...doc.data(), uid: doc.id})),
+        mechanisms: mechanismsSnapshot.docs.map(doc => ({...doc.data(), uid: doc.id})),
+        items: itemsSnapshot.docs.map(doc => ({...doc.data(), uid: doc.id})),
+        markers: markersSnapshot.docs.map(doc => ({...doc.data(), uid: doc.id}))
+      }))
     );
   }
 
@@ -79,24 +104,24 @@ export class ScenarioService {
       if (!!scenariofilter) {
         query = scenariofilter.rate !== null
           ? (
-            scenariofilter.city !== null
-              ? query.where('scenarioMetadata.rate', '>=', scenariofilter.rate)
-              : query.where('scenarioMetadata.rate', '>=', scenariofilter.rate).orderBy('scenarioMetadata.rate')
+            scenariofilter.cityId !== null
+              ? query.where('metadata.rate', '>=', scenariofilter.rate)
+              : query.where('metadata.rate', '>=', scenariofilter.rate).orderBy('metadata.rate')
           ) : query;
         query = scenariofilter.estimatedDuration !== null
-          ? query.where('scenarioMetadata.estimatedDuration', '==', scenariofilter.estimatedDuration)
+          ? query.where('metadata.estimatedDuration', '==', scenariofilter.estimatedDuration)
           : query;
         query = scenariofilter.difficulty !== null
-          ? query.where('scenarioMetadata.difficulty', '==', scenariofilter.difficulty)
+          ? query.where('metadata.difficulty', '==', scenariofilter.difficulty)
           : query;
         query = scenariofilter.type !== null
-          ? query.where('scenarioMetadata.type', '==', scenariofilter.type)
+          ? query.where('metadata.type', '==', scenariofilter.type)
           : query;
-        query = scenariofilter.city !== null
-          ? query.where('scenarioMetadata.city', '==', scenariofilter.city)
-          : query.orderBy('scenarioMetadata.geohash').startAt(bound[0]).endAt(bound[1]);
+        query = scenariofilter.cityId !== null
+          ? query.where('metadata.cityId', '==', scenariofilter.cityId)
+          : query.orderBy('metadata.geohash').startAt(bound[0]).endAt(bound[1]);
       } else {
-        query = query.orderBy('scenarioMetadata.geohash').startAt(bound[0]).endAt(bound[1]);
+        query = query.orderBy('metadata.geohash').startAt(bound[0]).endAt(bound[1]);
       }
       return query;
     });
@@ -117,8 +142,8 @@ export class ScenarioService {
       .map(snapshot => snapshot.docs.map(this.getScenarioFromSnapshot))
       .flat(1)
       .filter((scenario: Scenario) => {
-        const {lat, lng} = scenario.scenarioMetadata.position;
-        return !!scenariofilter && !!scenariofilter.city ? true : distanceBetween([pos.lat, pos.lng], [lat, lng]) <= 10000;
+        const {lat, lng} = scenario.metadata.position;
+        return !!scenariofilter && !!scenariofilter.cityId ? true : distanceBetween([pos.lat, pos.lng], [lat, lng]) <= 10000;
       });
   }
 
@@ -127,11 +152,11 @@ export class ScenarioService {
    * @param doc Document snapshot containing the scenario
    */
   private getScenarioFromSnapshot(
-    doc: firebase.default.firestore.DocumentSnapshot<Scenario> | firebase.default.firestore.QueryDocumentSnapshot<Scenario>
+    snapshot: firebase.default.firestore.QueryDocumentSnapshot<Scenario>
   ): Scenario {
-    const scenario = {...doc.data(), uid: doc.id};
-    scenario.scenarioMetadata.creationDate = new Date(scenario.scenarioMetadata.creationDate);
-    scenario.scenarioMetadata.lastUpdateDate = new Date(scenario.scenarioMetadata.lastUpdateDate);
+    const scenario = {...snapshot.data(), uid: snapshot.id};
+    scenario.metadata.creationDate = new Date(scenario.metadata.creationDate);
+    scenario.metadata.lastUpdateDate = new Date(scenario.metadata.lastUpdateDate);
     return scenario;
   }
 }

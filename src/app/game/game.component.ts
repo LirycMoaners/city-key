@@ -3,14 +3,12 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatDialog } from '@angular/material/dialog';
 import { distanceBetween } from 'geofire-common';
 import { combineLatest, Observable, of, Subscription, } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import * as mapStyle from '../../assets/styles/map-style.json';
 import { GameService } from '../core/http-services/game.service';
 import { GoogleMapService } from '../core/http-services/google-map.service';
-import { ScenarioService } from '../core/http-services/scenario.service';
 import { Game } from '../shared/models/game.model';
 import { Marker } from '../shared/models/marker.model';
-import { Scenario } from '../shared/models/scenario.model';
 import { Step } from '../shared/models/step.model';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
 
@@ -40,7 +38,6 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(
     private readonly googleMapService: GoogleMapService,
     private readonly gameService: GameService,
-    private readonly scenarioService: ScenarioService,
     private readonly dialog: MatDialog
   ) {
     this.isGoogleMapApiLoaded$ = this.googleMapService.initGoogleMap();
@@ -51,11 +48,7 @@ export class GameComponent implements OnInit, OnDestroy {
       combineLatest([
         this.initGeolocation(),
         this.initGame()
-      ]).pipe(
-        map(([playerPosition, [game, scenario]]: [google.maps.LatLngLiteral, [Game, Scenario]]) =>
-          this.checkSteps(playerPosition, game, scenario)
-        )
-      ).subscribe()
+      ]).subscribe(([playerPosition, game]: [google.maps.LatLngLiteral, Game]) => this.checkSteps(playerPosition, game))
     );
   }
 
@@ -98,21 +91,15 @@ export class GameComponent implements OnInit, OnDestroy {
   /**
    * Initialize the game at the beginning & watch it over time for modifications
    */
-  private initGame(): Observable<[Game, Scenario]> {
+  private initGame(): Observable<Game> {
     return this.gameService.getCurrentGame().pipe(
-      switchMap(game => {
-        this.markers = game.markers;
-        return combineLatest([
-          of(game),
-          this.scenarioService.readScenario(game.scenarioId).pipe(
-            tap(scenario => {
-              if (!game.reachableSteps.length && !game.completedMechanismsId.length) {
-                const firstStep: Step = scenario.steps.find(step => step.isFirstStep);
-                game.reachableSteps.push(firstStep);
-              }
-            })
-          )
-        ]);
+      map(game => {
+        this.markers = game.scenario.markers.filter(m => game.markersId.includes(m.uid));
+        if (!game.reachableStepsId.length && !game.completedMechanismsId.length) {
+          const firstStep: Step = game.scenario.steps.find(step => step.isFirstStep);
+          game.reachableStepsId.push(firstStep.uid);
+        }
+        return game;
       })
     );
   }
@@ -122,10 +109,11 @@ export class GameComponent implements OnInit, OnDestroy {
    * @param playerPosition The current player position
    * @param game The current played game
    */
-  private checkSteps(playerPosition: google.maps.LatLngLiteral, game: Game, scenario: Scenario): Observable<void> {
-    if (game.reachableSteps.length) {
+  private checkSteps(playerPosition: google.maps.LatLngLiteral, game: Game): Observable<void> {
+    if (game.reachableStepsId.length) {
       let isUpdateNeeded = false;
-      for (const step of game.reachableSteps) {
+      for (const stepId of game.reachableStepsId) {
+        const step = game.scenario.steps.find(s => s.uid === stepId);
         if (
           (
             !step.requiredMechanismsId
@@ -134,15 +122,17 @@ export class GameComponent implements OnInit, OnDestroy {
           )
           && (
             !step.requiredPosition
-            || (distanceBetween([step.requiredPosition.lat, step.requiredPosition.lng], [playerPosition.lat, playerPosition.lng]) <= 50)
+            || (distanceBetween([step.requiredPosition.lat, step.requiredPosition.lng], [playerPosition.lat, playerPosition.lng]) <= 0.05)
           )
         ) {
-          this.dialog.open(StepDialogComponent, { data: step });
-          game.items.push(...step.unlockedItems);
-          game.mechanisms.push(...step.unlockedMechanisms);
-          game.markers.push(...step.unlockedMarkers);
-          game.reachableSteps.push(...step.unlockedStepsId.map(id => scenario.steps.find(s => s.id === id)));
-          game.reachableSteps.splice(game.reachableSteps.indexOf(step), 1);
+          const mechanisms = game.scenario.mechanisms.filter(mechanism => step.unlockedMechanismsId.includes(mechanism.uid));
+          const items = game.scenario.items.filter(item => step.unlockedItemsId.includes(item.uid));
+          this.dialog.open(StepDialogComponent, { data: {step, mechanisms, items } });
+          game.itemsId.push(...step.unlockedItemsId);
+          game.mechanismsId.push(...step.unlockedMechanismsId);
+          game.markersId.push(...step.unlockedMarkersId);
+          game.reachableStepsId.push(...step.unlockedStepsId);
+          game.reachableStepsId.splice(game.reachableStepsId.indexOf(stepId), 1);
           isUpdateNeeded = true;
         }
       }

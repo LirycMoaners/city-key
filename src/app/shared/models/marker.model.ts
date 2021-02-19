@@ -1,5 +1,5 @@
 export interface Marker {
-  id: string;
+  uid: string;
   position: google.maps.LatLngLiteral;
   title: string;
   description: string;

@@ -1,7 +1,7 @@
 import {ScenarioType} from '../enums/scenario-type.enum';
 
 export interface ScenarioFilter {
-  city: string;
+  cityId: string;
   rate: number;
   difficulty: number;
   estimatedDuration: number;

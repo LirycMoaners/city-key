@@ -1,21 +1,21 @@
 <h1 mat-dialog-title>
-  <p>{{ data.scenarioMetadata.title }}</p>
+  <p>{{ data.metadata.title }}</p>
   <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 </h1>
 <mat-dialog-content>
-  <img [src]="data.scenarioMetadata.image" alt="Scenario's image">
-  <div>{{ data.scenarioMetadata.description }}</div>
+  <img [src]="data.metadata.image" alt="Scenario's image">
+  <div>{{ data.metadata.description }}</div>
   <mat-divider></mat-divider>
   <div class="infos">
-    <div><mat-icon>location_city</mat-icon>{{ data.scenarioMetadata.city}}</div>
-    <div><mat-icon *ngFor="let i of [1,2,3,4,5]">{{ data.scenarioMetadata.rate >= i ? 'star' : data.scenarioMetadata.rate >= i -.5 ? 'star_half' : 'star_border' }}</mat-icon></div>
-    <div><mat-icon>hourglass_bottom</mat-icon>{{ data.scenarioMetadata.estimatedDuration | hour }}</div>
-    <div>{{ Difficulty[data.scenarioMetadata.difficulty] }}</div>
+    <div><mat-icon>location_city</mat-icon>{{ data.metadata.cityId | cityName | async }}</div>
+    <div><mat-icon *ngFor="let i of [1,2,3,4,5]">{{ data.metadata.rate >= i ? 'star' : data.metadata.rate >= i -.5 ? 'star_half' : 'star_border' }}</mat-icon></div>
+    <div><mat-icon>hourglass_bottom</mat-icon>{{ data.metadata.estimatedDuration | hour }}</div>
+    <div>{{ Difficulty[data.metadata.difficulty] }}</div>
   </div>
   <mat-divider></mat-divider>
   <div class="about">
-    <div><mat-icon>today</mat-icon>{{ data.scenarioMetadata.creationDate | date:'MM/dd/yyyy' }}</div>
-    <div><mat-icon>people</mat-icon>{{ data.scenarioMetadata.timesPlayed}}</div>
+    <div><mat-icon>today</mat-icon>{{ data.metadata.creationDate | date:'MM/dd/yyyy' }}</div>
+    <div><mat-icon>people</mat-icon>{{ data.metadata.timesPlayed}}</div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">

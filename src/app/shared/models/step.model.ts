@@ -1,17 +1,13 @@
-import { Item } from './item.model';
-import { Marker } from './marker.model';
-import { Mechanism } from './mechanism.model';
-
 export interface Step {
-  id: string;
+  uid: string;
   title: string;
   description: string;
   isFirstStep: boolean;
   isLastStep: boolean;
   requiredMechanismsId?: string[];
   requiredPosition?: google.maps.LatLngLiteral;
-  unlockedItems: Item[];
-  unlockedMechanisms: Mechanism[];
-  unlockedMarkers: Marker[];
+  unlockedItemsId: string[];
+  unlockedMechanismsId: string[];
+  unlockedMarkersId: string[];
   unlockedStepsId: string[];
 }

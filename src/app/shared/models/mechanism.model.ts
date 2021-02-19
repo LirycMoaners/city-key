@@ -1,17 +1,15 @@
 import { MechanismType } from '../enums/mechanism-type.enum';
-import { Item } from './item.model';
-import { Marker } from './marker.model';
 
 export interface Mechanism {
-  id: string;
+  uid: string;
   name: string;
   title: string;
   description: string;
   type: MechanismType;
-  unlockedItems: Item[];
-  unlockedMechanisms: Mechanism[];
-  unlockedMarkers: Marker[];
+  unlockedItemsId: string[];
+  unlockedMechanismsId: string[];
+  unlockedMarkersId: string[];
   unlockingCombination?: number;
-  unlockingKeyId?: string;
+  unlockingItemId?: string;
   image?: string;
 }

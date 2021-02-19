@@ -19,21 +19,24 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./mechanism-list.component.scss']
 })
 export class MechanismListComponent implements OnInit, OnDestroy {
-  public game: Game;
+  public mechanisms: Mechanism[] = [];
+  private game: Game;
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private gameService: GameService,
+    private readonly gameService: GameService,
     private readonly dialog: MatDialog,
     private readonly snackBar: MatSnackBar,
     private readonly router: Router
-  ) {
-    this.subscriptions.push(
-      this.gameService.getCurrentGame().subscribe(game => this.game = game)
-    );
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.gameService.getCurrentGame().subscribe(game => {
+        this.game = game;
+        this.mechanisms = this.game.scenario.mechanisms.filter(mechanism => this.game.mechanismsId.includes(mechanism.uid));
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -58,18 +61,18 @@ export class MechanismListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(component, {
       minWidth: '100vw',
       height: '100vh',
-      data: { mechanism, items: this.game.items },
+      data: { mechanism, items: this.game.scenario.items.filter(item => this.game.itemsId.includes(item.uid)) },
       disableClose: true
     });
 
     dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result === true) {
-          this.game.items.push(...mechanism.unlockedItems);
-          this.game.mechanisms.push(...mechanism.unlockedMechanisms);
-          this.game.markers.push(...mechanism.unlockedMarkers);
-          this.game.completedMechanismsId.push(mechanism.id);
-          this.game.mechanisms.splice(this.game.mechanisms.indexOf(mechanism), 1);
+          this.game.itemsId.push(...mechanism.unlockedItemsId);
+          this.game.mechanismsId.push(...mechanism.unlockedMechanismsId);
+          this.game.markersId.push(...mechanism.unlockedMarkersId);
+          this.game.completedMechanismsId.push(mechanism.uid);
+          this.game.mechanismsId.splice(this.game.mechanismsId.indexOf(mechanism.uid), 1);
           return this.gameService.updateGame(this.game);
         }
       })

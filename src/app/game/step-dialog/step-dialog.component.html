@@ -1,17 +1,17 @@
 <h1 mat-dialog-title>
-  {{ data.title }}
+  {{ data.step.title }}
 </h1>
 <mat-dialog-content>
-  <p>{{ data.description }}</p>
-  <ng-container *ngIf="data.unlockedItems.length">
+  <p>{{ data.step.description }}</p>
+  <ng-container *ngIf="data.items.length">
     <h2>New items :</h2>
-    <div *ngFor="let item of data.unlockedItems">{{ item.name }}</div>
+    <div *ngFor="let item of data.items">{{ item.name }}</div>
   </ng-container>
-  <ng-container *ngIf="data.unlockedMechanisms.length">
+  <ng-container *ngIf="data.mechanisms.length">
     <h2>New mechanisms :</h2>
-    <div *ngFor="let mechanism of data.unlockedMechanisms">{{ mechanism.name }}</div>
+    <div *ngFor="let mechanism of data.mechanisms">{{ mechanism.name }}</div>
   </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button *ngIf="!data.isLastStep" mat-raised-button mat-dialog-close>Ok</button>
+  <button *ngIf="!data.step.isLastStep" mat-raised-button mat-dialog-close>Ok</button>
 </mat-dialog-actions>

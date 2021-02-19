@@ -28,7 +28,7 @@ export class LockComponent implements OnInit {
    * @param key The key item we try
    */
   public onTryKey(key: Item): void {
-    if (this.data.mechanism.unlockingKeyId === key.id) {
+    if (this.data.mechanism.unlockingItemId === key.uid) {
       this.data.items.splice(this.data.items.indexOf(key), 1);
       this.dialogRef.close(true);
     } else {

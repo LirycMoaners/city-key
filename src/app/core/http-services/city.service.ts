@@ -2,12 +2,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { filter, first, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { filter, find, first, switchMap } from 'rxjs/operators';
+import { City } from 'src/app/shared/models/city.model';
 
 
 @Injectable()
 export class CityService {
+  private cities$: BehaviorSubject<City[]> = new BehaviorSubject(undefined);
 
   constructor(
     private readonly auth: AngularFireAuth,
@@ -17,12 +19,30 @@ export class CityService {
   /**
    * Get all cities
    */
-  public readAllCity(): Observable<string[]> {
+  public readAllCity(): Observable<City[]> {
+    if (!!this.cities$.getValue()) {
+      return this.cities$;
+    }
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(_ => this.store.collection<{name: string}>('cities').valueChanges()),
-      map(cities => cities.map(city => city.name))
+      switchMap(_ => this.store.collection<City>('cities').get()),
+      switchMap(snapshot => {
+        this.cities$ = new BehaviorSubject(snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() })));
+        return this.cities$;
+      })
     );
   }
+
+  /**
+   * Get a city
+   * @param id The id of the city to retrieve
+   */
+  public readCity(id: string): Observable<City> {
+    return this.readAllCity().pipe(
+      switchMap(cities => from(cities)),
+      find(city => city.uid === id)
+    );
+  }
+
 }
