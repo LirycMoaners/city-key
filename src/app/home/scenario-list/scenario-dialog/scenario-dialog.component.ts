@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GameService } from '../../core/http-services/game.service';
+import { GameService } from '../../../core/http-services/game.service';
 import { Router } from '@angular/router';
 import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 import { first, switchMap } from 'rxjs/operators';

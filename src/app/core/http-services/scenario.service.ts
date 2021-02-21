@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, Query, QuerySnapshot } from '@angular/fire/firestore';
 import { distanceBetween, geohashQueryBounds } from 'geofire-common';
-import { forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap } from 'rxjs/operators';
-import { Item } from 'src/app/shared/models/item.model';
-import { Marker } from 'src/app/shared/models/marker.model';
-import { Mechanism } from 'src/app/shared/models/mechanism.model';
-import { Scenario } from 'src/app/shared/models/scenario.model';
-import { Step } from 'src/app/shared/models/step.model';
+import { Item } from '../../shared/models/item.model';
+import { Marker } from '../../shared/models/marker.model';
+import { Mechanism } from '../../shared/models/mechanism.model';
+import { Scenario } from '../../shared/models/scenario.model';
+import { Step } from '../../shared/models/step.model';
 import { ScenarioFilter } from '../../shared/models/scenario-filter';
 
 
 @Injectable()
 export class ScenarioService {
   public currentFilter: ScenarioFilter;
+  private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject(undefined);
   private currentUser$: Observable<firebase.default.User>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
@@ -41,10 +42,17 @@ export class ScenarioService {
   public readAllScenario(scenarioFilter: ScenarioFilter): Observable<Scenario[]> {
     let pos: google.maps.LatLngLiteral;
 
+    if (!!this.scenarii$.getValue() && JSON.stringify(this.currentFilter) === JSON.stringify(scenarioFilter)) {
+      return this.scenarii$;
+    }
+    this.currentFilter = scenarioFilter;
     return !!scenarioFilter && !!scenarioFilter.cityId
       ? this.currentUser$.pipe(
         switchMap(() => this.getScenarioCollection(scenarioFilter).get()),
-        map(snapshot => snapshot.docs.map(doc => this.getScenarioFromSnapshot(doc)))
+        switchMap(snapshot => {
+          this.scenarii$.next(snapshot.docs.map(doc => this.getScenarioFromSnapshot(doc)));
+          return this.scenarii$;
+        })
       )
       : forkJoin([
         this.currentUser$,
@@ -55,7 +63,10 @@ export class ScenarioService {
           const bounds = geohashQueryBounds([pos.lat, pos.lng], 10000);
           return forkJoin(bounds.map(b => this.getScenarioCollection(scenarioFilter, b).get()));
         }),
-        map(snapshots => this.getScenariiFromSnapshots(scenarioFilter, snapshots, pos))
+        switchMap(snapshots => {
+          this.scenarii$.next(this.getScenariiFromSnapshots(scenarioFilter, snapshots, pos));
+          return this.scenarii$;
+        })
       );
   }
 

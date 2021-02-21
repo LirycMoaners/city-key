@@ -1,12 +1,17 @@
 <div class="map-container" *ngIf="isGoogleMapApiLoaded$ | async">
-  <section class="items-menu">
+  <div class="items-menu top left">
+    <button routerLink="../home" mat-fab color="primary" aria-label="Back">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="items-menu top right">
     <button routerLink="mechanism_list" mat-fab color="primary" aria-label="Mechanisms list">
       <mat-icon>lock</mat-icon>
     </button>
     <button routerLink="inventory" mat-fab color="primary" aria-label="Inventory">
       <mat-icon>backpack</mat-icon>
     </button>
-  </section>
+  </div>
   <google-map
     height="100%"
     width="100%"

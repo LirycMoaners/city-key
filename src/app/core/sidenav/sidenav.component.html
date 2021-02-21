@@ -1,9 +1,0 @@
-<mat-nav-list>
-  <a
-    *ngFor="let route of routes"
-    mat-list-item
-    [routerLink]="route.path"
-    routerLinkActive="list-item-active"
-    (click)="closeSidenav()"
-  >{{ route.data?.title }}</a>
-</mat-nav-list>

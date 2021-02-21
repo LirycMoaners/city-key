@@ -1,34 +1,12 @@
-:host {
-  padding: 10px;
-}
-
-.filter-button {
-  position: fixed;
-  top: 8px;
-  right: 20px;
-}
-
-.mat-card-header, .mat-card-content {
-  display: flex;
-}
-
-::ng-deep.mat-card-header-text {
+.content {
   flex: 1;
-  margin: 0 !important;
-  overflow: hidden;
-  white-space: nowrap;
+  display: flex;
+
+  ::ng-deep router-outlet ~ * {
+    flex: 0 0 100vw;
+  }
 }
 
-.mat-card-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-div > mat-icon {
-  vertical-align: middle;
-  font-size: 20px;
-}
-
-.rate {
+.mat-button-toggle {
   flex: 1;
 }

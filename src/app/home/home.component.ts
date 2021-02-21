@@ -1,57 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { ScenarioService } from '../core/http-services/scenario.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ScenarioDialogComponent } from './scenario-dialog/scenario-dialog.component';
-import { FilterScenarioDialogComponent } from './filter-scenario-dialog/filter-scenario-dialog.component';
-import { ScenarioFilter } from '../shared/models/scenario-filter';
-import { Scenario } from '../shared/models/scenario.model';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet, Routes } from '@angular/router';
+import { slideInAnimation } from './home-animation';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [slideInAnimation]
 })
-export class HomeComponent implements OnInit {
-  public scenarii: Scenario[] = [];
+export class HomeComponent {
+  public routes: Routes;
+  private posX: number;
+  private width: number;
 
   constructor(
-    private readonly scenarioService: ScenarioService,
-    private readonly dialog: MatDialog
-  ) { }
-
-  ngOnInit(): void {
-    this.getScenarii(null);
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
+  ) {
+    this.routes = this.activatedRoute.routeConfig.children;
+    this.routes.splice(0, 1);
   }
 
-  /**
-   * Get scenarii list to display
-   * @param filter The scenario filter
-   */
-  private getScenarii(filter: ScenarioFilter): void {
-    this.scenarioService.readAllScenario(filter).subscribe(scenarii => this.scenarii = scenarii);
+  public prepareRoute(outlet: RouterOutlet): boolean {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
-  /**
-   * Open a dialog with additional information on the selected scenario and allows to start it or abort
-   * @param scenario The scenario to show details about
-   */
-  public seeDetails(scenario: Scenario): void {
-    this.dialog.open(ScenarioDialogComponent, {
-      minWidth: '100vw',
-      height: '100vh',
-      data: scenario
-    });
+  public navigateTo(url: string): void {
+    this.router.navigate(['home/' + url]);
   }
 
-  /**
-   * Open a dialog to filter the scenario list
-   */
-  public openFilterScenarioDialog(): void {
-    this.dialog.open(FilterScenarioDialogComponent).afterClosed().subscribe( filter => {
-      if (!!filter) {
-        this.getScenarii(Object.entries(filter).length ? filter : null);
+  public onTouchStart(event: TouchEvent, element: HTMLDivElement): void {
+    this.posX = event.touches[0].pageX;
+    this.width = element.clientWidth;
+  }
+
+  public onTouchMove(event: TouchEvent, element: HTMLDivElement): void {
+    const diff = (event.touches[0].pageX - this.posX) * 100 / this.width ;
+    (element.children.item(1) as HTMLDivElement).style.marginLeft = diff + '%';
+  }
+
+  public onTouchEnd(event: TouchEvent, element: HTMLDivElement): void {
+    const diff = (event.changedTouches[0].pageX - this.posX) * 100 / this.width ;
+    this.posX = 0;
+
+    if (Math.abs(diff) > 40) {
+      const currentRouteIndex = this.routes.findIndex(route => {
+        const urlFragment: string[] = this.router.url.split('/');
+        return route.path === urlFragment[urlFragment.length - 1];
+      });
+      let newRouteIndex: number;
+
+      if (diff > 0) {
+        newRouteIndex = currentRouteIndex - 1 >= 0 ? currentRouteIndex - 1 : this.routes.length - 1;
+      } else {
+        newRouteIndex = currentRouteIndex + 1 < this.routes.length ? currentRouteIndex + 1 : 0;
       }
-    });
+
+      this.navigateTo(this.routes[newRouteIndex].path);
+    } else {
+      (element.children.item(1) as HTMLDivElement).style.marginLeft = '0';
+    }
   }
+
 }
