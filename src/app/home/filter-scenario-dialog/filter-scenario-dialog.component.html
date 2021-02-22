@@ -2,7 +2,19 @@
   {{ title }}
 </h1>
 <mat-dialog-content>
-  <form [formGroup]="form">
+  <h2>Sort</h2>
+  <form [formGroup]="sortingForm">
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="sortingCriteria">
+        <mat-option *ngFor="let criteria of sortingCriteria | keyvalue" [value]="criteria">
+          {{criteria.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <h2>Filter</h2>
+  <form [formGroup]="filterForm">
     <mat-form-field appearance="fill">
       <mat-label>City</mat-label>
       <mat-select formControlName="city" aria-label="City">

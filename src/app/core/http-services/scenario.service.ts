@@ -6,11 +6,13 @@ import { forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap } from 'rxjs/operators';
 import { Scenario } from 'src/app/shared/models/scenario.model';
 import { ScenarioFilter } from '../../shared/models/scenario-filter';
+import {ScenarioSortingCriterion} from '../../shared/enums/scenario-sorting-criterion.enum';
 
 
 @Injectable()
 export class ScenarioService {
   public currentScenarioFilter: ScenarioFilter;
+  public currentScenarioSorting: ScenarioSortingCriterion;
   private currentUser$: Observable<firebase.default.User>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
@@ -31,8 +33,8 @@ export class ScenarioService {
   }
 
   /**
-   * Get all the scenarii or filtered list of scenarii if param
-   * @param filter Filter properties
+   * Get all the scenarii or filtered list of scenarii if filter param
+   * @param scenarioFilter Filter properties
    */
   public readAllScenario(scenarioFilter: ScenarioFilter): Observable<Scenario[]> {
     let pos: google.maps.LatLngLiteral;
