@@ -58,6 +58,11 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Open an info windows about the current marker that we clicked
+   * @param mapMarker The map marker we clicked
+   * @param marker The marker containing all the data
+   */
   public showInfoWindow(mapMarker: MapMarker, marker: Marker): void {
     this.currentMarker = marker;
     this.infoWindow.open(mapMarker);

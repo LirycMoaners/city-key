@@ -1,16 +1,2 @@
-<mat-sidenav-container>
-  <mat-sidenav
-    #sidenav
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <app-sidenav (linkClicked)="sidenav.close()"></app-sidenav>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-header *ngIf="(isHandset$ | async)" (menuButtonClicked)="sidenav?.toggle()"></app-header>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<app-header class="mat-elevation-z6"></app-header>
+<router-outlet></router-outlet>

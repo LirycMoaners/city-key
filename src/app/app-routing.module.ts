@@ -9,13 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-    data: { title: 'City Key' }
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'game',
-    loadChildren: () => import('./game/game.module').then(m => m.GameModule),
-    data: { title: 'Game' }
+    loadChildren: () => import('./game/game.module').then(m => m.GameModule)
   }
 ];
 

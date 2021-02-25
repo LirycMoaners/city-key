@@ -1,0 +1,22 @@
+<button
+  mat-icon-button
+  aria-label="Filter scenarios"
+  (click)="openFilterScenarioDialog()"
+  class="filter-button"
+>
+  <mat-icon aria-label="Filter scenarios icon">filter_alt</mat-icon>
+</button>
+
+<div class="container">
+  <mat-card *ngFor="let scenario of scenarii" (click)="seeDetails(scenario)">
+    <mat-card-header>
+      <mat-card-title>{{ scenario.metadata.title }}</mat-card-title>
+      <div><mat-icon>location_city</mat-icon>{{ scenario.metadata.cityId | cityName | async }}</div>
+    </mat-card-header>
+    <img mat-card-image [src]="scenario.metadata.image" alt="Scenario picture">
+    <mat-card-content>
+      <div class="rate"><mat-icon *ngFor="let i of [1,2,3,4,5]">{{ scenario.metadata.rate >= i ? 'star' : scenario.metadata.rate >= i -.5 ? 'star_half' : 'star_border' }}</mat-icon></div>
+      <div><mat-icon>hourglass_bottom</mat-icon>{{ scenario.metadata.estimatedDuration | hour }}</div>
+    </mat-card-content>
+  </mat-card>
+</div>

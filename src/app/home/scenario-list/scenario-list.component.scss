@@ -1,0 +1,40 @@
+:host {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    flex: 1;
+    overflow-y: auto;
+    touch-action: none;
+
+    .mat-card {
+      margin-bottom: 10px;
+
+      .mat-card-header, .mat-card-content {
+        display: flex;
+
+        ::ng-deep.mat-card-header-text {
+          flex: 1;
+          margin: 0 !important;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        .mat-card-title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        div > mat-icon {
+          vertical-align: middle;
+          font-size: 20px;
+        }
+
+        .rate {
+          flex: 1;
+        }
+      }
+    }
+  }
+}

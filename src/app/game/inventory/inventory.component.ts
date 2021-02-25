@@ -34,6 +34,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Open an item in a dialog
+   * @param item The item to open
+   */
   public openItem(item: Item): void {
     if (item.text || item.imgSrc) {
       this.dialog.open(ItemComponent, { data: item, minWidth: '100vw', height: '100vh' });

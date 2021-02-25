@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GameService } from '../../core/http-services/game.service';
+import { GameService } from '../../../core/http-services/game.service';
 import { Router } from '@angular/router';
 import { Difficulty } from 'src/app/shared/enums/difficulty.enum';
 import { first, switchMap } from 'rxjs/operators';
@@ -53,6 +53,9 @@ export class ScenarioDialogComponent implements OnInit {
     obs.subscribe(() => this.router.navigate(['/game']));
   }
 
+  /**
+   * Restart a game for the selected scenario and redirect to the game page
+   */
   public restartScenario(): void {
     this.gameService.deleteGame(this.game).pipe(
       switchMap(() => this.scenarioService.readScenario(this.data)),
