@@ -13,7 +13,7 @@ export class CityNamePipe implements PipeTransform {
 
   transform(id: string): Observable<string> {
     return this.cityService.readCity(id).pipe(
-      map(city => city.name)
+      map(city => !!city ? city.name : '')
     );
   }
 }

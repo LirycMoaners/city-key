@@ -9,7 +9,7 @@ import { City } from 'src/app/shared/models/city.model';
 
 @Injectable()
 export class CityService {
-  private cities$: BehaviorSubject<City[]> = new BehaviorSubject(undefined);
+  private cities$: BehaviorSubject<City[]> = new BehaviorSubject([] as City[]);
 
   constructor(
     private readonly auth: AngularFireAuth,
@@ -20,7 +20,7 @@ export class CityService {
    * Get all cities
    */
   public readAllCity(): Observable<City[]> {
-    if (!!this.cities$.getValue()) {
+    if (!!this.cities$.getValue() && !!this.cities$.getValue().length) {
       return this.cities$;
     }
     return this.auth.user.pipe(
@@ -28,7 +28,7 @@ export class CityService {
       first(),
       switchMap(_ => this.store.collection<City>('cities').get()),
       switchMap(snapshot => {
-        this.cities$ = new BehaviorSubject(snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() })));
+        this.cities$.next(snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id })));
         return this.cities$;
       })
     );
@@ -38,8 +38,9 @@ export class CityService {
    * Get a city
    * @param id The id of the city to retrieve
    */
-  public readCity(id: string): Observable<City> {
+  public readCity(id: string): Observable<City | undefined> {
     return this.readAllCity().pipe(
+      first(),
       switchMap(cities => from(cities)),
       find(city => city.uid === id)
     );

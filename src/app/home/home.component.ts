@@ -11,15 +11,19 @@ import { slideInAnimation } from './home-animation';
 })
 export class HomeComponent {
   public routes: Routes;
-  private posX: number;
-  private width: number;
+  private posX = 0;
+  private width = 0;
 
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute
   ) {
-    this.routes = this.activatedRoute.routeConfig.children;
-    this.routes.splice(0, 1);
+    if (!!this.activatedRoute.routeConfig && !!this.activatedRoute.routeConfig.children) {
+      this.routes = [ ...this.activatedRoute.routeConfig.children ];
+      this.routes.splice(0, 1);
+    } else {
+      this.routes = [];
+    }
   }
 
   /**
@@ -80,7 +84,10 @@ export class HomeComponent {
         newRouteIndex = currentRouteIndex + 1 < this.routes.length ? currentRouteIndex + 1 : 0;
       }
 
-      this.navigateTo(this.routes[newRouteIndex].path);
+      const path = this.routes[newRouteIndex].path;
+      if (path !== undefined) {
+        this.navigateTo(path);
+      }
     } else {
       (element.children.item(1) as HTMLDivElement).style.marginLeft = '0';
     }

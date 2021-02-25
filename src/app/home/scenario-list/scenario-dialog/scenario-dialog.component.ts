@@ -17,7 +17,7 @@ import { Scenario } from 'src/app/shared/models/scenario.model';
 })
 export class ScenarioDialogComponent implements OnInit {
   public Difficulty: typeof Difficulty = Difficulty;
-  public game: Game;
+  public game?: Game;
   public isStartVisible = false;
 
   constructor(
@@ -41,10 +41,10 @@ export class ScenarioDialogComponent implements OnInit {
    * @param scenario The scenario to start
    */
   public startScenario(): void {
-    let obs: Observable<Game>;
+    let obs: Observable<Game | undefined>;
     if (this.game) {
       this.gameService.setCurrentGame(this.game);
-      obs = of(null);
+      obs = of(undefined);
     } else {
       obs = this.scenarioService.readScenario(this.data).pipe(
         switchMap((scenario: Scenario) => this.gameService.createGame(scenario))
@@ -57,9 +57,11 @@ export class ScenarioDialogComponent implements OnInit {
    * Restart a game for the selected scenario and redirect to the game page
    */
   public restartScenario(): void {
-    this.gameService.deleteGame(this.game).pipe(
-      switchMap(() => this.scenarioService.readScenario(this.data)),
-      switchMap(scenario => this.gameService.createGame(scenario))
-    ).subscribe(() => this.router.navigate(['/game']));
+    if (!!this.game) {
+      this.gameService.deleteGame(this.game).pipe(
+        switchMap(() => this.scenarioService.readScenario(this.data)),
+        switchMap(scenario => this.gameService.createGame(scenario))
+      ).subscribe(() => this.router.navigate(['/game']));
+    }
   }
 }

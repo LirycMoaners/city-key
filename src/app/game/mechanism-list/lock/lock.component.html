@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{ data.mechanism.title }}</h1>
 <mat-dialog-content>
   <div class="lock">
-    <img [src]="data.mechanism.image">
+    <img [src]="data.mechanism.image" alt="Lock image">
   </div>
   <div class="keys">
     <button mat-fab *ngFor="let key of keys" (click)="onTryKey(key)">
-      <img *ngIf="key.imgSrc; else icon" [src]="key.imgSrc">
+      <img *ngIf="key.imgSrc; else icon" [src]="key.imgSrc" [alt]="key.name">
       <ng-template #icon>
         <mat-icon>vpn_key</mat-icon>
       </ng-template>

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Mechanism } from '../../shared/models/mechanism.model';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { GameService } from 'src/app/core/http-services/game.service';
 import { NumberLockComponent } from './number-lock/number-lock.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import { MechanismType } from 'src/app/shared/enums/mechanism-type.enum';
 import { LockComponent } from './lock/lock.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { ResembleComponent } from './resemble/resemble.component';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mechanism-list',
@@ -20,7 +20,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class MechanismListComponent implements OnInit, OnDestroy {
   public mechanisms: Mechanism[] = [];
-  private game: Game;
+  private game?: Game;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -34,7 +34,7 @@ export class MechanismListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.gameService.getCurrentGame().subscribe(game => {
         this.game = game;
-        this.mechanisms = this.game.scenario.mechanisms.filter(mechanism => this.game.mechanismsId.includes(mechanism.uid));
+        this.mechanisms = this.game.scenario.mechanisms.filter(mechanism => this.game?.mechanismsId.includes(mechanism.uid));
       })
     );
   }
@@ -65,22 +65,27 @@ export class MechanismListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(component, {
       minWidth: '100vw',
       height: '100vh',
-      data: { mechanism, items: this.game.scenario.items.filter(item => this.game.itemsId.includes(item.uid)) },
+      data: { mechanism, items: this.game?.scenario.items.filter(item => this.game?.itemsId.includes(item.uid)) },
       disableClose: true
     });
 
     dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result === true) {
+      filter(result => result),
+      switchMap(() => {
+        if (!!this.game) {
           this.game.itemsId.push(...mechanism.unlockedItemsId);
           this.game.mechanismsId.push(...mechanism.unlockedMechanismsId);
           this.game.markersId.push(...mechanism.unlockedMarkersId);
           this.game.completedMechanismsId.push(mechanism.uid);
           this.game.mechanismsId.splice(this.game.mechanismsId.indexOf(mechanism.uid), 1);
+          if (!!mechanism.unlockingItemId) {
+            this.game.itemsId.splice(this.game.mechanismsId.indexOf(mechanism.unlockingItemId), 1);
+          }
           return this.gameService.updateGame(this.game);
         }
+        return of(undefined);
       })
-    ).subscribe(_ => {
+    ).subscribe(() => {
       this.snackBar.open('Success! New items unlocked!', 'Ok', {
         verticalPosition: 'bottom'
       });

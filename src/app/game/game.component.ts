@@ -18,7 +18,7 @@ import { StepDialogComponent } from './step-dialog/step-dialog.component';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit, OnDestroy {
-  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+  @ViewChild(MapInfoWindow) infoWindow?: MapInfoWindow;
   public isGoogleMapApiLoaded$: Observable<boolean>;
   public center: google.maps.LatLngLiteral = { lat: 48.8581929, lng: 2.3508915 };
   public options: google.maps.MapOptions = {
@@ -26,13 +26,13 @@ export class GameComponent implements OnInit, OnDestroy {
     // @ts-ignore
     styles : mapStyle.default
   };
-  public userPosition: google.maps.LatLngLiteral;
+  public userPosition?: google.maps.LatLngLiteral;
   public userMarkerOptions: google.maps.MarkerOptions = {
     draggable: false,
     icon: { path: 0, scale: 10, fillColor: 'DodgerBlue', fillOpacity: 1, strokeOpacity: 0.8, strokeWeight: 5, strokeColor: 'lightblue' }
   };
   public markers: Marker[] = [];
-  public currentMarker: Marker;
+  public currentMarker?: Marker;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -48,7 +48,11 @@ export class GameComponent implements OnInit, OnDestroy {
       combineLatest([
         this.initGeolocation(),
         this.initGame()
-      ]).subscribe(([playerPosition, game]: [google.maps.LatLngLiteral, Game]) => this.checkSteps(playerPosition, game))
+      ]).subscribe(([playerPosition, game]: [google.maps.LatLngLiteral | undefined, Game]) => {
+        if (!!playerPosition) {
+          this.checkSteps(playerPosition, game);
+        }
+      })
     );
   }
 
@@ -65,13 +69,13 @@ export class GameComponent implements OnInit, OnDestroy {
    */
   public showInfoWindow(mapMarker: MapMarker, marker: Marker): void {
     this.currentMarker = marker;
-    this.infoWindow.open(mapMarker);
+    this.infoWindow?.open(mapMarker);
   }
 
   /**
    * Initialize the center position of the map & the marker position of the player & watch position over time
    */
-  private initGeolocation(): Observable<google.maps.LatLngLiteral> {
+  private initGeolocation(): Observable<google.maps.LatLngLiteral | undefined> {
     if (navigator.geolocation) {
       return new Observable<google.maps.LatLngLiteral>(obs => {
         navigator.geolocation.watchPosition((position) => {
@@ -90,7 +94,7 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       });
     }
-    return of(null);
+    return of(undefined);
   }
 
   /**
@@ -101,8 +105,10 @@ export class GameComponent implements OnInit, OnDestroy {
       map(game => {
         this.markers = game.scenario.markers.filter(m => game.markersId.includes(m.uid));
         if (!game.reachableStepsId.length && !game.completedMechanismsId.length) {
-          const firstStep: Step = game.scenario.steps.find(step => step.isFirstStep);
-          game.reachableStepsId.push(firstStep.uid);
+          const firstStep: Step | undefined = game.scenario.steps.find(step => step.isFirstStep);
+          if (!!firstStep) {
+            game.reachableStepsId.push(firstStep.uid);
+          }
         }
         return game;
       })
@@ -120,7 +126,8 @@ export class GameComponent implements OnInit, OnDestroy {
       for (const stepId of game.reachableStepsId) {
         const step = game.scenario.steps.find(s => s.uid === stepId);
         if (
-          (
+          !!step
+          && (
             !step.requiredMechanismsId
             || !step.requiredMechanismsId.length
             || step.requiredMechanismsId.every(id => game.completedMechanismsId.includes(id))

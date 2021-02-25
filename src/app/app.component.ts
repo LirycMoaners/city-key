@@ -15,7 +15,7 @@ export class AppComponent {
   ) {
     this.auth.user.pipe(
       first(),
-      switchMap(user => !user ? of(this.auth.signInAnonymously()) : of(null))
+      switchMap(user => !user ? of(this.auth.signInAnonymously()) : of())
     ).subscribe();
   }
 }
