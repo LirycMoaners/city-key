@@ -27,6 +27,10 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
     this.elementRef.nativeElement.style.scrollBehavior = 'smooth';
   }
 
+  /**
+   * Update the value list order when scrolling
+   * @param values The current value list
+   */
   private orderValues(values: string[]): string[] {
     const orderedValues: string[] = [...values];
     for (let i = values.length - 1; i > Math.trunc(values.length / 2); i--) {
@@ -35,6 +39,9 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
     return orderedValues;
   }
 
+  /**
+   * Order values durring scrolling to far up or down
+   */
   @HostListener('scroll') onScroll(): void {
     if (this.elementRef.nativeElement.scrollTop < this.valueHeight * 1.5) {
       this.orderedValues.unshift(this.orderedValues.splice(this.orderedValues.length - 1, 1)[0]);
@@ -46,6 +53,9 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * When starting scrolling we add a touchend event that will wait for the scrolling to stop, to set the value
+   */
   @HostListener('touchstart') onTouchStart(): void {
     this.elementRef.nativeElement.removeEventListener('scroll', this.scrollEvent);
     this.document.addEventListener('touchend', () => {
@@ -54,13 +64,19 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private scrollEvent = () => {
+  /**
+   * Wait the end of the scrolling to set the value
+   */
+  private scrollEvent(): void {
     clearTimeout(this.isScrolling);
     this.isScrolling = setTimeout(() => {
       this.setValue();
     }, 66);
   }
 
+  /**
+   * Get the value from the scrolling list and emit it to the parent component
+   */
   private setValue(): void {
     this.elementRef.nativeElement.scrollTo({ top:
       Math.round(

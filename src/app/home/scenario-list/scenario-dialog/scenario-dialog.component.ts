@@ -53,6 +53,9 @@ export class ScenarioDialogComponent implements OnInit {
     obs.subscribe(() => this.router.navigate(['/game']));
   }
 
+  /**
+   * Restart a game for the selected scenario and redirect to the game page
+   */
   public restartScenario(): void {
     this.gameService.deleteGame(this.game).pipe(
       switchMap(() => this.scenarioService.readScenario(this.data)),

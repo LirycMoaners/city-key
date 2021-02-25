@@ -3,23 +3,37 @@ import { forkJoin, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 export class ImageTool {
+
+  /**
+   * Compare 2 image by croping them to the same dimensions and use resemble module for comparison
+   * @param firstImagePath The first image path for comparison
+   * @param secondImagePath The second image path for comparison
+   * @param canvasWidth The width of the canvas to crop the images
+   * @param canvasHeight The height of the canvas to crop the images
+   */
   public static compare(firstImagePath: string, secondImagePath: string, canvasWidth: number, canvasHeight: number): Observable<number> {
     return forkJoin([
       ImageTool.cropImage(firstImagePath, canvasWidth, canvasHeight),
       ImageTool.cropImage(secondImagePath, canvasWidth, canvasHeight)
     ]).pipe(
       mergeMap(([first, second]) => {
-        return new Promise((resolve: (value: number) => void, reject) => {
+        return new Promise((resolve: (value: number) => void) => {
           resemble(first)
             .compareTo(second)
             .ignoreColors()
             .ignoreAntialiasing()
-            .onComplete((result) => resolve(result.misMatchPercentage));
+            .onComplete((result) => resolve(+result.misMatchPercentage));
         });
       })
     );
   }
 
+  /**
+   * Crop an image to a canvas size by keeping the same ratio and reduce or enlarge it
+   * @param url The path of the image
+   * @param canvasWidth The width of the canvas to crop the image
+   * @param canvasHeight The height of the canvas to crop the image
+   */
   public static cropImage(url: string, canvasWidth: number, canvasHeight: number): Promise<ImageData> {
     const img = new Image();
     const canvas = document.createElement('canvas');
@@ -27,7 +41,7 @@ export class ImageTool {
 
     img.src = url;
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       img.onload = () => {
         const { sx, sy, sw, sh } = this.getLimitDimensions(
           img.width,
@@ -45,6 +59,13 @@ export class ImageTool {
     });
   }
 
+  /**
+   * Get all the dimension to crop the image to the same ration than the canvas
+   * @param width The image with
+   * @param height The image height
+   * @param limitWidth The canvas width
+   * @param limitHeight The canvas height
+   */
   private static getLimitDimensions(
     width: number,
     height: number,

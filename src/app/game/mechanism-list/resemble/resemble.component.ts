@@ -26,6 +26,10 @@ export class ResembleComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
+  /**
+   * Compare the image in parameter to the overlay image
+   * @param image The image from the webcam
+   */
   public compareImage(image: WebcamImage): void {
     ImageTool.compare(this.data.mechanism.image, image.imageAsDataUrl, this.img.nativeElement.width, this.img.nativeElement.height)
       .subscribe(result => {

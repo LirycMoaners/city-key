@@ -21,10 +21,18 @@ export class NumberLockComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Modify the entered code after modifying one value on 4
+   * @param value The entered value from a wheel
+   * @param index The wheel index
+   */
   public setCodeDigit(value: string, index: number): void {
     this.code = this.code.substring(0, index) + value + this.code.substring(index + 1);
   }
 
+  /**
+   * Compare the entered code to the unlocking combination and close dialog if success
+   */
   onTryCode(): void {
     if (Number(this.code) === this.data.mechanism.unlockingCombination) {
       this.dialogRef.close(true);

@@ -45,6 +45,10 @@ export class MechanismListComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Open the mechanism in parameter in a dialog and update game if we succeded it
+   * @param mechanism The mechanism to open
+   */
   openMechanism(mechanism: Mechanism): void {
     let component: ComponentType<unknown>;
     switch (mechanism.type) {

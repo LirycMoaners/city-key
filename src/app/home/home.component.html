@@ -1,9 +1,9 @@
 <div #content
   class="content"
   [@routeAnimations]="prepareRoute(outlet)"
-  (touchstart)="onTouchStart($event, content)"
-  (touchmove)="onTouchMove($event, content)"
-  (touchend)="onTouchEnd($event, content)"
+  (touchstart)="startPageSwipe($event, content)"
+  (touchmove)="swipePage($event, content)"
+  (touchend)="endPageSwipe($event, content)"
 >
   <router-outlet #outlet="outlet"></router-outlet>
 </div>

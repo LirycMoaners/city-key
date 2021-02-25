@@ -22,25 +22,48 @@ export class HomeComponent {
     this.routes.splice(0, 1);
   }
 
+  /**
+   * Return state for router animation
+   * @param outlet The home router outlet
+   */
   public prepareRoute(outlet: RouterOutlet): boolean {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
+  /**
+   * Navigate to the url in parameter
+   * @param url Url to navigate to
+   */
   public navigateTo(url: string): void {
     this.router.navigate(['home/' + url]);
   }
 
-  public onTouchStart(event: TouchEvent, element: HTMLDivElement): void {
+  /**
+   * Start swiping the current component in the container in parameter
+   * @param event The start touch event
+   * @param element The container element
+   */
+  public startPageSwipe(event: TouchEvent, element: HTMLDivElement): void {
     this.posX = event.touches[0].pageX;
     this.width = element.clientWidth;
   }
 
-  public onTouchMove(event: TouchEvent, element: HTMLDivElement): void {
+  /**
+   * Move the component inside the container in paramater
+   * @param event The current touch event
+   * @param element The container element
+   */
+  public swipePage(event: TouchEvent, element: HTMLDivElement): void {
     const diff = (event.touches[0].pageX - this.posX) * 100 / this.width ;
     (element.children.item(1) as HTMLDivElement).style.marginLeft = diff + '%';
   }
 
-  public onTouchEnd(event: TouchEvent, element: HTMLDivElement): void {
+  /**
+   * End swiping the current component in the container in parameter
+   * @param event The end touch event
+   * @param element The container element
+   */
+  public endPageSwipe(event: TouchEvent, element: HTMLDivElement): void {
     const diff = (event.changedTouches[0].pageX - this.posX) * 100 / this.width ;
     this.posX = 0;
 
