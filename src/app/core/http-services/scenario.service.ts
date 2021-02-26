@@ -14,9 +14,10 @@ import { ScenarioFilter } from '../../shared/models/scenario-filter';
 
 @Injectable()
 export class ScenarioService {
-  public currentFilter: ScenarioFilter;
-  private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject(undefined);
-  private currentUser$: Observable<firebase.default.User>;
+  public currentFilter?: ScenarioFilter;
+  private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject([] as Scenario[]);
+  private userScenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject([] as Scenario[]);
+  private currentUser$: Observable<firebase.default.User | null>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
   constructor(
@@ -68,6 +69,27 @@ export class ScenarioService {
           return this.scenarii$;
         })
       );
+  }
+
+  /**
+   * Get all the scenarii made by the author in parameter
+   * @param authorId The author id
+   */
+  public readAllScenarioByAuthorId(authorId?: string): Observable<Scenario[]> {
+    if (!!this.userScenarii$.getValue().length) {
+      return this.userScenarii$;
+    }
+    return this.currentUser$.pipe(
+      switchMap((user) => {
+        return this.store.collection<Scenario>('scenarii', ref =>
+          ref.where('metadata.authorId', '==', authorId ? authorId : user?.uid)
+        ).get();
+      }),
+      switchMap(snapshot => {
+        this.userScenarii$.next(snapshot.docs.map(this.getScenarioFromSnapshot));
+        return this.userScenarii$;
+      })
+    );
   }
 
   /**

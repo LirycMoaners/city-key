@@ -1,1 +1,19 @@
-<p>creation-list works!</p>
+<mat-card *ngFor="let scenario of scenarii">
+  <mat-icon class="status">
+    {{ scenario.status === ScenarioStatus.DRAFT ? 'architecture' : scenario.status === ScenarioStatus.SUBMITED ? 'pending' : scenario.status === ScenarioStatus.VALIDATED ? 'verified' : 'new_releases' }}
+  </mat-icon>
+  <div class="infos">
+    <h2>{{ scenario.metadata.title }}</h2>
+    <div class="stats">
+      <div class="rate">
+        <mat-icon *ngFor="let i of [1,2,3,4,5]" class="star">
+          {{ scenario.metadata.rate >= i ? 'star' : scenario.metadata.rate >= i -.5 ? 'star_half' : 'star_border' }}
+        </mat-icon>
+      </div>
+      <div class="people">
+        <mat-icon>people</mat-icon>
+        {{ scenario.metadata.timesPlayed}}
+      </div>
+    </div>
+  </div>
+</mat-card>
