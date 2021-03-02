@@ -41,10 +41,10 @@ export class ScenarioDialogComponent implements OnInit {
    * @param scenario The scenario to start
    */
   public startScenario(): void {
-    let obs: Observable<Game | undefined>;
+    let obs: Observable<Game | null>;
     if (this.game) {
-      this.gameService.setCurrentGame(this.game);
-      obs = of(undefined);
+      this.gameService.currentGame = this.game;
+      obs = of(null);
     } else {
       obs = this.scenarioService.readScenario(this.data).pipe(
         switchMap((scenario: Scenario) => this.gameService.createGame(scenario))

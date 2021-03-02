@@ -1,0 +1,18 @@
+.mat-tab-group {
+  flex: 1;
+
+  ::ng-deep.mat-tab-body-wrapper {
+    flex: 1;
+
+    .mat-tab-body {
+      padding: 20px;
+    }
+  }
+}
+
+.back {
+  position: fixed;
+  z-index: 5;
+  bottom: 20px;
+  left: 20px;
+}

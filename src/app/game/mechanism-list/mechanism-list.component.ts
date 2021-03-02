@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Mechanism } from '../../shared/models/mechanism.model';
-import { of, Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { GameService } from 'src/app/core/http-services/game.service';
 import { NumberLockComponent } from './number-lock/number-lock.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,15 +13,15 @@ import { ComponentType } from '@angular/cdk/portal';
 import { ResembleComponent } from './resemble/resemble.component';
 import { filter, switchMap } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-mechanism-list',
   templateUrl: './mechanism-list.component.html',
   styleUrls: ['./mechanism-list.component.scss']
 })
-export class MechanismListComponent implements OnInit, OnDestroy {
+export class MechanismListComponent implements OnInit {
   public mechanisms: Mechanism[] = [];
   private game?: Game;
-  private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly gameService: GameService,
@@ -31,18 +31,8 @@ export class MechanismListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.gameService.getCurrentGame().subscribe(game => {
-        this.game = game;
-        this.mechanisms = this.game.scenario.mechanisms.filter(mechanism => this.game?.mechanismsId.includes(mechanism.uid));
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.game = this.gameService.currentGame;
+    this.mechanisms = this.game ? this.game.scenario.mechanisms.filter(mechanism => this.game?.mechanismsId.includes(mechanism.uid)) : [];
   }
 
   /**
