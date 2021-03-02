@@ -27,10 +27,10 @@ export class FilterScenarioDialogComponent implements OnInit {
     private readonly scenarioService: ScenarioService,
     private readonly cityService: CityService
   ) {
+    this.form = this.initForm();
   }
 
   ngOnInit(): void {
-    this.initForm();
     this.getCities();
   }
 
@@ -51,8 +51,8 @@ export class FilterScenarioDialogComponent implements OnInit {
   /**
    * Initialize formgroup with value if already init in service
    */
-  private initForm(): void {
-    this.form = this.formBuilder.group({
+  private initForm(): FormGroup {
+    return this.formBuilder.group({
       cityId: [this.scenarioService.currentFilter?.cityId],
       rate: [this.scenarioService.currentFilter?.rate],
       difficulty: [this.scenarioService.currentFilter?.difficulty],

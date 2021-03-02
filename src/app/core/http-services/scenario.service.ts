@@ -14,9 +14,9 @@ import { ScenarioFilter } from '../../shared/models/scenario-filter';
 
 @Injectable()
 export class ScenarioService {
-  public currentFilter: ScenarioFilter;
-  private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject(undefined);
-  private currentUser$: Observable<firebase.default.User>;
+  public currentFilter?: ScenarioFilter;
+  private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject([] as Scenario[]);
+  private currentUser$: Observable<firebase.default.User | null>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
   constructor(
@@ -39,10 +39,14 @@ export class ScenarioService {
    * Get all the scenarii or filtered list of scenarii if param
    * @param filter Filter properties
    */
-  public readAllScenario(scenarioFilter: ScenarioFilter): Observable<Scenario[]> {
+  public readAllScenario(scenarioFilter?: ScenarioFilter): Observable<Scenario[]> {
     let pos: google.maps.LatLngLiteral;
 
-    if (!!this.scenarii$.getValue() && JSON.stringify(this.currentFilter) === JSON.stringify(scenarioFilter)) {
+    if (
+      !!this.scenarii$.getValue()
+      && !!this.scenarii$.getValue().length
+      && JSON.stringify(this.currentFilter) === JSON.stringify(scenarioFilter)
+    ) {
       return this.scenarii$;
     }
     this.currentFilter = scenarioFilter;
@@ -64,7 +68,7 @@ export class ScenarioService {
           return forkJoin(bounds.map(b => this.getScenarioCollection(scenarioFilter, b).get()));
         }),
         switchMap(snapshots => {
-          this.scenarii$.next(this.getScenariiFromSnapshots(scenarioFilter, snapshots, pos));
+          this.scenarii$.next(this.getScenariiFromSnapshots(snapshots, pos, scenarioFilter));
           return this.scenarii$;
         })
       );
@@ -109,7 +113,7 @@ export class ScenarioService {
    * @param scenariofilter Filter to construct the subcollection
    * @param bound Map area range
    */
-  private getScenarioCollection(scenariofilter: ScenarioFilter, bound?: string[]): AngularFirestoreCollection<Scenario> {
+  private getScenarioCollection(scenariofilter?: ScenarioFilter, bound?: string[]): AngularFirestoreCollection<Scenario> {
     return this.store.collection<Scenario>('scenarii', ref => {
       let query: Query = ref.limit(50);
       if (!!scenariofilter) {
@@ -130,8 +134,8 @@ export class ScenarioService {
           : query;
         query = scenariofilter.cityId !== null
           ? query.where('metadata.cityId', '==', scenariofilter.cityId)
-          : query.orderBy('metadata.geohash').startAt(bound[0]).endAt(bound[1]);
-      } else {
+          : !!bound ? query.orderBy('metadata.geohash').startAt(bound[0]).endAt(bound[1]) : query;
+      } else if (!!bound) {
         query = query.orderBy('metadata.geohash').startAt(bound[0]).endAt(bound[1]);
       }
       return query;
@@ -145,9 +149,9 @@ export class ScenarioService {
    * @param pos Current user position to detect false positiv
    */
   private getScenariiFromSnapshots(
-    scenariofilter: ScenarioFilter,
     snapshots: firebase.default.firestore.QuerySnapshot<Scenario>[],
-    pos: google.maps.LatLngLiteral
+    pos: google.maps.LatLngLiteral,
+    scenariofilter?: ScenarioFilter
   ): Scenario[] {
     return snapshots
       .map(snapshot => snapshot.docs.map(this.getScenarioFromSnapshot))

@@ -1,4 +1,4 @@
-import {ScenarioType} from '../enums/scenario-type.enum';
+import { ScenarioType } from '../enums/scenario-type.enum';
 
 export interface ScenarioFilter {
   cityId: string;

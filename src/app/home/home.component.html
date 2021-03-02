@@ -10,6 +10,6 @@
 
 <mat-button-toggle-group>
   <mat-button-toggle *ngFor="let route of routes" [routerLink]="[route.path]" routerLinkActive="mat-button-toggle-checked">
-    <mat-icon>{{ route.data.icon }}</mat-icon>
+    <mat-icon>{{ route.data?.icon }}</mat-icon>
   </mat-button-toggle>
 </mat-button-toggle-group>

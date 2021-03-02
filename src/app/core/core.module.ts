@@ -1,5 +1,5 @@
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { ScenarioService } from './http-services/scenario.service';

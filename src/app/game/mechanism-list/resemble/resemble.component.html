@@ -5,9 +5,9 @@
   </button>
 </div>
 <mat-dialog-content>
-  <webcam #webcam (imageCapture)="compareImage($event)" width="1920" height="1080"></webcam>
+  <webcam #webcam (imageCapture)="compareImage($event)" [width]="1920" [height]="1080"></webcam>
   <div class="overlay">
-    <img #overlay [src]="data.mechanism.image">
+    <img #overlay [src]="data.mechanism.image" alt="Image overlay">
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
