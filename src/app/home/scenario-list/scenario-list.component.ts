@@ -27,7 +27,7 @@ export class ScenarioListComponent implements OnInit {
    * Get scenarii list to display
    * @param filter The scenario filter
    */
-  private getScenarii(filter: ScenarioFilter): void {
+  private getScenarii(filter?: ScenarioFilter): void {
     this.scenarioService.readAllScenario(filter).subscribe(scenarii => this.scenarii = scenarii);
   }
 

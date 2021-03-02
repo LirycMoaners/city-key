@@ -5,7 +5,7 @@ import { ItemType } from '../enums/item-type.enum';
   name: 'itemIcon'
 })
 export class ItemIconPipe implements PipeTransform {
-  transform(value: ItemType, ...args: any[]): any {
+  transform(value: ItemType): any {
     switch (value) {
       case ItemType.TEXT:
         return 'article';

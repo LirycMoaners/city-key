@@ -1,6 +1,6 @@
 <div class="map-container" *ngIf="isGoogleMapApiLoaded$ | async">
   <div class="items-menu top left">
-    <button routerLink="../home" mat-fab color="primary" aria-label="Back">
+    <button [routerLink]="['/home/scenario-list']" mat-fab color="primary" aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
@@ -31,7 +31,7 @@
     </map-marker>
     <map-info-window>
       <ng-container *ngIf="currentMarker">
-        <img class="info-image" [src]="currentMarker.image">
+        <img class="info-image" [src]="currentMarker.image" [alt]="currentMarker.title + ' image'">
         <h1>{{ currentMarker.title }}</h1>
         <p>{{ currentMarker.description }}</p>
       </ng-container>

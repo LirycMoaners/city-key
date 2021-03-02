@@ -1,24 +1,22 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-wheel-picker',
   templateUrl: './wheel-picker.component.html',
   styleUrls: ['./wheel-picker.component.scss']
 })
-export class WheelPickerComponent implements OnInit, AfterViewInit {
-  @Input() values: string[];
+export class WheelPickerComponent implements AfterViewInit {
+  @Input() values: string[] = [];
   @Output() valueSelected: EventEmitter<string> = new EventEmitter();
   public orderedValues: string[] = [];
   private valueHeight = 36;
-  private isScrolling: any;
+  private isScrolling?: NodeJS.Timeout;
 
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
-    @Inject(DOCUMENT) private document
-  ) { }
-
-  ngOnInit(): void {
+    @Inject(DOCUMENT) private document: Document
+  ) {
     this.orderedValues = this.orderValues(this.values);
   }
 
@@ -46,7 +44,10 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
     if (this.elementRef.nativeElement.scrollTop < this.valueHeight * 1.5) {
       this.orderedValues.unshift(this.orderedValues.splice(this.orderedValues.length - 1, 1)[0]);
     } else if (this.elementRef.nativeElement.scrollTop > (this.orderedValues.length - 1) * this.valueHeight - this.valueHeight * 1.5) {
-      this.orderedValues.push(this.orderedValues.shift());
+      const value = this.orderedValues.shift();
+      if (!!value) {
+        this.orderedValues.push(value);
+      }
       this.elementRef.nativeElement.style.scrollBehavior = 'auto';
       this.elementRef.nativeElement.scrollTop -= this.valueHeight;
       this.elementRef.nativeElement.style.scrollBehavior = 'smooth';
@@ -68,7 +69,9 @@ export class WheelPickerComponent implements OnInit, AfterViewInit {
    * Wait the end of the scrolling to set the value
    */
   private scrollEvent(): void {
-    clearTimeout(this.isScrolling);
+    if (!!this.isScrolling) {
+      clearTimeout(this.isScrolling);
+    }
     this.isScrolling = setTimeout(() => {
       this.setValue();
     }, 66);

@@ -17,13 +17,19 @@ export class ImageTool {
       ImageTool.cropImage(secondImagePath, canvasWidth, canvasHeight)
     ]).pipe(
       mergeMap(([first, second]) => {
-        return new Promise((resolve: (value: number) => void) => {
-          resemble(first)
-            .compareTo(second)
-            .ignoreColors()
-            .ignoreAntialiasing()
-            .onComplete((result) => resolve(+result.misMatchPercentage));
-        });
+        if (!!first && !!second) {
+          return new Observable<number>(obs => {
+            resemble(first)
+              .compareTo(second)
+              .ignoreColors()
+              .ignoreAntialiasing()
+              .onComplete((result) => {
+                obs.next(+result.misMatchPercentage);
+                obs.complete();
+              });
+          });
+        }
+        return throwError('Error while croping images.');
       })
     );
   }
@@ -34,14 +40,14 @@ export class ImageTool {
    * @param canvasWidth The width of the canvas to crop the image
    * @param canvasHeight The height of the canvas to crop the image
    */
-  public static cropImage(url: string, canvasWidth: number, canvasHeight: number): Promise<ImageData> {
+  public static cropImage(url: string, canvasWidth: number, canvasHeight: number): Observable<ImageData | undefined> {
     const img = new Image();
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
     img.src = url;
 
-    return new Promise(resolve => {
+    return new Observable<ImageData | undefined>(obs => {
       img.onload = () => {
         const { sx, sy, sw, sh } = this.getLimitDimensions(
           img.width,
@@ -53,8 +59,9 @@ export class ImageTool {
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
 
-        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvasWidth, canvasHeight);
-        resolve(ctx.getImageData(0, 0, canvasWidth, canvasHeight));
+        ctx?.drawImage(img, sx, sy, sw, sh, 0, 0, canvasWidth, canvasHeight);
+        obs.next(ctx?.getImageData(0, 0, canvasWidth, canvasHeight));
+        obs.complete();
       };
     });
   }

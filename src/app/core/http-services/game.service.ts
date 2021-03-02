@@ -40,7 +40,7 @@ export class GameService {
       first(),
       switchMap(user =>
         this.store.collection<Game>(
-          'users/' + user.uid + '/games',
+          'users/' + user?.uid + '/games',
           ref => ref.where('scenario.uid', '==', scenarioId)
         ).get()
       ),
@@ -58,7 +58,7 @@ export class GameService {
       first(),
       switchMap(user => {
         const {uid, ...g} = game;
-        return from(this.store.collection<Game>('users/' + user.uid + '/games').doc(uid).update(g));
+        return from(this.store.collection<Game>('users/' + user?.uid + '/games').doc(uid).update(g));
       }),
       tap(_ => this.currentGame$.next({...game}))
     );
@@ -81,7 +81,7 @@ export class GameService {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(user => from(this.store.collection<Game>('users/' + user.uid + '/games').add(newGame))),
+      switchMap(user => from(this.store.collection<Game>('users/' + user?.uid + '/games').add(newGame))),
       map(ref => {
         newGame.uid = ref.id;
         this.currentGame$.next({...newGame});
@@ -98,7 +98,7 @@ export class GameService {
     return this.auth.user.pipe(
       filter(user => user !== null),
       first(),
-      switchMap(user => from(this.store.collection<Game>('users/' + user.uid + '/games').doc(game.uid).delete()))
+      switchMap(user => from(this.store.collection<Game>('users/' + user?.uid + '/games').doc(game.uid).delete()))
     );
   }
 }
