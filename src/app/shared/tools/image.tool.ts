@@ -1,5 +1,5 @@
 import * as resemble from 'resemblejs';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 export class ImageTool {

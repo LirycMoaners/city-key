@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ScenarioService } from 'src/app/core/http-services/scenario.service';
+import { ScenarioStatus } from 'src/app/shared/enums/scenario-status.enum';
+import { Scenario } from 'src/app/shared/models/scenario.model';
 
 @Component({
   selector: 'app-creation-list',
@@ -6,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./creation-list.component.scss']
 })
 export class CreationListComponent implements OnInit {
+  public scenarii: Scenario[] = [];
+  public ScenarioStatus: typeof ScenarioStatus = ScenarioStatus;
 
-  constructor() { }
+  constructor(
+    private readonly scenarioService: ScenarioService
+  ) { }
 
   ngOnInit(): void {
+    this.scenarioService.readAllScenarioByAuthorId().subscribe(scenarii => this.scenarii = scenarii);
   }
 
 }
