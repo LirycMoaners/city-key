@@ -13,4 +13,5 @@ export interface Scenario {
   mechanisms: Mechanism[];
   items: Item[];
   markers: Marker[];
+  originScenarioId?: string;
 }

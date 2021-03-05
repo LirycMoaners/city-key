@@ -1,4 +1,4 @@
-<mat-card *ngFor="let scenario of scenarii">
+<mat-card *ngFor="let scenario of scenarii" (click)="editScenario(scenario)">
   <mat-icon class="status">
     {{ scenario.status === ScenarioStatus.DRAFT ? 'architecture' : scenario.status === ScenarioStatus.SUBMITED ? 'pending' : scenario.status === ScenarioStatus.VALIDATED ? 'verified' : 'new_releases' }}
   </mat-icon>

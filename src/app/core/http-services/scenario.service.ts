@@ -17,6 +17,7 @@ export class ScenarioService {
   public currentFilter?: ScenarioFilter;
   private scenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject([] as Scenario[]);
   private userScenarii$: BehaviorSubject<Scenario[]> = new BehaviorSubject([] as Scenario[]);
+  private currentEditionScenarioVal?: Scenario;
   private currentUser$: Observable<firebase.default.User | null>;
   private currentPosition$: Observable<google.maps.LatLngLiteral>;
 
@@ -34,6 +35,21 @@ export class ScenarioService {
         obs.complete();
       })
     );
+  }
+
+  /**
+   * Retrieve the current scenario for edition
+   */
+  public get currentEditionScenario(): Scenario | undefined {
+    return this.currentEditionScenarioVal;
+  }
+
+  /**
+   * Set the current scenario for edition
+   * @param scenario Game to push in the subject
+   */
+  public set currentEditionScenario(scenario: Scenario | undefined) {
+    this.currentEditionScenarioVal = scenario;
   }
 
   /**

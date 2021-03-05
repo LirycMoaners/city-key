@@ -19,6 +19,7 @@ import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatOptionModule } from '@angular/material/core';
+import { MatTabsModule } from '@angular/material/tabs';
 import { HourPipe } from './pipes/hour.pipe';
 import { CityNamePipe } from './pipes/city-name.pipe';
 
@@ -34,6 +35,8 @@ import { CityNamePipe } from './pipes/city-name.pipe';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -45,15 +48,17 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     FormsModule,
     MatButtonToggleModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
     MatSliderModule,
+    MatTabsModule
   ],
   exports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -62,14 +67,13 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     MatListModule,
     MatDialogModule,
     MatSnackBarModule,
-    FormsModule,
     MatButtonToggleModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
     MatSliderModule,
+    MatTabsModule,
     ItemIconPipe,
     MechanismIconPipe,
     EnumToArrayPipe,

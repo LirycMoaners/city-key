@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatDialog } from '@angular/material/dialog';
 import { distanceBetween } from 'geofire-common';
-import { combineLatest, Observable, of, Subscription, } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, of, Subscription, } from 'rxjs';
 import * as mapStyle from '../../assets/styles/map-style.json';
 import { GameService } from '../core/http-services/game.service';
 import { GoogleMapService } from '../core/http-services/google-map.service';
@@ -11,6 +10,7 @@ import { Game } from '../shared/models/game.model';
 import { Marker } from '../shared/models/marker.model';
 import { Step } from '../shared/models/step.model';
 import { StepDialogComponent } from './step-dialog/step-dialog.component';
+
 
 @Component({
   selector: 'app-game',
@@ -45,11 +45,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      combineLatest([
-        this.initGeolocation(),
-        this.initGame()
-      ]).subscribe(([playerPosition, game]: [google.maps.LatLngLiteral | undefined, Game]) => {
-        if (!!playerPosition) {
+      this.initGeolocation().subscribe(playerPosition => {
+        const game = this.initGame();
+        if (!!playerPosition && !!game) {
           this.checkSteps(playerPosition, game);
         }
       })
@@ -100,19 +98,16 @@ export class GameComponent implements OnInit, OnDestroy {
   /**
    * Initialize the game at the beginning & watch it over time for modifications
    */
-  private initGame(): Observable<Game> {
-    return this.gameService.getCurrentGame().pipe(
-      map(game => {
-        this.markers = game.scenario.markers.filter(m => game.markersId.includes(m.uid));
-        if (!game.reachableStepsId.length && !game.completedMechanismsId.length) {
-          const firstStep: Step | undefined = game.scenario.steps.find(step => step.isFirstStep);
-          if (!!firstStep) {
-            game.reachableStepsId.push(firstStep.uid);
-          }
-        }
-        return game;
-      })
-    );
+  private initGame(): Game | undefined {
+    const game = this.gameService.currentGame;
+    this.markers = game ? game.scenario.markers.filter(m => game.markersId.includes(m.uid)) : [];
+    if (!game?.reachableStepsId.length && !game?.completedMechanismsId.length) {
+      const firstStep: Step | undefined = game?.scenario.steps.find(step => step.isFirstStep);
+      if (!!firstStep) {
+        game?.reachableStepsId.push(firstStep.uid);
+      }
+    }
+    return game;
   }
 
   /**
