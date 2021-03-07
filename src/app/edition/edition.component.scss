@@ -6,6 +6,10 @@
 
     .mat-tab-body {
       padding: 20px;
+
+      .mat-tab-body-content {
+        display: flex;
+      }
     }
   }
 }

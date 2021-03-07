@@ -1,4 +1,99 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.city", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.estimatedDuration", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.type", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.city", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.difficulty", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.difficulty", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.city", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.difficulty", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.estimatedDuration", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.estimatedDuration", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.city", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.type", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "scenarii",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scenarioMetadata.type", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.rate", "order": "ASCENDING" },
+        { "fieldPath": "scenarioMetadata.geohash", "order": "ASCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }

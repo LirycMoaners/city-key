@@ -1,0 +1,35 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <ng-container formGroupName="metadata">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+    <div class="image" (click)="fileInput.click()">
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        (change)="uploadImage($event.target)"
+      >
+      <img [src]="form.get('metadata')?.get('image')?.value">
+      <button mat-flat-button>{{ form.get('metadata')?.get('image')?.value ? 'Change image' : 'Add image' }}</button>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>City</mat-label>
+      <mat-select formControlName="cityId">
+        <mat-option *ngFor="let city of cities" [value]="city.uid">{{ city.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option [value]="0">Permanent</mat-option>
+        <mat-option [value]="1">Event</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+</ng-container>

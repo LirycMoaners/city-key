@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, Query, QuerySnapshot } from '@angular/fire/firestore';
 import { distanceBetween, geohashQueryBounds } from 'geofire-common';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { filter, first, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, from, Observable } from 'rxjs';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { Item } from '../../shared/models/item.model';
 import { Marker } from '../../shared/models/marker.model';
 import { Mechanism } from '../../shared/models/mechanism.model';
@@ -146,6 +146,16 @@ export class ScenarioService {
     );
   }
 
+  public updateScenario(scenario: Scenario): Observable<void> {
+    return from(this.store.collection<Scenario>('scenarii').doc(scenario.uid).update(scenario)).pipe(
+      tap(() => {
+        const scenarii = this.userScenarii$.getValue();
+        scenarii.splice(scenarii.findIndex(s => s.uid === scenario.uid), 1, scenario);
+        this.userScenarii$.next(scenarii);
+      })
+    );
+  }
+
   /**
    * Get a subcollection from the scenario collection filtered by filter and map area
    * @param scenariofilter Filter to construct the subcollection
@@ -208,8 +218,8 @@ export class ScenarioService {
     snapshot: firebase.default.firestore.QueryDocumentSnapshot<Scenario>
   ): Scenario {
     const scenario = {...snapshot.data(), uid: snapshot.id};
-    scenario.metadata.creationDate = new Date(scenario.metadata.creationDate);
-    scenario.metadata.lastUpdateDate = new Date(scenario.metadata.lastUpdateDate);
+    scenario.metadata.creationDate = new Date((scenario.metadata.creationDate as {seconds: number}).seconds * 1000);
+    scenario.metadata.lastUpdateDate = new Date((scenario.metadata.lastUpdateDate as {seconds: number}).seconds * 1000);
     return scenario;
   }
 }

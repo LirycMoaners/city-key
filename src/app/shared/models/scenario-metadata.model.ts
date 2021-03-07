@@ -11,8 +11,8 @@ export interface ScenarioMetadata {
   rate: number;
   difficulty: Difficulty;
   estimatedDuration: number;
-  creationDate: Date;
-  lastUpdateDate: Date;
+  creationDate: Date | {seconds: number};
+  lastUpdateDate: Date | {seconds: number};
   timesPlayed: number;
   authorId: string;
   type: ScenarioType;

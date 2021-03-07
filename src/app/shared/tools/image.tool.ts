@@ -1,8 +1,20 @@
 import * as resemble from 'resemblejs';
 import { forkJoin, Observable, throwError } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, switchMap } from 'rxjs/operators';
 
 export class ImageTool {
+
+  public static getImageFromTarget(target: EventTarget | null): File | undefined {
+    if (target) {
+      const fileTypes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+      const files = (target as HTMLInputElement).files;
+
+      if (files && files[0] && fileTypes.includes(files[0].type)) {
+        return files[0];
+      }
+    }
+    return undefined;
+  }
 
   /**
    * Compare 2 image by croping them to the same dimensions and use resemble module for comparison
@@ -40,7 +52,7 @@ export class ImageTool {
    * @param canvasWidth The width of the canvas to crop the image
    * @param canvasHeight The height of the canvas to crop the image
    */
-  public static cropImage(url: string, canvasWidth: number, canvasHeight: number): Observable<ImageData | undefined> {
+  private static cropImage(url: string, canvasWidth: number, canvasHeight: number): Observable<ImageData | undefined> {
     const img = new Image();
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');

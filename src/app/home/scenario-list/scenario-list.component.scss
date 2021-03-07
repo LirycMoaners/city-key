@@ -35,6 +35,11 @@
           flex: 1;
         }
       }
+
+      .mat-card-image {
+        max-height: 120px;
+        object-fit: cover;
+      }
     }
   }
 }

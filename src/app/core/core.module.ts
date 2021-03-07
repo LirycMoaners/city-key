@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CityService } from './http-services/city.service';
+import { ImageStorageService } from './http-services/image-storage.service';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { CityService } from './http-services/city.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFirestoreModule,
     SharedModule
   ],
   exports: [
@@ -31,7 +33,8 @@ import { CityService } from './http-services/city.service';
     GoogleMapService,
     ScenarioService,
     GameService,
-    CityService
+    CityService,
+    ImageStorageService
   ]
 })
 export class CoreModule { }
