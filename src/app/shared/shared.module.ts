@@ -22,6 +22,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HourPipe } from './pipes/hour.pipe';
 import { CityNamePipe } from './pipes/city-name.pipe';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -59,6 +61,7 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,

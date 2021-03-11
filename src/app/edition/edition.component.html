@@ -1,8 +1,10 @@
-<mat-tab-group>
+<mat-tab-group *ngIf="scenario">
   <mat-tab label="Infos"> Infos </mat-tab>
   <mat-tab label="Machines"> Machines </mat-tab>
   <mat-tab label="Clues"> Clues </mat-tab>
-  <mat-tab label="Places"> Places </mat-tab>
+  <mat-tab label="Places">
+    <app-edition-markers [scenario]="scenario" [form]="formGroup"></app-edition-markers>
+  </mat-tab>
 </mat-tab-group>
 <button mat-fab color="accent" class="back" [routerLink]="['/home/creation-list']">
   <mat-icon>arrow_back</mat-icon>

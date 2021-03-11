@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ScenarioService } from '../core/http-services/scenario.service';
 import { Scenario } from '../shared/models/scenario.model';
 
@@ -9,13 +10,19 @@ import { Scenario } from '../shared/models/scenario.model';
 })
 export class EditionComponent implements OnInit {
   public scenario?: Scenario;
+  public formGroup: FormGroup;
 
   constructor(
-    private scenarioService: ScenarioService
-  ) { }
+    private readonly fb: FormBuilder,
+    private readonly scenarioService: ScenarioService
+  ) {
+    this.formGroup = this.fb.group({});
+  }
 
   ngOnInit(): void {
-    this.scenario = this.scenarioService.currentEditionScenario;
+    if (this.scenarioService.currentEditionScenario) {
+      this.scenarioService.readScenario(this.scenarioService.currentEditionScenario).subscribe(scenario => this.scenario = scenario);
+    }
   }
 
 }
