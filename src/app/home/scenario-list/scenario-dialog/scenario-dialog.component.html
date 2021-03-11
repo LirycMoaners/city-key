@@ -14,7 +14,7 @@
   </div>
   <mat-divider></mat-divider>
   <div class="about">
-    <div><mat-icon>today</mat-icon>{{ data.metadata.creationDate | date:'MM/dd/yyyy' }}</div>
+    <div><mat-icon>today</mat-icon>{{ $any(data.metadata.creationDate) | date:'MM/dd/yyyy' }}</div>
     <div><mat-icon>people</mat-icon>{{ data.metadata.timesPlayed}}</div>
   </div>
 </mat-dialog-content>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,6 +38,7 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -59,6 +61,7 @@ import { CityNamePipe } from './pipes/city-name.pipe';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,

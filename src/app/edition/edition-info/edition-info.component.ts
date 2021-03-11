@@ -1,13 +1,15 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { of, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CityService } from 'src/app/core/http-services/city.service';
+import { GoogleMapService } from 'src/app/core/http-services/google-map.service';
 import { ImageStorageService } from 'src/app/core/http-services/image-storage.service';
 import { ScenarioService } from 'src/app/core/http-services/scenario.service';
 import { City } from 'src/app/shared/models/city.model';
 import { Scenario } from 'src/app/shared/models/scenario.model';
 import { ImageTool } from 'src/app/shared/tools/image.tool';
+import * as mapStyle from '../../../assets/styles/map-style.json';
 
 
 @Component({
@@ -18,15 +20,27 @@ import { ImageTool } from 'src/app/shared/tools/image.tool';
 export class EditionInfoComponent implements OnInit, OnDestroy {
   @Input() form?: FormGroup;
   @Input() scenario?: Scenario;
+  public isGoogleMapApiLoaded$: Observable<boolean>;
+  public options: google.maps.MapOptions = {
+    mapTypeControl: false,
+    fullscreenControl: false,
+    streetViewControl: false,
+    // @ts-ignore
+    styles : mapStyle.default
+  };
+  public center?: google.maps.LatLngLiteral;
   public cities: City[] = [];
   private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly fb: FormBuilder,
+    private readonly googleMapService: GoogleMapService,
     private readonly scenarioService: ScenarioService,
     private readonly cityService: CityService,
     private readonly imageStorageService: ImageStorageService
-  ) { }
+  ) {
+    this.isGoogleMapApiLoaded$ = this.googleMapService.initGoogleMap();
+  }
 
   ngOnInit(): void {
     if (this.form && this.scenario) {
@@ -50,7 +64,18 @@ export class EditionInfoComponent implements OnInit, OnDestroy {
             }
             return of();
           })
-        ).subscribe()
+        ).subscribe(),
+        new Observable<GeolocationPosition>(obs => navigator.geolocation.getCurrentPosition(position => {
+          obs.next(position);
+          obs.complete();
+        })).subscribe(position => {
+          if (!this.form?.get('metadata')?.get('position')?.value) {
+            this.center = { lat: position.coords.latitude, lng: position.coords.longitude };
+            this.form?.get('metadata')?.patchValue({position: this.center});
+          } else {
+            this.center = this.form?.get('metadata')?.get('position')?.value;
+          }
+        })
       );
     }
     this.subscriptions.push(
@@ -64,6 +89,10 @@ export class EditionInfoComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Add or replace the current scenario image
+   * @param target Target from the input file event
+   */
   public uploadImage(target: EventTarget | null): void {
     const image = ImageTool.getImageFromTarget(target);
 
@@ -74,5 +103,13 @@ export class EditionInfoComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  /**
+   * Update the scenario position by clicking on the map
+   * @param event The mouse click event on the map
+   */
+  public changePosition(event: google.maps.MapMouseEvent): void {
+    this.form?.get('metadata')?.patchValue({position: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
   }
 }

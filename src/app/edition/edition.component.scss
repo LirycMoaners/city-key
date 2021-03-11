@@ -1,5 +1,6 @@
 .mat-tab-group {
   flex: 1;
+  overflow: hidden;
 
   ::ng-deep.mat-tab-body-wrapper {
     flex: 1;

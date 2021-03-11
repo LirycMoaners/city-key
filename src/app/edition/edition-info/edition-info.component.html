@@ -20,16 +20,39 @@
         <mat-option *ngFor="let city of cities" [value]="city.uid">{{ city.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
+    <google-map
+      *ngIf="(isGoogleMapApiLoaded$ | async) && center"
+      #map
+      width="100%"
+      height="300px"
+      [options]="options"
+      [center]="center"
+      (mapClick)="changePosition($event)"
+    >
+      <map-marker *ngIf="form.get('metadata')?.get('position')?.value" [position]="form.get('metadata')?.get('position')?.value"></map-marker>
+    </google-map>
+    <div class="difficulty">
+      <mat-label>Difficulty</mat-label>
+      <mat-button-toggle-group formControlName="difficulty" aria-label="Difficulty">
+        <mat-button-toggle [value]="0">EASY</mat-button-toggle>
+        <mat-button-toggle [value]="1">MEDIUM</mat-button-toggle>
+        <mat-button-toggle [value]="2">HARD</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="duration">
+      <mat-label>Duration (minutes)</mat-label>
+      <mat-slider min="30" max="300" step="30" thumbLabel tickInterval="auto" formControlName="estimatedDuration"></mat-slider>
+    </div>
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select formControlName="type">
         <mat-option [value]="0">Permanent</mat-option>
         <mat-option [value]="1">Event</mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" cdkTextareaAutosize [cdkAutosizeMinRows]="1"></textarea>
     </mat-form-field>
   </ng-container>
 </ng-container>
